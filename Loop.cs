@@ -10,15 +10,17 @@ namespace Exit
     {
         static void Main(string[] args)
         {
-            int loop = 1;
+            bool endLoop = false;
             string inputOfMessage;
-            while (loop > 0) { 
-            Console.WriteLine("Введите слово exit.");
-            inputOfMessage = Console.ReadLine();
-            if (inputOfMessage == "exit")
+            while (endLoop == false) 
+            { 
+                Console.WriteLine("Введите слово exit.");
+                inputOfMessage = Console.ReadLine();
+            
+                if (inputOfMessage == "exit")
                  {
                     Console.WriteLine("Вы вышли из цикла.");
-                    --loop; 
+                    endLoop = true;
                  }
             }
         }
