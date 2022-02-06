@@ -16,7 +16,7 @@ namespace SimpleCode
             message = Console.ReadLine();
             Console.WriteLine("Введите кол-во отправляемых сообщений");
             numberMessages = Convert.ToInt32(Console.ReadLine());
-            while (numberMessages-- >0)
+            for (int i = numberMessages; i>0; i--)
             {
                 Console.WriteLine(message);
             }
