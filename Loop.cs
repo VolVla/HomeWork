@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,18 +10,20 @@ namespace Exit
     {
         static void Main(string[] args)
         {
-            bool endLoop = false;
-            string inputOfMessage;
-            while (endLoop == false) 
-            { 
-                Console.WriteLine("Введите слово exit.");
-                inputOfMessage = Console.ReadLine();
-            
-                if (inputOfMessage == "exit")
-                 {
+            bool isExit = false;
+            string inputUser;
+            string commandExit = "exit";
+
+            while (isExit == false)
+            {
+                Console.WriteLine("Введите слово " + commandExit);
+                inputUser = Console.ReadLine();
+
+                if (inputUser == commandExit)
+                {
                     Console.WriteLine("Вы вышли из цикла.");
-                    endLoop = true;
-                 }
+                    isExit = true;
+                }
             }
         }
     }
