@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,7 +16,8 @@ namespace SimpleCode
             message = Console.ReadLine();
             Console.WriteLine("Введите кол-во отправляемых сообщений");
             numberMessages = Convert.ToInt32(Console.ReadLine());
-            for (int i = numberMessages; i>0; i--)
+
+            for (int i = 0; i < numberMessages; i++)
             {
                 Console.WriteLine(message);
             }
