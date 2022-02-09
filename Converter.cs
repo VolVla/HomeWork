@@ -10,12 +10,12 @@ namespace Converter
     {
         static void Main(string[] args)
         {
-            float balanceDollars = 100;
-            float balanceRub = 20;
-            float balanceYuan = 10;
-            float usdToRub = 10;
-            float usdrToYuan = 20;
-            float rubToYuan = 5;
+            float balanceUSD = 100;
+            float balanceRUB = 20;
+            float balanceCNY = 10;
+            float usdToRub = 75.3f;
+            float usdToCny = 6.37f;
+            float rubToCny = 0.085f;
             float currencyCount;
             string userInput;
             bool isExit = false;
@@ -23,7 +23,8 @@ namespace Converter
             Console.WriteLine("Добро пожаловать в обменик валют.Выберете основную валюту для обмена. ");
 
             while (isExit == false)
-            {   Console.WriteLine("Ваш баланс " + balanceDollars + " Долларов " + balanceRub + " Рублей " + balanceYuan + " Юаней ");
+            {   
+                Console.WriteLine("Ваш баланс " + balanceUSD + " Долларов " + balanceRUB + " Рублей " + balanceCNY + " Юаней ");
                 Console.WriteLine("1 - обменять доллары на рубли");
                 Console.WriteLine("2 - обменять доллары на юани");
                 Console.WriteLine("3 - обменять рубли на доллары");
@@ -34,71 +35,100 @@ namespace Converter
                 userInput = Console.ReadLine();
 
                 switch (userInput)
-                {   case "1":
+                {   
+                    case "1":
                         Console.WriteLine("Обмен доллары на рубли.");
                         Console.WriteLine("Сколько вы хотите обменять:");
                         currencyCount = Convert.ToSingle(Console.ReadLine());
 
-                        if (balanceDollars >= currencyCount)
-                        {   balanceDollars -= currencyCount;
-                            balanceRub += currencyCount / usdToRub;}
-                        else{   Console.WriteLine("Введено недопустимое кол-во долларов.");}
+                        if (balanceUSD >= currencyCount)
+                        {
+                            balanceUSD -= currencyCount;
+                            balanceRUB += currencyCount / usdToRub;
+                        }
+                        else
+                        {  
+                            Console.WriteLine("Введено недопустимое кол-во долларов.");
+                        }
                             break;
                     case "2":
                         Console.WriteLine("Обмен доллары на юань.");
                         Console.WriteLine("Сколько вы хотите обменять:");
                         currencyCount = Convert.ToSingle(Console.ReadLine());
 
-                        if (balanceDollars >= currencyCount)
-                        {   balanceDollars -= currencyCount;
-                            balanceYuan += currencyCount / usdrToYuan;}
-                        else{   Console.WriteLine("Введено недопустимое кол-во долларов.");}
+                        if (balanceUSD >= currencyCount)
+                        {
+                            balanceUSD -= currencyCount;
+                            balanceCNY += currencyCount / usdToCny;}
+                        else
+                        {   
+                            Console.WriteLine("Введено недопустимое кол-во долларов.");
+                        }
                             break;
                     case "3":
                         Console.WriteLine("Обмен рублей на доллары.");
                         Console.WriteLine("Сколько вы хотите обменять:");
                         currencyCount = Convert.ToSingle(Console.ReadLine());
 
-                        if (balanceRub >= currencyCount)
-                        {   balanceRub -= currencyCount;
-                            balanceDollars += currencyCount * usdToRub;}
-                        else{   Console.WriteLine("Введено недопустимое кол-во рублей.");}
+                        if (balanceRUB >= currencyCount)
+                        {   
+                            balanceRUB -= currencyCount;
+                            balanceUSD += currencyCount * usdToRub;
+                        }
+                        else
+                        {   
+                            Console.WriteLine("Введено недопустимое кол-во рублей.");
+                        }
                             break;
                     case "4":
                         Console.WriteLine("Обмен рублей на юани.");
                         Console.WriteLine("Сколько вы хотите обменять:");
                         currencyCount = Convert.ToSingle(Console.ReadLine());
 
-                        if (balanceRub >= currencyCount)
-                        {   balanceRub -= currencyCount;
-                            balanceYuan += currencyCount / rubToYuan;}
-                        else{   Console.WriteLine("Введено недопустимое кол-во рублей.");}
+                        if (balanceRUB >= currencyCount)
+                        {   
+                            balanceRUB -= currencyCount;
+                            balanceCNY += currencyCount / rubToCny;}
+                        else
+                        {   
+                            Console.WriteLine("Введено недопустимое кол-во рублей.");
+                        }
                             break;
                     case "5":
                         Console.WriteLine("Обмен юани на доллары .");
                         Console.WriteLine("Сколько вы хотите обменять:");
                         currencyCount = Convert.ToSingle(Console.ReadLine());
 
-                        if (balanceYuan >= currencyCount)
-                        {   balanceYuan -= currencyCount;
-                            balanceDollars += currencyCount * usdrToYuan;}
-                        else{   Console.WriteLine("Введено недопустимое кол-во юаней.");}
+                        if (balanceCNY >= currencyCount)
+                        {   
+                            balanceCNY -= currencyCount;
+                            balanceUSD += currencyCount * usdToCny;
+                        }
+                        else
+                        {   
+                             Console.WriteLine("Введено недопустимое кол-во юаней.");
+                        }
                             break;
                     case "6":
                         Console.WriteLine("Обмен юани на рубли.");
                         Console.WriteLine("Сколько вы хотите обменять: ");
                         currencyCount = Convert.ToSingle(Console.ReadLine());
 
-                        if (balanceYuan >= currencyCount)
-                        {   balanceYuan -= currencyCount;
-                            balanceRub += currencyCount * rubToYuan;}
-                        else{   Console.WriteLine("Введено недопустимое кол-во юаней.");}
+                        if (balanceCNY >= currencyCount)
+                        {   
+                            balanceCNY -= currencyCount;
+                            balanceRUB += currencyCount * rubToCny;
+                        }
+                        else
+                        {   
+                            Console.WriteLine("Введено недопустимое кол-во юаней.");
+                        }
                             break;
-
                     case "7":
-                        Console.WriteLine("Вы закончили обмен.");
+                            Console.WriteLine("Вы закончили обмен.");
                         isExit = true;
-                        break;}
+                        break;
+                }
             }
         }
     }
