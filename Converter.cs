@@ -29,8 +29,8 @@ namespace Converter
                 Console.WriteLine("2 - обменять доллары на юани");
                 Console.WriteLine("3 - обменять рубли на доллары");
                 Console.WriteLine("4 - обменять рубли на юани");
-                Console.WriteLine("5 - обменять юани на рубли");
-                Console.WriteLine("6 - обменять юани на доллары");
+                Console.WriteLine("5 - обменять юани на доллары");
+                Console.WriteLine("6 - обменять юани на рубли");
                 Console.WriteLine("7 - Закончить обмен");
                 userInput = Console.ReadLine();
 
@@ -44,7 +44,7 @@ namespace Converter
                         if (balanceUSD >= currencyCount)
                         {
                             balanceUSD -= currencyCount;
-                            balanceRUB += currencyCount / usdToRub;
+                            balanceRUB += currencyCount * usdToRub;
                         }
                         else
                         {  
@@ -59,7 +59,7 @@ namespace Converter
                         if (balanceUSD >= currencyCount)
                         {
                             balanceUSD -= currencyCount;
-                            balanceCNY += currencyCount / usdToCny;}
+                            balanceCNY += currencyCount * usdToCny;}
                         else
                         {   
                             Console.WriteLine("Введено недопустимое кол-во долларов.");
@@ -73,7 +73,7 @@ namespace Converter
                         if (balanceRUB >= currencyCount)
                         {   
                             balanceRUB -= currencyCount;
-                            balanceUSD += currencyCount * usdToRub;
+                            balanceUSD += currencyCount / usdToRub;
                         }
                         else
                         {   
@@ -88,7 +88,7 @@ namespace Converter
                         if (balanceRUB >= currencyCount)
                         {   
                             balanceRUB -= currencyCount;
-                            balanceCNY += currencyCount / rubToCny;}
+                            balanceCNY += currencyCount * rubToCny;}
                         else
                         {   
                             Console.WriteLine("Введено недопустимое кол-во рублей.");
@@ -102,7 +102,7 @@ namespace Converter
                         if (balanceCNY >= currencyCount)
                         {   
                             balanceCNY -= currencyCount;
-                            balanceUSD += currencyCount * usdToCny;
+                            balanceUSD += currencyCount / usdToCny;
                         }
                         else
                         {   
@@ -117,7 +117,7 @@ namespace Converter
                         if (balanceCNY >= currencyCount)
                         {   
                             balanceCNY -= currencyCount;
-                            balanceRUB += currencyCount * rubToCny;
+                            balanceRUB += currencyCount / rubToCny;
                         }
                         else
                         {   
