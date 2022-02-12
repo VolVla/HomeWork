@@ -12,11 +12,13 @@ namespace Cycle
         {
             int exitValue = 7;
             int stepValue = 7;
+            int valueNumbers = 14;
             
-            for(int i = 0; i < 14 ; i++)
+            while(valueNumbers > 0)
             {
                 Console.Write(exitValue+" ");
                 exitValue += stepValue;
+                valueNumbers--;
             }
         }
     }
