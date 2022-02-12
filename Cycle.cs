@@ -14,14 +14,9 @@ namespace Cycle
             int stepValue = 7;
             int maximumNumber = 98;
 
-            for (; ;exitValue += stepValue )
+            for (int i = exitValue; exitValue <= maximumNumber ; exitValue += stepValue )
             {
                  Console.Write(exitValue+" ");
-                 
-                if (exitValue >= maximumNumber)
-                {
-                    break;
-                }
             }
         }
     }
