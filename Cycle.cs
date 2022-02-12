@@ -12,13 +12,16 @@ namespace Cycle
         {
             int exitValue = 7;
             int stepValue = 7;
-            int valueNumbers = 14;
-            
-            while(valueNumbers > 0)
+            int maximumNumber = 99;
+
+            for (; ; )
             {
-                Console.Write(exitValue+" ");
-                exitValue += stepValue;
-                valueNumbers--;
+                 Console.Write(exitValue+" ");
+                 exitValue += stepValue;
+                if (exitValue >= maximumNumber)
+                {
+                    break;
+                }
             }
         }
     }
