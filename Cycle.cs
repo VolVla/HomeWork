@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,15 +9,16 @@ namespace Cycle
     class Program
     {
         static void Main(string[] args)
-        {   
-            int numberOnIncrease = 7;
-            int lenghtArray = 14;
-            int numberExit = 7;
+        {
+            int initialValue = 0;
+            int maximumValue = 14;
+            int exitValue = 7;
+            int stepValue = 7;
             
-            for(int i=0; i < lenghtArray; i++)
+            for(int i = initialValue; i < maximumValue; i++)
             {
-                Console.WriteLine(numberExit);
-                numberExit += numberOnIncrease;
+                Console.WriteLine(exitValue);
+                exitValue += stepValue;
             }
         }
     }
