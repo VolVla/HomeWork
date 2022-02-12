@@ -10,14 +10,12 @@ namespace Cycle
     {
         static void Main(string[] args)
         {
-            int initialValue = 0;
-            int maximumValue = 14;
             int exitValue = 7;
             int stepValue = 7;
             
-            for(int i = initialValue; i < maximumValue; i++)
+            for(int i = 0; i < 14 ; i++)
             {
-                Console.WriteLine(exitValue);
+                Console.Write(exitValue+" ");
                 exitValue += stepValue;
             }
         }
