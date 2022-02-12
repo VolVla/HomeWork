@@ -12,12 +12,12 @@ namespace Cycle
         {
             int exitValue = 7;
             int stepValue = 7;
-            int maximumNumber = 99;
+            int maximumNumber = 98;
 
-            for (; ; )
+            for (; ;exitValue += stepValue )
             {
                  Console.Write(exitValue+" ");
-                 exitValue += stepValue;
+                 
                 if (exitValue >= maximumNumber)
                 {
                     break;
