@@ -10,31 +10,35 @@ namespace RectangleName
     {
         static void Main(string[] args)
         {
-            const int ValueInitial = 0;
-            int heightPositionTextName = 6;
-            int widthPositionTextName = 1;
-            int valueRow = 3;
-            int cursorPosition = 8;
+            int userNameLenght;
             char symbol;
             string userName;
+            int valueIndent = 1;
 
             Console.WriteLine("Введите имя пользователя");
             userName = Console.ReadLine();
+            userNameLenght = userName.Length;
             Console.WriteLine("Введите любой символ");
             symbol = Convert.ToChar(Console.ReadLine());
 
-            for (int y = ValueInitial; y <= valueRow; y++)
+            for (int x= 0; x <= userNameLenght + valueIndent; x++)
             {
-                Console.WriteLine(symbol);
-
-                for (int x = ValueInitial; x <= userName.Length; x++)
-                {
-                    Console.Write(symbol);
-                }
+                Console.Write(symbol);
             }
-                Console.SetCursorPosition(widthPositionTextName, heightPositionTextName);
-                Console.Write(userName);
-                Console.SetCursorPosition(ValueInitial, cursorPosition);
+            Console.SetCursorPosition(0,5);
+            
+            for (int x = 0; x <= userNameLenght + valueIndent; x++)
+            {
+                Console.Write(symbol);
+            }
+            Console.SetCursorPosition(1, 5);
+            Console.Write(userName);
+            Console.SetCursorPosition(0, 6);
+            
+            for (int x = 0; x <= userNameLenght + valueIndent; x++)
+            {
+                Console.Write(symbol);
+            }
         }
     }
 }
