@@ -11,7 +11,7 @@ namespace Array
         static void Main(string[] args)
         {
             int[,] arrayLine = { { 2,2,3 }, { 5,7,2 } };
-            int sumLine2 = 0 ;
+            int sumLine2 = 0;
             int productColumn1 = 1;
             int result;
             int numberLine = 1;
@@ -24,14 +24,14 @@ namespace Array
               sumLine2 += arrayLine[numberLine, initialValueArray];
             }
 
-            for (int x = initialValueArray; x < arrayLine.GetLength(0); x++ )
+            for (int x = initialValueArray; x < arrayLine.GetLength(0); x++)
             {
               productColumn1 *= arrayLine[lineArray++, columnArray];
             }
             
-            for (int i = initialValueArray; i < arrayLine.GetLength(0);i++)
+            for (int i = initialValueArray; i < arrayLine.GetLength(0); i++)
             {
-                for (int j = initialValueArray; j < arrayLine.GetLength(1);j++)
+                for (int j = initialValueArray; j < arrayLine.GetLength(1); j++)
                 {
                   Console.Write(arrayLine[i, j] + " ");
                 }
