@@ -29,9 +29,9 @@ namespace Array
               productColumn1 *= arrayLine[lineArray++, columnArray] ;
             }
             
-            for (int i= initialValueArray; i<arrayLine.GetLength(0);i++)
+            for (int i = initialValueArray; i<arrayLine.GetLength(0);i++)
             {
-                for (int j= initialValueArray; j<arrayLine.GetLength(1);j++)
+                for (int j = initialValueArray; j<arrayLine.GetLength(1);j++)
                 {
                     Console.Write(arrayLine[i, j] + " ");
                 }
