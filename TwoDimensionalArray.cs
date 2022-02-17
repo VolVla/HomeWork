@@ -26,7 +26,7 @@ namespace Array
 
             for (int x = initialValueArray; x < arrayLine.GetLength(0); x++ )
             {
-              productColumn1 *= arrayLine[lineArray++, columnArray] ;
+              productColumn1 *= arrayLine[lineArray++, columnArray];
             }
             
             for (int i = initialValueArray; i < arrayLine.GetLength(0);i++)
