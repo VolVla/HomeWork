@@ -21,7 +21,7 @@ namespace Array
 
             for (int y = initialValueArray; y < arrayLine.GetLength(1); y++)
             {
-                sumLine2 += arrayLine[numberLine, initialValueArray];
+              sumLine2 += arrayLine[numberLine, initialValueArray];
             }
 
             for (int x = initialValueArray; x < arrayLine.GetLength(0); x++ )
@@ -33,7 +33,7 @@ namespace Array
             {
                 for (int j = initialValueArray; j < arrayLine.GetLength(1);j++)
                 {
-                    Console.Write(arrayLine[i, j] + " ");
+                  Console.Write(arrayLine[i, j] + " ");
                 }
                 Console.WriteLine();
             } 
