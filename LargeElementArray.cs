@@ -18,7 +18,7 @@ namespace LargeElementArray
                 int maximumElement = matrix[lineMaximumElement, columnMaximumElement];
                 Random random = new Random();
 
-                matrix[1, 5] = random.Next(1, 11);
+                matrix[4, 2] = random.Next(1, 11);
                 
                 for (int i = 0; i < matrix.GetLength(0); i++)
                 {
