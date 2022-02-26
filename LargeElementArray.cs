@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,37 +13,36 @@ namespace LargeElementArray
                 int sizeArrayLines = 10;
                 int sizeArrayColumns = 10;
                 int [,] matrix = new int[sizeArrayLines,sizeArrayColumns];
-                int lineMaximumElement = 0;
-                int columnMaximumElement = 0;
-                int maximumElement = matrix[lineMaximumElement, columnMaximumElement];
+                int maximumElement = int.MinValue;
                 Random random = new Random();
 
-                matrix[4, 2] = random.Next(1, 11);
-                
+                Console.WriteLine("Исходная матрица");
                 for (int i = 0; i < matrix.GetLength(0); i++)
                 {
                     for (int j = 0; j < matrix.GetLength(1); j++)
                     {
+                        matrix[i, j] = random.Next(1, 11);
+
                         if (matrix[i, j] > maximumElement)
                         {
-                           lineMaximumElement = i;
-                           columnMaximumElement = j;
-                           maximumElement = matrix[lineMaximumElement, columnMaximumElement];
+                            maximumElement = matrix[i, j];
                         }
-                    }   
-                }  
-                Console.WriteLine("Наибольший элемент = " + maximumElement);
-                Console.WriteLine("Исходная матрица");
-
-                for (int i = 0; i < matrix.GetLength(0); i++)
-                {
-                    for (int j = 0; j < matrix.GetLength(1); j++)
-                    {
                         Console.Write(matrix[i,j] + " ");
                     }
                     Console.WriteLine();
                 }
-                matrix[lineMaximumElement, columnMaximumElement] = 0;
+                Console.WriteLine("Наибольший элемент = " + maximumElement);
+
+                for (int i = 0; i < matrix.GetLength(0); i++)
+                {
+                    for (int j = 0; j < matrix.GetLength(1); j++)
+                    {
+                        if(matrix[i,j] == maximumElement)
+                        {
+                            matrix[i, j] = 0; 
+                        }
+                    }
+                }
                 Console.WriteLine("\nПолученная матрица");
 
                 for (int i = 0; i < matrix.GetLength(0); i++)
