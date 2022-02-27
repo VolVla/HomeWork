@@ -20,25 +20,23 @@ namespace OneArray
                 Console.Write(array[i] + " ");
             }
             Console.SetCursorPosition(0,3);
-            int firstElementArray = array[0];
-            int lastElementArray = array[sizeArray - 1];
-
-            if (firstElementArray > firstElementArray++ )
+            
+            if (array[0] > array[1])
             {
-                Console.Write(firstElementArray + " ");
+                Console.Write(array[0] + " ");
             }
 
             for (int i = 1; i < array.Length -1 ; i++)
             {
                 if (array[i - 1] < array[i] && array[i + 1] < array[i])
                 {
-                   Console.Write(array[i] + " ");
+                    Console.Write(array[i] + " ");
                 }
             }
             
-            if (lastElementArray  > array[sizeArray - 2])
+            if (array[sizeArray - 1] > array[sizeArray - 2])
             {
-               Console.Write(lastElementArray + " ");
+               Console.Write(array[sizeArray - 1] + " ");
             }
         }
     }
