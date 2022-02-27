@@ -10,21 +10,35 @@ namespace OneArray
     {
         static void Main(string[] args)
         {
-            int[] arrayElement = new int[30];
+            int sizeArray = 30;
+            int[] array = new int[sizeArray];
             Random random = new Random();
-
-            for (int i = 1; i < arrayElement.Length - 1; i++)
+            
+            for (int i = 0; i < array.Length ; i++)
             {
-                arrayElement[i] = random.Next(1, 10);
+                array[i] = random.Next(1, 10);
+                Console.Write(array[i] + " ");
+            }
+            Console.SetCursorPosition(0,3);
+            int firstElementArray = array[0];
+            int lastElementArray = array[sizeArray - 1];
 
-                if (arrayElement[0] > arrayElement[1])
+            if (firstElementArray > firstElementArray++ )
+            {
+                Console.Write(firstElementArray + " ");
+            }
+
+            for (int i = 1; i < array.Length -1 ; i++)
+            {
+                if (array[i - 1] < array[i] && array[i + 1] < array[i])
                 {
-                    Console.Write(arrayElement[i] + " ");
+                   Console.Write(array[i] + " ");
                 }
-                else if (arrayElement[i - 1] < arrayElement[i] && arrayElement[i + 1] < arrayElement[i])
-                {
-                    Console.Write(arrayElement[i] + " ");
-                }
+            }
+            
+            if (lastElementArray  > array[sizeArray - 2])
+            {
+               Console.Write(lastElementArray + " ");
             }
         }
     }
