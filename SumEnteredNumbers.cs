@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,51 +10,50 @@ namespace SumEnteredNumbers
     {
         static void Main(string[] args)
         {
-            int sizeArray = 4;
-            int[] arrayNumbers = new int[sizeArray];
+            int enterNumber;
+            int sumNumbers = 0;
+            int sizeArray = 0;
+            int[] firstArrayNumbers = new int[sizeArray];
             bool exit = false;
-            int amountNumbers = 0;
-            int number = 0;
-            string inputUser;
-            string wordEnterNumbers = "numbers";
+            string userInput;
+            string wordEnterNumbers = "1";
             string wordExit = "exit";
             string wordAmount = "sum";
 
             Console.WriteLine("Введите числа через пробел");
             while(exit == false)
             {
-                
-                Console.WriteLine("Комманды 1) "+ wordEnterNumbers + " введите число \n2)Введите слово "+ wordAmount +" для выведения суммы всех введеных чисел \n3)Введите слово "+ wordExit+" для выхода из программы  ");
-                inputUser = Console.ReadLine();
+                Console.WriteLine("\nКомманды \n1)Для ввода числа напишите в чат " + wordEnterNumbers + "\n2)Для вывода суммы всех введеных чисел.Введите слово "+ wordAmount +"\n3)Для выхода из программы.Введите слово "+ wordExit);
+                userInput = Console.ReadLine();
 
-                switch (inputUser)
+                switch (userInput)
                 {
-                    case "numbers":
+                    case "1":
                         Console.WriteLine("Введите число");
-                        number = Convert.ToInt32 (Console.ReadLine());
-                        for (int i=0; i<sizeArray; i++)
+                        enterNumber = Convert.ToInt32 (Console.ReadLine());
+                        int[] secondArray = new int [firstArrayNumbers.Length + 1];
+                        secondArray[secondArray.Length - 1] = enterNumber;
+
+                        for (int i = 0; i < firstArrayNumbers.Length; i++)
                         {
-                            arrayNumbers[i] = number;
-
-                        Console.WriteLine(arrayNumbers[i] + " "  + " "); 
+                            secondArray[i] = firstArrayNumbers[i];
                         }
-                         
-                    break;
-
+                        firstArrayNumbers = secondArray;
+                        sizeArray++;
+                            break;
                     case "sum":
-                        for (int i = 0;i<arrayNumbers.Length;i++)
-                            amountNumbers += arrayNumbers[i];
+
+                        for (int i = 0; i < firstArrayNumbers.Length; i++)
                         {
+                            sumNumbers += firstArrayNumbers[i] ;
                         }
-                        break;
-
+                        Console.WriteLine(sumNumbers);    
+                            break;
                     case "exit":
-
-                            exit = true;
-
-                        break;
+                        Console.WriteLine("Вы вышли из программы.");
+                        exit = true;
+                            break;
                 } 
-                
             }
         }
     }
