@@ -15,9 +15,8 @@ namespace SumEnteredNumbers
             int[] arrayNumbers = new int[sizeArray];
             bool isExit = false;
             string userInput;
-            string wordEnterNumbers = "1";
-            string wordExit = "exit";
-            string wordAmount = "sum";
+            string const WordExit = "exit";
+            string const CommandAmount = "sum";
 
             Console.WriteLine("Введите числа через пробел");
             while(isExit == false)
@@ -27,9 +26,8 @@ namespace SumEnteredNumbers
 
                 switch (userInput)
                 {
-                    case "1":
-                        Console.WriteLine("Введите число");
-                        enterNumber = Convert.ToInt32 (Console.ReadLine());
+                    case userInput:
+                        enterNumber = Convert.ToInt32 (userInput);
                         int[] tempArrayNumbers = new int [arrayNumbers.Length + 1];
                         tempArrayNumbers[tempArrayNumbers.Length - 1] = enterNumber;
 
@@ -39,20 +37,23 @@ namespace SumEnteredNumbers
                         }
                         arrayNumbers = tempArrayNumbers;
                         sizeArray++;
-                            break;
-                    case "sum":
+                        break;
+                        
+                    case CommandAmount:
                         int sumNumbers = 0;
 
                         for (int i = 0; i < arrayNumbers.Length; i++)
                         {
                             sumNumbers += arrayNumbers[i] ;
                         }
-                        Console.WriteLine(sumNumbers);    
-                            break;
-                    case "exit":
+                        Console.WriteLine(sumNumbers); 
+                        
+                        break;
+                        
+                    case WordExit:
                         Console.WriteLine("Вы вышли из программы.");
                         isExit = true;
-                            break;
+                        break;
                 } 
             }
         }
