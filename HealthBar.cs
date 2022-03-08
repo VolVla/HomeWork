@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -21,25 +21,17 @@ namespace HealthBar
             int percentFillBar = 0;
             string healthBar = "HealthBar";
             string manaBar = "ManaBar";
-
+            int percent = 100;
             while (isExit == false)
             {
-                Console.WriteLine("Введите % заполнения шкалы " + healthBar);
-                health = Convert.ToInt32(Console.ReadLine());
-                percentFillBar = health * maxHealth / 100;
+                percentFillBar = SetPercentBar(healthBar, health, maxHealth, percent, percentFillBar );
                 Console.Clear();
 
                 DrawBar(percentFillBar, maxHealth, positionLine,'_', '#') ;
-
-                Console.SetCursorPosition(0, 5);
-                Console.WriteLine("Введите % заполнения шкалы " + manaBar );
-                mana = Convert.ToInt32(Console.ReadLine());
-                percentFillBar = mana * maxMana / 100;
+                percentFillBar = SetPercentBar(manaBar, mana, maxMana, percent, percentFillBar);
 
                 DrawBar(percentFillBar, maxMana, positionLine + 1 , '_','#');
-
-                Console.SetCursorPosition(0, 4);
-                Console.WriteLine("Для выхода из программы напишите" + wordExit);
+                Console.WriteLine("\nДля выхода из программы напишите " + wordExit +" для продолжения напишите любой символ");
                 userInput = Console.ReadLine();
                 
                 if(userInput == wordExit)
@@ -49,25 +41,42 @@ namespace HealthBar
                 Console.Clear(); 
             }
         }    
+        static void StandartPositionText()
+        {
+            Console.SetCursorPosition(0, 6);
+        }
+        static int SetPercentBar(string nameBar, int value ,int maxValue,int percent, int percentFillBar)
+        {
+            StandartPositionText();
+            Console.WriteLine("Введите % заполнения шкалы " + nameBar);
+            value = Convert.ToInt32(Console.ReadLine());
+            percentFillBar = value * maxValue / percent;
+            return percentFillBar;
+        }
         static void DrawBar(int value, int maxValue, int positionX, char emptySymbol = ' ',char fillSymbol = ' '  )
         {
             string bar ="";
-            
-            for (int i = 0; i < value; i++)
+
+            if (value >= 0)
             {
-                bar += fillSymbol;
+                for (int i = 0; i < value; i++)
+                {
+                    bar += fillSymbol;
+                }
             }
 
             Console.SetCursorPosition(0, positionX);
             Console.Write('[');
             Console.Write(bar);
             bar ="";
-            
-            for(int i = 0; i < maxValue - value; i++)
+
+            if (value <= maxValue)
             {
-                bar += emptySymbol;
-            }
-             
+                for(int i = 0; i < maxValue - value; i++)
+                {   
+                    bar += emptySymbol;
+                }
+            }  
             Console.Write(bar + "]");
         }
     }
