@@ -11,7 +11,6 @@ namespace RequestNumber
         static void Main(string[] args)
         {
             int number = 0;
-
             number = GetNumber();
         }
         static int GetNumber()
