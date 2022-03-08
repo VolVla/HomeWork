@@ -10,32 +10,35 @@ namespace RequestNumber
     {
         static void Main(string[] args)
         {
-            int number;
+            int number = 0;
             bool isExit = false;
             string wordExit = "exit";
             string userInput;
 
-            while (isExit == false)
+            while (isExit == false) 
             {
-                Console.WriteLine($"Введите число");
-                RequestNumber(out number, out userInput);
-                Console.WriteLine($"Для выхода из программы ввидите слово {wordExit}");
-
-                if(userInput == wordExit)
-                {
-                    Console.Clear();
-                    isExit = true;
-                }
+                RequestNumber(ref number,out userInput);
+                ExitIsProgram(userInput, wordExit,isExit);
             }
         }
-        static void RequestNumber(out int number,out string userInput)
+        static void ExitIsProgram(string userInput,string wordExit,bool isExit)
         {
+            Console.WriteLine($"Для выхода из программы ввидите слово {wordExit}");
+            if (userInput == wordExit)
+            {
+               Console.Clear();
+               isExit = true;
+            } 
+        }
+        static void RequestNumber(ref int number,out string userInput)
+        {
+            Console.WriteLine($"Введите число"); 
             userInput = Console.ReadLine();
-            bool result = int.TryParse(userInput, out  number);
+            bool result = int.TryParse(userInput, out number);
 
             if (result == true)
             {
-                Console.WriteLine($"Преобразование прошло успешно. Число {number}");  
+                Console.WriteLine($"Преобразование прошло успешно. Число {number}");
             }
             else
             {
