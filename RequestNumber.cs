@@ -12,10 +12,11 @@ namespace RequestNumber
         {
             int number = 0;
 
-            number = ReturnNumber(number);
+            number = GetNumber();
         }
-        static int ReturnNumber(int number)
+        static int GetNumber()
         {
+            int number = 0;
             string userInput;
             bool isExit = false;
 
