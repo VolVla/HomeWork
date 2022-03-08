@@ -13,6 +13,7 @@ namespace RequestNumber
             int number = 0;
             number = GetNumber();
         }
+        
         static int GetNumber()
         {
             int number = 0;
