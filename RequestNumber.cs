@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -30,9 +30,8 @@ namespace RequestNumber
         }
         static void RequestNumber(out int number,out string userInput)
         {
-            bool result = true;
             userInput = Console.ReadLine();
-            result = int.TryParse(userInput, out  number);
+            bool result = int.TryParse(userInput, out  number);
 
             if (result == true)
             {
