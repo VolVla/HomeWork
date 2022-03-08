@@ -12,11 +12,11 @@ namespace RequestNumber
         {
             int number = 0;
 
-            RequestNumber(ref number);
+            number = ReturnNumber(number);
         }
-        static void RequestNumber(ref int number)
+        static int ReturnNumber(int number)
         {
-            string userInput ;
+            string userInput;
             bool isExit = false;
 
             while (isExit == false)
@@ -28,14 +28,14 @@ namespace RequestNumber
                 if (result == true)
                 {
                     Console.WriteLine($"Преобразование прошло успешно. Число {number}");
-                    isExit = true;
+                    isExit = true; 
                 }
                 else
                 {
                     Console.WriteLine($"Преобразование прошло не удачно введите число.");
                 }
-                
             }
+             return number;
         }
     }
 }
