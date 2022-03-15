@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,8 +14,11 @@ namespace Random100
             int multiplicityFirstValue = 3;
             int multiplicitySecondtValue = 5;
             int sumNumbers = 0;
+            int minimumValue = 0;
+            int maximumValue = 101;
+
             Random random = new Random();
-            number = random.Next(0, 101);
+            number = random.Next(minimumValue, maximumValue);
 
             for(int i = 0; i < number; i++)
             {
