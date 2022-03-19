@@ -10,8 +10,7 @@ namespace SortingArrayElement
     {
         static void Main(string[] args)
         {
-            const int LengthArray = 10;
-            int[] array = new int[LengthArray] { 4, 6, 8, 1, 2, 3, 7, 9, 0, 5 };
+            int[] array = new int[10] { 4, 6, 8, 1, 2, 3, 7, 9, 0, 5 };
 
             for (int i = 0;  i < array.Length; i++)
             {
@@ -19,9 +18,9 @@ namespace SortingArrayElement
                 {
                     if (array[j] > array[j+1])
                     { 
-                        int a = array[j + 1];
+                        int temporaryValue = array[j + 1];
                         array[j + 1] = array[j];
-                        array[j] = a;
+                        array[j] = temporaryValue;
                     }
                 }
             }
