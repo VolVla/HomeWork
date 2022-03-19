@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,7 +10,8 @@ namespace SortingArrayElement
     {
         static void Main(string[] args)
         {
-            int[] array = new int[10] { 4, 6, 8, 1, 2, 3, 7, 9, 0, 5 };
+            const int LengthArray = 10;
+            int[] array = new int[LengthArray] { 4, 6, 8, 1, 2, 3, 7, 9, 0, 5 };
 
             for (int i = 0;  i < array.Length; i++)
             {
