@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,25 +12,23 @@ namespace FindNaturalNumbers
         {
             int maximumValue = 28;
             int minimumValue = 1;
-            int number = 0;
+            int amountNaturalNumbers = 0;
+            int lowerLimit = 100;
             Random random = new Random();
             int valueElementN = random.Next(minimumValue, maximumValue);
 
-            for(int i = 0; i < 10; i++)
+            for (int i = 0; i < 1000; i += valueElementN)
             {
-                for (int j = 0; j < 10; j++)
+                if(i < lowerLimit)
                 {
-                    for (int k = 0; k < 10; k++)
-                    {
-                        if (i + j + k == valueElementN)
-                        {
-                            number++;
-                            Console.Write(i * 100 + j * 10 + k +" ");
-                        }
-                    }
+                    continue;
                 }
-            }
-            Console.WriteLine($"\nЧисло N = {valueElementN} количество трехзначных натуральных чисел {number}");
+                else
+                {
+                    amountNaturalNumbers++;
+                } 
+            } 
+            Console.WriteLine($"Число N = {valueElementN} количество трехзначных натуральных чисел {amountNaturalNumbers}");
         }
     }
 }
