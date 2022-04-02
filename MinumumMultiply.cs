@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,7 +19,7 @@ namespace MinumumMultiply
             Random random = new Random();
             number = random.Next(minumumValueNumber, maxumumValueNumber);
 
-            for(int i = 0; superiorNumber <= number; i++)
+            while(superiorNumber<=number)
             {
                 superiorNumber *= numberDegree;
                 degree++;
