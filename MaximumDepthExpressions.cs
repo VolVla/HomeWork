@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,11 +17,11 @@ namespace MaximumDepthExpressions
             char rightParenthesis = ')';
             string text = "(()())";
 
-            foreach ( char symbols  in text) { 
-                if (symbols == leftParenthesis){
+            foreach (char symbol in text) { 
+                if (symbol == leftParenthesis){
                     valueIncorrectParentheses++;
                 }
-                else if (symbols == rightParenthesis){
+                else if (symbol == rightParenthesis){
                     maximumDepthParentheses++;
                     valueIncorrectParentheses--;
                 }
