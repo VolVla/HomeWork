@@ -11,23 +11,30 @@ namespace MaximumDepthExpressions
     {
         static void Main(string[] args) 
         {
-            int maximumDepthParentheses = 0; 
+            int lineBalance = 0;
+            int currentDepthParentheses = 0; 
             int valueIncorrectParentheses = 0;
+            int maximumDepthParentheses = 0;
             char leftParenthesis = '(';
             char rightParenthesis = ')';
-            string text = "(()())";
+            string text = "())(()";
 
             foreach (char symbol in text) { 
                 if (symbol == leftParenthesis){
                     valueIncorrectParentheses++;
+
+                    if(valueIncorrectParentheses > maximumDepthParentheses){
+                        maximumDepthParentheses = valueIncorrectParentheses;
+                    }
                 }
-                else if (symbol == rightParenthesis){
-                    maximumDepthParentheses++;
+                else if (symbol == rightParenthesis && valueIncorrectParentheses > lineBalance)
+                {
+                    currentDepthParentheses++;
                     valueIncorrectParentheses--;
                 }
             }
 
-            if (valueIncorrectParentheses != 0){
+            if (valueIncorrectParentheses != lineBalance){
                 Console.WriteLine($"Не корректное скобочное выражение.");
             }
             else {
