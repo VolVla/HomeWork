@@ -9,36 +9,33 @@ namespace MaximumDepthExpressions
 {
     class Program
     {
-        static void Main(string[] args) 
+        static void Main(string[] args)
         {
-            int lineBalance = 0;
-            int currentDepthParentheses = 0; 
-            int valueIncorrectParentheses = 0;
-            int maximumDepthParentheses = 0;
+            int valueLeftParenthesis = 0;
+            int valueRightParenthesis = 0;
+            int maximumDepthParenthesis = 0;
             char leftParenthesis = '(';
             char rightParenthesis = ')';
-            string text = "())(()";
+            string text = "(()())";
 
-            foreach (char symbol in text) { 
-                if (symbol == leftParenthesis){
-                    valueIncorrectParentheses++;
-
-                    if(valueIncorrectParentheses > maximumDepthParentheses){
-                        maximumDepthParentheses = valueIncorrectParentheses;
-                    }
+            for (int i = 0; i < text.Length; i++)
+            {
+                if (text[i] == leftParenthesis){
+                    valueLeftParenthesis++;
                 }
-                else if (symbol == rightParenthesis && valueIncorrectParentheses > lineBalance)
-                {
-                    currentDepthParentheses++;
-                    valueIncorrectParentheses--;
+                else if (text[i] == rightParenthesis){
+                    valueRightParenthesis++;
+                    maximumDepthParenthesis++;
+                }
+                if(valueLeftParenthesis < valueRightParenthesis){
+                    break;    
                 }
             }
-
-            if (valueIncorrectParentheses != lineBalance){
-                Console.WriteLine($"Не корректное скобочное выражение.");
+            if (valueLeftParenthesis == valueRightParenthesis){
+                Console.WriteLine($"Корректное скобочное выражение, максимальная глубина вложенных скобок {maximumDepthParenthesis}");
             }
-            else {
-                Console.WriteLine($"Корректное скобочное выражение, максимальная глубина вложенных скобок {maximumDepthParentheses}");
+            else{
+                Console.WriteLine($"Не корректное скобочное выражение.");      
             } 
         }
     }
