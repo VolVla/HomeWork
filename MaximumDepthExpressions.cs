@@ -22,14 +22,16 @@ namespace MaximumDepthExpressions
             {
                 if (text[i] == leftParenthesis){
                     valueLeftParenthesis++;
+                    if (i != text.Length-1 && text[i+1] != leftParenthesis){
+                        maximumDepthParenthesis++;
+                    }
                 }
                 else if (text[i] == rightParenthesis){
                     valueRightParenthesis++;
-                    maximumDepthParenthesis++;
                 }
                 if(valueLeftParenthesis < valueRightParenthesis){
                     break;    
-                }
+                } 
             }
             if (valueLeftParenthesis == valueRightParenthesis){
                 Console.WriteLine($"Корректное скобочное выражение, максимальная глубина вложенных скобок {maximumDepthParenthesis}");
