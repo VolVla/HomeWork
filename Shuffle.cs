@@ -19,10 +19,11 @@ namespace Shuffle
         static void Shuffle(int[] array)
         {
             Random random = new Random();
+            int lenghtArray = array.Length;
 
-            for (int i = 0; i < array.Length; i++)
+            for (int i = 0; i < lenghtArray; i++)
             {
-                Swap(ref array, i, i + random.Next(array.Length - i));
+                Swap(ref array, i, random.Next(lenghtArray));
             }
         }
         static void Swap(ref int[] array, int firstNumber , int secondNumber)
