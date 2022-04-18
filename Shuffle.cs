@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,7 +13,7 @@ namespace Shuffle
             const int AmountNumbers = 5;
             int[] array = new int[AmountNumbers] { 1, 2, 3, 4, 5 };
             Shuffle(array);
-            Foreach(array);
+            ForeachArray(array);
         }
 
         static void Shuffle(int[] array)
@@ -22,18 +22,18 @@ namespace Shuffle
 
             for (int i = 0; i < array.Length; i++)
             {
-                Swap(array, i, i + random.Next(array.Length - i));
+                Swap(ref array, i, i + random.Next(array.Length - i));
             }
         }
-        static void Swap(int[] array, int a, int b)
+        static void Swap(ref int[] array, int firstNumber , int secondNumber)
         {
-            int temp = array[a];
-            array[a] = array[b];
-            array[b] = temp;
+            int temporaryValue = array[firstNumber];
+            array[firstNumber] = array[secondNumber];
+            array[secondNumber] = temporaryValue;
         }
-        static void Foreach(int[] array)
+        static void ForeachArray(int[] array)
         {
-            foreach (int value in array)
+            foreach(int value in array)
             {
                 Console.Write($"{value} ");
             }
