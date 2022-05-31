@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System;
 
 namespace PacMan
 {
@@ -10,82 +6,121 @@ namespace PacMan
     {
         static void Main(string[] args)
         {
-            int sizeMapX = 0;
-            int sizeMapY = 0;
-            int[,] Maps = new int[sizeMapX, sizeMapY];
-            string userInput;
-
-            int[,] map = new int[sizeMapX, sizeMapY];
-            bool isExit = false;
-            //        char[,] mapRead = ReadMap("map1");
-
-            string wall = "#";
-            while (isExit == false)
+             bool exitIsGame = false;
+            while (exitIsGame == false)
             {
-                Console.SetCursorPosition(10, 10);
-                Console.WriteLine($"Для установки стены напишите 1. Для удаления стены напишите 2 Для ходьбы по карте персонажем напишите 3");
-                userInput = Console.ReadLine();
-                switch (userInput)
+               
+                int pacmanX = 0;
+                int pacmanY = 0;
+                int numberLine = 0 ;
+                int numberColumn = 0;
+                char hero = '@';
+                char[,] map; 
+                const int CreateMap = 1;
+                const int PlayGame = 2;
+                Console.WriteLine($"Для создание карты и редактирования напишите {CreateMap},для игры на карте напишите {PlayGame}");
+                int number;
+                number = Convert.ToInt32(Console.ReadLine());
+                
+                switch (number)
                 {
-                    case "1":
-                        Console.WriteLine($"Установка стены");
-                        SizeMap(out sizeMapX, out sizeMapY);
-                    //    SetPositionWall(ref sizeMapX, ref sizeMapY);
-                        DrawWalls(wall, sizeMapX, sizeMapY, map);
+                    case CreateMap:
+                        SizeMap(out numberLine, out numberColumn);
+                      //  charArray = new char[numberLine, numberColumn];
+                      map = ConstructMap(numberLine, numberColumn, ref pacmanX,ref pacmanY, hero);
+                        DrawMap(map);
                         break;
-                    case "2":
-                        Console.WriteLine($"Удаление стены");
-                        break;
-                    case "3":
-                        Console.WriteLine($"Хождение игрока");
-                        // ReadMap(mapRead);
-                        break;
-                    case "4":
-                        Console.WriteLine($"");
+                    case PlayGame:
+                        DrawMap(map);
+                        PlayGames( pacmanX,  pacmanY, hero);
+
                         break;
                 }
+            } 
+        }
+
+        static void PlayGames(  int pacmanY, int pacmanX,char hero)
+        {
+          //  Console.CursorVisible = false;
+            bool isPlaying = true;
+            
+            while (isPlaying == true)
+            {
+                Console.SetCursorPosition(pacmanY, pacmanX);
+                Console.Write(hero);
             }
         }
 
-        static void DrawWalls(string wall, int sizeMapX, int sizeMapY, int[,] map)
+        static void SizeMap(out int numberLine, out int numberColumn)
         {
-            if (sizeMapX != sizeMapY)
-            {
-                for (int i = 0; i < sizeMapY; i++)
-                {
-                    Console.SetCursorPosition(sizeMapX, i);
-                    Console.WriteLine(wall);
-                }
-            }
-            if (sizeMapX == sizeMapY)
-            {
-                for (int i = 0; i < sizeMapX; i++)
-                {
-                    Console.SetCursorPosition(i, sizeMapY);
-
-                    Console.Write(wall);
-                }
-            }
-        }
-        static void SetPositionWall(ref int sizeMapX, ref int sizeMapY)
-        {
-            Console.WriteLine($"Введите первую точку");
-            sizeMapX = Convert.ToInt32(Console.ReadLine());
-            Console.WriteLine($"Введите вторую точку");
-            sizeMapY = Convert.ToInt32(Console.ReadLine());
+            Console.WriteLine($"Введите количество символов в строке карты");
+            numberLine = Convert.ToInt32(Console.ReadLine());
+            Console.WriteLine($"Введите количество столбцов в карте");
+            numberColumn = Convert.ToInt32(Console.ReadLine());
+            
         }
 
-        //static char[,] ReadMap(string mapRead)
-        // {
-
-        //  }
-
-        static void SizeMap(out int sizeMapX,out int sizeMapY )
+        static char[,] ConstructMap( int numberLine, int numberColumn, ref int pacmanX,  ref int pacmanY,char hero)
         {
-            Console.WriteLine($"Введите количество символов.");
-            sizeMapX = Convert.ToInt32(Console.ReadLine());
-            Console.WriteLine($"Введите количество строк.");
-            sizeMapY = Convert.ToInt32(Console.ReadLine());
+           
+            bool exit = false;
+            string line;
+            char[,] charArray = new char[numberLine, numberColumn];
+
+
+            for (int i = 0; i < charArray.GetLength(0); i++)
+            {
+                exit = false;
+                Console.WriteLine($"Введите {i + 1} строку карты");
+
+                while (exit == false)
+                {
+                    line = Console.ReadLine();
+
+                    if (line.Length == numberLine)
+                    {
+                        for (int j = 0; j < line.Length; j++)
+                        {
+                            charArray[i, j] = line[j];
+
+                            if(charArray[i,j] == hero)
+                            {
+                                pacmanX = i;
+                                pacmanY = j;
+                            }
+                            exit = true;
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine($"Ввдено не коректное значение символов");
+
+                        if (line.Length < numberLine)
+                        {
+                            Console.WriteLine($"Добавьте {numberLine - line.Length} символа");
+                        }
+                        else
+                        {
+                            Console.WriteLine($"Уберите {line.Length - numberLine} символа");
+                        }
+                    }
+                }
+            }
+            return charArray;
+            // сдесь надо сделать возрат массива символов в глобальную переменую
+        }
+
+        static void DrawMap( char [,] maps)
+        {
+            for (int i = 0; i < maps.GetLength(0); i++)
+            {
+                for (int j = 0; j < maps.GetLength(1); j++)
+                {
+                    Console.Write(maps[i, j]);
+                }
+                Console.WriteLine();
+            }
         }
     }
 }
+
