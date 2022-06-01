@@ -16,13 +16,14 @@ namespace PacMan
             char wall = '#';
             char coin = '$';
             char[,] map;
-            
-            Console.WriteLine($"Для создайти карту для игры");      
+
+            Console.WriteLine($"Добро пожаловать в создание карты.");   
             SizeMap(out numberSymbolsInLine, out numberSymbolsInColumn);
-            map = ConstructMap(numberSymbolsInLine, numberSymbolsInColumn, ref heroPositionX, ref heroPositionY, hero, coin, ref allMoney);
+            Console.WriteLine($"Для создание стены используете символ {wall},\nДля создание монетки используете символ {money},\nДля создание игрока используете символ {hero}");  
+            map = CreateMap(numberSymbolsInLine, numberSymbolsInColumn, ref heroPositionX, ref heroPositionY, hero, coin, ref allMoney);
             Console.Clear();
             DrawMap(map);
-            PlayGames(heroPositionX, heroPositionY, hero, map, wall, ref money, coin, ref allMoney);
+            PlayGame(heroPositionX, heroPositionY, hero, map, wall, ref money, coin, ref allMoney);
         }
 
         static void SizeMap(out int numberSymbolsInLine, out int numberSymbolsInColumn)
@@ -33,7 +34,7 @@ namespace PacMan
             numberSymbolsInColumn = Convert.ToInt32(Console.ReadLine());
         }
     
-        static char[,] ConstructMap(int numberSymbolsInLine, int numberSymbolsInColumn, ref int heroPositionX, ref int heroPositionY, char hero, char coin, ref int allMoney)
+        static char[,] CreateMap(int numberSymbolsInLine, int numberSymbolsInColumn, ref int heroPositionX, ref int heroPositionY, char hero, char coin, ref int allMoney)
         {
             bool exitLoop;
             string symbolsInLine;
@@ -41,6 +42,7 @@ namespace PacMan
 
             for (int i = 0; i < arraySymbols.GetLength(0); i++)
             {
+                int valueHero = 0;
                 exitLoop = false;
                 Console.WriteLine($"Введите {i + 1} строку карты");
 
@@ -58,6 +60,7 @@ namespace PacMan
                             {
                                 heroPositionX = j;
                                 heroPositionY = i;
+                                valueHero++;
                             }
                             
                             if(arraySymbols[i,j] == coin)
@@ -70,7 +73,7 @@ namespace PacMan
                     }
                     else
                     {
-                        InCorrectNumberSymbols(symbolsInLine, numberSymbolsInLine);
+                        CheckCorrectNumberSymbols(symbolsInLine, numberSymbolsInLine);
                     }
                 }
             }
@@ -78,7 +81,7 @@ namespace PacMan
             return arraySymbols;
         }   
 
-        static void InCorrectNumberSymbols(string symbolsInLine, int numberSymbolsInLine)
+        static void CheckCorrectNumberSymbols(string symbolsInLine, int numberSymbolsInLine)
         {
             Console.WriteLine($"Ввдено не коректное значение символов");
 
@@ -105,7 +108,7 @@ namespace PacMan
             }
         }
 
-        static void PlayGames(int heroPositionX, int heroPositionY, char hero, char[,] map, char wall, ref int money, char coin, ref int allMoney)
+        static void PlayGame(int heroPositionX, int heroPositionY, char hero, char[,] map, char wall, ref int money, char coin, ref int allMoney)
         {
             bool isPlaying = true;
             int heroPositionDx = 0;
@@ -125,7 +128,7 @@ namespace PacMan
                     
                     if (map[heroPositionX + heroPositionDx, heroPositionY + heroPositionDy] != wall )
                     {
-                        Move(ref heroPositionX, ref heroPositionY, heroPositionDx, heroPositionDy, hero);
+                        MovePlayer(ref heroPositionX, ref heroPositionY, heroPositionDx, heroPositionDy, hero);
                         CollectCoins(heroPositionX, heroPositionY, map, ref money, coin);
                     }
                 }
@@ -140,7 +143,7 @@ namespace PacMan
 
             if (money == allMoney)
             {
-                Console.Write($"Вы собрали все монетки");
+                Console.WriteLine($"Вы собрали все монетки");
             }
         }
 
@@ -163,7 +166,7 @@ namespace PacMan
             }
         }
 
-        static void Move(ref int heroPositionX, ref int heroPositionY, int valueStepDirectionX, int valueStepDirectionY, char hero)
+        static void MovePlayer(ref int heroPositionX, ref int heroPositionY, int valueStepDirectionX, int valueStepDirectionY, char hero)
         {
             Console.SetCursorPosition(heroPositionY, heroPositionX);
             Console.Write(" ");
