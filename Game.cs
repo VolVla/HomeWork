@@ -18,7 +18,7 @@ namespace PacMan
             char[,] map;
 
             Console.WriteLine($"Добро пожаловать в создание карты.");   
-            SizeMap(out numberSymbolsInLine, out numberSymbolsInColumn);
+            SetSizeMap(out numberSymbolsInLine, out numberSymbolsInColumn);
             Console.WriteLine($"Для создание стены используете символ {wall},\nДля создание монетки используете символ {money},\nДля создание игрока используете символ {hero}");  
             map = CreateMap(numberSymbolsInLine, numberSymbolsInColumn, ref heroPositionX, ref heroPositionY, hero, coin, ref allMoney);
             Console.Clear();
@@ -26,7 +26,7 @@ namespace PacMan
             PlayGame(heroPositionX, heroPositionY, hero, map, wall, ref money, coin, ref allMoney);
         }
 
-        static void SizeMap(out int numberSymbolsInLine, out int numberSymbolsInColumn)
+        static void SetSizeMap(out int numberSymbolsInLine, out int numberSymbolsInColumn)
         {
             Console.WriteLine($"Введите количество символов в строке карты");
             numberSymbolsInLine = Convert.ToInt32(Console.ReadLine());
@@ -111,8 +111,8 @@ namespace PacMan
         static void PlayGame(int heroPositionX, int heroPositionY, char hero, char[,] map, char wall, ref int money, char coin, ref int allMoney)
         {
             bool isPlaying = true;
-            int heroPositionDx = 0;
-            int heroPositionDy = 1;
+            int heroPositionDirectionX = 0;
+            int heroPositionDirectionY = 1;
 
             Console.CursorVisible = false;
 
@@ -124,12 +124,12 @@ namespace PacMan
                 if (Console.KeyAvailable)
                 {
                     ConsoleKeyInfo key = Console.ReadKey(true);
-                    ChangeDirection(key, ref heroPositionDx, ref heroPositionDy);
+                    ChangeDirection(key, ref heroPositionDirectionX, ref heroPositionDirectionY);
                     
-                    if (map[heroPositionX + heroPositionDx, heroPositionY + heroPositionDy] != wall )
+                    if (map[heroPositionX + heroPositionDirectionX, heroPositionY + heroPositionDirectionY] != wall )
                     {
-                        MovePlayer(ref heroPositionX, ref heroPositionY, heroPositionDx, heroPositionDy, hero);
-                        CollectCoins(heroPositionX, heroPositionY, map, ref money, coin);
+                        MovePlayer(ref heroPositionX, ref heroPositionY, heroPositionDirectionX, heroPositionDirectionY, hero);
+                        CollectingCoins(heroPositionX, heroPositionY, map, ref money, coin);
                     }
                 }
                 
@@ -152,16 +152,20 @@ namespace PacMan
             switch (key.Key)
             {
                 case ConsoleKey.UpArrow:
-                    valueStepDirectionX = -1; valueStepDirectionY = 0;
+                    valueStepDirectionX = -1;
+                    valueStepDirectionY = 0;
                     break;
                 case ConsoleKey.DownArrow:
-                    valueStepDirectionX = 1; valueStepDirectionY = 0;
+                    valueStepDirectionX = 1;
+                    valueStepDirectionY = 0;
                     break;
                 case ConsoleKey.RightArrow:
-                    valueStepDirectionX = 0; valueStepDirectionY = 1;
+                    valueStepDirectionX = 0;
+                    valueStepDirectionY = 1;
                     break;
                 case ConsoleKey.LeftArrow:
-                    valueStepDirectionX = 0; valueStepDirectionY = -1;
+                    valueStepDirectionX = 0;
+                    valueStepDirectionY = -1;
                     break;
             }
         }
@@ -178,7 +182,7 @@ namespace PacMan
             Console.Write(hero);
         }
 
-        static void CollectCoins(int heroPositionX, int heroPositionY, char[,] map, ref int money, char coins)
+        static void CollectingCoins(int heroPositionX, int heroPositionY, char[,] map, ref int money, char coins)
         {
             if (map[heroPositionX, heroPositionY] == coins)
             {
