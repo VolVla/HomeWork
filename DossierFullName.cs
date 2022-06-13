@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,40 +10,30 @@ namespace DossierFullName
     {
         static void Main(string[] args)
         {
-            string fullName = "Фамилию Имя Отчество";
-            string jobName = "Должность";
-            int[] index = new int[1];
-            int numberDosie = 0;
-            string[] arrayFullName = new string[index.Length];
-            string[] arrayPositonJob = new string[index.Length];
-
             bool exit = false;
+            int index = 0;
+            string[] arrayFullName = new string[index];
+            string[] arrayPositonJob = new string[index];
             string inputUser;
 
             while (exit == false)
             {
                 Console.WriteLine("\n1 Для добавление досье введите 1.\n2 Для вывода всех досье введите 2. \n3 Для удаления досье введите 3. \n4 Для поиска досье по фамилии введите 4. \n5 Для выхода из программы введите 5.");
                 inputUser = Console.ReadLine();
+
                 switch (inputUser)
                 {
                     case "1":
-                       index = AddIndex(index, numberDosie);
-                        Console.WriteLine($"Введите {fullName}");
-                     arrayFullName = AddInform(arrayFullName, numberDosie);
-                        Console.WriteLine($"Введите {jobName}");
-                      arrayPositonJob = AddInform(arrayPositonJob, numberDosie);
-                        numberDosie++;
+                        AddDosier(ref arrayFullName,ref arrayPositonJob);
                         break;
                     case "2":
-                        Console.WriteLine($"Номер     ФИО     Должность ") ;
-                        outDosie(index,arrayFullName,arrayPositonJob);
+                        ShowDosie(ref arrayFullName,ref arrayPositonJob);
                         break;
                     case "3":
-                        Console.WriteLine("Введите номер досье");
-                        RemoveDossier();
+                        RemoveDossier(ref arrayFullName, ref arrayPositonJob);
                         break;
                     case "4":
-                        Console.WriteLine("");
+                        FindDossie(ref arrayFullName, ref arrayPositonJob);
                         break;
                     case "5":
                         Console.WriteLine("Вы вышли из программы");
@@ -53,95 +43,83 @@ namespace DossierFullName
             }
         }
 
-       static string[] AddInform(string[] array,  int numberDosie)
+        static void AddDosier(ref string[] arrayFullName, ref string[] arrayPositonJob)
         {
-            string enterInformation;
-            enterInformation = Console.ReadLine();
-            string[] tempArrayInformation = new string[array.Length + 1 ];
-            tempArrayInformation[tempArrayInformation.Length - 1] = enterInformation;
-
-            for (int i = 0; i < array.Length; i++)
-            {
-                tempArrayInformation[i] = array[i];
-
-            }
-
-            array = tempArrayInformation;
-
-            return array;
-        }
-
-        static void outDosie(int[] index,string[] arrayFullName,string[] arrayPositonJob)
-        {
-            foreach (int value in index)
-           {
-               Console.Write($"{value}  ");
-
-                foreach (string fullName in arrayFullName)
-                {
-                    Console.Write($" {fullName}   ");
-                    foreach(string jobName in arrayPositonJob)
-                    {
-                        Console.Write($" {jobName}");
-                        
-                    }
-                    
-                }
-                Console.WriteLine();
-            }
-        }
-        static int[] AddIndex( int[] index, int numberDosie)
-        {
-            
-            index[numberDosie] = numberDosie;
-            
-           
-                
-            
-            return index;
-
-        }
-
-        static string AddFullName(string[] arrayFullName,int numberDosie)
-        {
-            
-            string enterFullname;
-            Console.WriteLine("Введите Фамилию Имя Отчество");
-            enterFullname = Console.ReadLine();
-            string[] tempArrayFullname = new string[arrayFullName.Length + 1];
-            tempArrayFullname[tempArrayFullname.Length - 1] = enterFullname;
+            string[] tempDossier = new string[arrayFullName.Length + 1];
+            string[] tempJobName = new string[arrayPositonJob.Length + 1];
 
             for (int i = 0; i < arrayFullName.Length; i++)
             {
-                tempArrayFullname[i] = arrayFullName[i];
-            
+                tempDossier[i] = arrayFullName[i];
+                tempJobName[i] = arrayPositonJob[i];
             }
+
+            arrayFullName = tempDossier;
+            arrayPositonJob = tempJobName;
+            Console.WriteLine("Напишите ФИО сотрудника");
+            arrayFullName[arrayFullName.Length - 1] = Console.ReadLine();
+            Console.WriteLine("Напишите должность сотрудника");
+            arrayPositonJob[arrayPositonJob.Length - 1] = Console.ReadLine();
+        }
+
+        static void ShowDosie(ref string[] arrayFullName,ref string[] arrayPositonJob)
+        {
+            for(int i = 0; i < arrayFullName.Length; i++)
+            {
+                if(arrayFullName[i] != "" && arrayPositonJob[i] != "")
+                {
+                    Console.WriteLine($"{i + 1}    - {arrayFullName[i]} -  {arrayPositonJob[i]}");
+                }
+            }
+        }
+
+        static void RemoveDossier(ref string[] arrayFullName, ref string[] arrayPositonJob)
+        {
+            int indexArray;
+            string[] tempDossier = new string[arrayFullName.Length - 1];
+            string[] tempJobName = new string[arrayPositonJob.Length - 1];
             
-            arrayFullName = tempArrayFullname;
+            Console.WriteLine($"Напишите порядковый номер досье,который вы хотите удалить");
+            ShowDosie(ref arrayFullName, ref arrayPositonJob);
+            indexArray = Convert.ToInt32(Console.ReadLine());
 
-            return arrayFullName[numberDosie];
-        }
+            for (int i = 0; i < indexArray - 1; i++)
+            {
+                tempDossier[i] = arrayFullName[i];
+                tempJobName[i] = arrayPositonJob[i];
+            }
 
-        static void AddPositionJob(string[] positionJob,int numberDosie)
+            for (int i = indexArray; i < arrayPositonJob.Length; i++)
+            {
+                tempDossier[i - 1] = arrayFullName[i];
+                tempJobName[i - 1] = arrayPositonJob[i];
+            }
+
+            arrayPositonJob = tempJobName;
+            arrayFullName = tempDossier;
+        }  
+
+        static void FindDossie(ref string[] arrayFullName, ref string[] arrayPositonJob)
         {
-            string job;
-            Console.WriteLine("Введите Должность");
-            job = Console.ReadLine();
-            positionJob[numberDosie] = job;
-        }
-        static void RemoveDossier()
-        {
+            string inputSurname;
+            int indexArray;
 
-           int index = Convert.ToInt32(Console.ReadLine());
+            Console.WriteLine($"Чтобы найти досье, напишите полностью фамилию");
+            inputSurname = Console.ReadLine();
 
-        }
-        static void OutputAllDossier()
-        {
-
-        }
-        static void SearchLastName()
-        {
-
+            for(int i = 0; i < arrayFullName.Length; i++)
+            {
+                if(inputSurname == arrayFullName[i])
+                {
+                    indexArray = i;
+                    Console.WriteLine("Досье найдено!");
+                    Console.WriteLine($"{indexArray + 1}    - {arrayFullName[i]} -  {arrayPositonJob[i]}");
+                }
+                else
+                {
+                    Console.WriteLine("Такое досье не было найдено!");
+                }
+            }
         }
     }
 }
