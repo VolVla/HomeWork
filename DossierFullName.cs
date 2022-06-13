@@ -61,7 +61,7 @@ namespace DossierFullName
             fullArrays = tempValueArray;
         }
 
-        static void InputInformationArray(ref string[] arrayName)
+        static void GetValueArray(ref string[] arrayName)
         {
             arrayName[arrayName.Length - 1] = Console.ReadLine();
         }
@@ -71,9 +71,9 @@ namespace DossierFullName
             string[] tempDossier = AddElementArray(ref arrayFullNames);
             string[] tempJobName = AddElementArray(ref arrayPositonJobs);
             Console.WriteLine("Напишите ФИО сотрудника");
-            InputInformationArray(ref arrayFullNames);
+            GetValueArray(ref arrayFullNames);
             Console.WriteLine("Напишите должность сотрудника");
-            InputInformationArray(ref arrayPositonJobs);
+            GetValueArray(ref arrayPositonJobs);
 
             for (int i = 0; i < arrayFullNames.Length; i++)
             {
