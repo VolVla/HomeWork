@@ -56,23 +56,33 @@ namespace DossierFullName
             return array;
         }
 
+        static void AssigningValue(ref string[] fullArrays , ref string[] tempValueArray)
+        {
+            fullArrays = tempValueArray;
+        }
+
+        static void InputInformationArray(ref string[] arrayName)
+        {
+            arrayName[arrayName.Length - 1] = Console.ReadLine();
+        }
+
         static void AddDosier(ref string[] arrayFullNames, ref string[] arrayPositonJobs)
         {
             string[] tempDossier = AddElementArray(ref arrayFullNames);
             string[] tempJobName = AddElementArray(ref arrayPositonJobs);
             Console.WriteLine("Напишите ФИО сотрудника");
-            arrayFullNames[arrayFullNames.Length - 1] = Console.ReadLine();
+            InputInformationArray(ref arrayFullNames);
             Console.WriteLine("Напишите должность сотрудника");
-            arrayPositonJobs[arrayPositonJobs.Length - 1] = Console.ReadLine(); 
-            
+            InputInformationArray(ref arrayPositonJobs);
+
             for (int i = 0; i < arrayFullNames.Length; i++)
             {
                 tempDossier[i] = arrayFullNames[i];
                 tempJobName[i] = arrayPositonJobs[i];
             }
 
-            arrayFullNames = tempDossier;
-            arrayPositonJobs = tempJobName;
+            AssigningValue(ref arrayFullNames, ref tempDossier);
+            AssigningValue(ref arrayPositonJobs, ref tempJobName);
         }
 
         static void ShowDossies(string[] arrayFullNames, string[] arrayPositonJobs)
@@ -108,8 +118,8 @@ namespace DossierFullName
                 tempJobName[i - 1] = arrayPositonJobs[i];
             }
 
-            arrayPositonJobs = tempJobName;
-            arrayFullNames = tempDossier;
+            AssigningValue(ref arrayFullNames, ref tempDossier);
+            AssigningValue(ref arrayPositonJobs, ref tempJobName);
         }  
 
         static void FindDossie(ref string[] arrayFullNames, ref string[] arrayPositonJobs)
