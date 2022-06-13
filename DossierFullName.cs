@@ -120,6 +120,7 @@ namespace DossierFullName
 
             AssigningValue(ref arrayFullNames, ref tempDossier);
             AssigningValue(ref arrayPositonJobs, ref tempJobName);
+            Console.WriteLine($"Вы удалили досье");
         }  
 
         static void FindDossie(ref string[] arrayFullNames, ref string[] arrayPositonJobs)
