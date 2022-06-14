@@ -42,30 +42,6 @@ namespace DossierFullName
             }
         }
 
-        static string[] AddElementArray(ref string[] array)
-        {
-            array = new string[array.Length + 1];
-
-            return array;
-        }
-
-        static string[] RemoveElementArray(ref string[] array)
-        {
-            array = new string[array.Length - 1]; ;
-
-            return array;
-        }
-
-        static void AssigningValue(ref string[] fullArrays , ref string[] tempValueArray)
-        {
-            fullArrays = tempValueArray;
-        }
-
-        static void GetValueArray(ref string[] arrayName)
-        {
-            arrayName[arrayName.Length - 1] = Console.ReadLine();
-        }
-
         static void AddDosier(ref string[] arrayFullNames, ref string[] arrayPositonJobs)
         {
             string[] tempDossier = AddElementArray(ref arrayFullNames);
@@ -74,15 +50,30 @@ namespace DossierFullName
             GetValueArray(ref arrayFullNames);
             Console.WriteLine("Напишите должность сотрудника");
             GetValueArray(ref arrayPositonJobs);
+            AssigningValueArray(ref arrayFullNames, ref tempDossier);
+            AssigningValueArray(ref arrayPositonJobs, ref tempJobName);
+        }
 
-            for (int i = 0; i < arrayFullNames.Length; i++)
+        static string[] AddElementArray(ref string[] array)
+        {
+            array = new string[array.Length + 1];
+
+            return array;
+        }
+
+        static void GetValueArray(ref string[] arrayName)
+        {
+            arrayName[arrayName.Length - 1] = Console.ReadLine();
+        }
+        
+        static void AssigningValueArray(ref string[] nameArray,ref string[] tempValueArray) 
+        {
+            for (int i = 0; i < nameArray.Length; i++)
             {
-                tempDossier[i] = arrayFullNames[i];
-                tempJobName[i] = arrayPositonJobs[i];
+                tempValueArray[i] = nameArray[i];
             }
 
-            AssigningValue(ref arrayFullNames, ref tempDossier);
-            AssigningValue(ref arrayPositonJobs, ref tempJobName);
+            nameArray = tempValueArray;
         }
 
         static void ShowDossies(string[] arrayFullNames, string[] arrayPositonJobs)
@@ -105,24 +96,33 @@ namespace DossierFullName
             Console.WriteLine($"Напишите порядковый номер досье,который вы хотите удалить");
             ShowDossies(arrayFullNames, arrayPositonJobs);
             indexArray = Convert.ToInt32(Console.ReadLine());
-
-            for (int i = 0; i < indexArray - 1; i++)
-            {
-                tempDossier[i] = arrayFullNames[i];
-                tempJobName[i] = arrayPositonJobs[i];
-            }
-
-            for (int i = indexArray; i < arrayPositonJobs.Length; i++)
-            {
-                tempDossier[i - 1] = arrayFullNames[i];
-                tempJobName[i - 1] = arrayPositonJobs[i];
-            }
-
-            AssigningValue(ref arrayFullNames, ref tempDossier);
-            AssigningValue(ref arrayPositonJobs, ref tempJobName);
+            DeletedValueArray(ref arrayFullNames, ref tempDossier, ref indexArray);
+            DeletedValueArray(ref arrayPositonJobs, ref tempJobName, ref indexArray);
             Console.WriteLine($"Вы удалили досье");
         }  
 
+        static string[] RemoveElementArray(ref string[] array)
+        {
+            array = new string[array.Length - 1]; 
+
+            return array;
+        }
+
+        static void DeletedValueArray(ref string[] nameArray, ref string[] tempValueArray, ref int indexArray)
+        {
+            for (int i = 0; i < indexArray - 1; i++)
+            {
+                tempValueArray[i] = nameArray[i];
+            }
+
+            for (int i = indexArray; i < tempValueArray.Length; i++)
+            {
+                tempValueArray[i - 1] = nameArray[i];
+            }
+
+            nameArray = tempValueArray;
+        }
+       
         static void FindDossie(ref string[] arrayFullNames, ref string[] arrayPositonJobs)
         {
             string[] inputFullNames;
