@@ -32,7 +32,7 @@ namespace DossierFullName
                         RemoveDossier(ref arrayFullNames, ref arrayPositonJobs);
                         break;
                     case "4":
-                        FindDossie(ref arrayFullNames, ref arrayPositonJobs);
+                        FindDossie(arrayFullNames, arrayPositonJobs);
                         break;
                     case "5":
                         Console.WriteLine("Вы вышли из программы");
@@ -44,30 +44,18 @@ namespace DossierFullName
 
         static void AddDosier(ref string[] arrayFullNames, ref string[] arrayPositonJobs)
         {
-            string[] tempDossier = AddElementArray(ref arrayFullNames);
-            string[] tempJobName = AddElementArray(ref arrayPositonJobs);
             Console.WriteLine("Напишите ФИО сотрудника");
-            GetValueArray(ref arrayFullNames);
+            AssigningValueArray(ref arrayFullNames);
             Console.WriteLine("Напишите должность сотрудника");
-            GetValueArray(ref arrayPositonJobs);
-            AssigningValueArray(ref arrayFullNames, ref tempDossier);
-            AssigningValueArray(ref arrayPositonJobs, ref tempJobName);
+            AssigningValueArray(ref arrayPositonJobs);
         }
 
-        static string[] AddElementArray(ref string[] array)
+        static void AssigningValueArray(ref string[] nameArray) 
         {
-            array = new string[array.Length + 1];
+            string[] tempValueArray = new string[nameArray.Length + 1];
 
-            return array;
-        }
+            tempValueArray[tempValueArray.Length - 1] = Console.ReadLine();
 
-        static void GetValueArray(ref string[] arrayName)
-        {
-            arrayName[arrayName.Length - 1] = Console.ReadLine();
-        }
-        
-        static void AssigningValueArray(ref string[] nameArray,ref string[] tempValueArray) 
-        {
             for (int i = 0; i < nameArray.Length; i++)
             {
                 tempValueArray[i] = nameArray[i];
@@ -90,26 +78,19 @@ namespace DossierFullName
         static void RemoveDossier(ref string[] arrayFullNames, ref string[] arrayPositonJobs)
         {
             int indexArray = 0;
-            string[] tempDossier = RemoveElementArray(ref arrayFullNames);
-            string[] tempJobName = RemoveElementArray(ref arrayPositonJobs);
 
             Console.WriteLine($"Напишите порядковый номер досье,который вы хотите удалить");
             ShowDossies(arrayFullNames, arrayPositonJobs);
             indexArray = Convert.ToInt32(Console.ReadLine());
-            DeletedValueArray(ref arrayFullNames, ref tempDossier, ref indexArray);
-            DeletedValueArray(ref arrayPositonJobs, ref tempJobName, ref indexArray);
+            DeletedValueArray(ref arrayFullNames, ref indexArray);
+            DeletedValueArray(ref arrayPositonJobs, ref indexArray);
             Console.WriteLine($"Вы удалили досье");
         }  
 
-        static string[] RemoveElementArray(ref string[] array)
+        static void DeletedValueArray(ref string[] nameArray, ref int indexArray)
         {
-            array = new string[array.Length - 1]; 
+            string[] tempValueArray = new string[nameArray.Length - 1];
 
-            return array;
-        }
-
-        static void DeletedValueArray(ref string[] nameArray, ref string[] tempValueArray, ref int indexArray)
-        {
             for (int i = 0; i < indexArray - 1; i++)
             {
                 tempValueArray[i] = nameArray[i];
@@ -123,7 +104,7 @@ namespace DossierFullName
             nameArray = tempValueArray;
         }
        
-        static void FindDossie(ref string[] arrayFullNames, ref string[] arrayPositonJobs)
+        static void FindDossie(string[] arrayFullNames, string[] arrayPositonJobs)
         {
             string[] inputFullNames;
             string inputSurname;
