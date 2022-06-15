@@ -1,20 +1,20 @@
-использование системы;
-использование System.Collections.Generic;
-использование System.Linq;
-использование System.Text;
-использование System.Threading.Tasks;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-пространство имен SumEnteredNumbers
+namespace SumEnteredNumbers
 {
-     программа занятий
+    class Program
     {
         static void Main(string[] args)
         {
             int[] arrayNumbers = new int[0];
             bool isExit = false;
-            строка userInput;
-            строка wordExit = "exit";
-            строка commandAmount = "сумма";
+            string userInput;
+            string wordExit = "exit";
+            string commandAmount = "sum";
             
             while(isExit == false)
             {
@@ -26,18 +26,18 @@
                     Console.WriteLine("Вы вышли из программы.");
                     isExit = true;
                 }
-                иначе , если (userInput == commandAmount)
+                else if (userInput == commandAmount)
                 {
                     int sumNumbers = 0;
 
-                    для (int i = 0; i < arrayNumbers.Length; i++)
+                    for (int i = 0; i < arrayNumbers.Length; i++)
                     {
                         sumNumbers += arrayNumbers[i] ;
                     }
 
-                    Console.WriteLine(sumNumbers); 
+                    Console.WriteLine(sumNumbers);    
                 }
-                ещё 
+                else 
                 {
                     Console.WriteLine("\n1)Для ввода числа напишите в чат");
                     int enterNumber;
@@ -45,7 +45,7 @@
                     int[] tempArrayNumbers = new int [arrayNumbers.Length + 1];
                     tempArrayNumbers[tempArrayNumbers.Length - 1] = enterNumber;
 
-                    для (int i = 0; i < arrayNumbers.Length; i++)
+                    for (int i = 0; i < arrayNumbers.Length; i++)
                     {
                         tempArrayNumbers[i] = arrayNumbers[i];
                     }
