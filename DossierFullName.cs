@@ -32,7 +32,7 @@ namespace DossierFullName
                         RemoveDossier(ref arrayFullNames, ref arrayPositonJobs);
                         break;
                     case "4":
-                        FindDossie(arrayFullNames, arrayPositonJobs);
+                        FindDossier(arrayFullNames, arrayPositonJobs);
                         break;
                     case "5":
                         Console.WriteLine("Вы вышли из программы");
@@ -104,28 +104,32 @@ namespace DossierFullName
             nameArray = tempValueArray;
         }
        
-        static void FindDossie(string[] arrayFullNames, string[] arrayPositonJobs)
+        static void FindDossier(string[] arrayFullNames, string[] arrayPositonJobs)
         {
+            bool foundDossier = false;
+            int indexArray;
             string[] inputFullNames;
             string inputSurname;
-            int indexArray;
 
             Console.WriteLine($"Чтобы найти досье, напишите полностью фамилию");
-            inputSurname = Console.ReadLine(); 
-            inputFullNames = inputSurname.Split(' ');
-
+            inputSurname = Console.ReadLine();
+            
             for(int i = 0; i < arrayFullNames.Length; i++)
             {
+                inputFullNames = arrayFullNames[i].Split(' ');
+
                 if(inputSurname == inputFullNames[0])
                 {
                     indexArray = i;
                     Console.WriteLine("Досье найдено!");
                     Console.WriteLine($"{indexArray + 1}    - {arrayFullNames[i]} -  {arrayPositonJobs[i]}");
+                    foundDossier = true;
                 }
-                else
-                {
-                    Console.WriteLine("Такое досье не было найдено!");
-                }
+            }
+
+            if(foundDossier == false)
+            {
+              Console.WriteLine("Такое досье не было найдено!");
             }
         }
     }
