@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -32,13 +32,13 @@ namespace LiteDynamicArray
                 }
                 else
                 {
-                    bool result = int.TryParse(userInput, out int enterNumber);
+                    bool result = int.TryParse(userInput, out int number);
 
-                    if (result)
+                    if (result == true)
                     {
-                        EnterNumber(numbers, userInput);
+                        EnterNumber(numbers, number);
                     }
-                    else
+                    else if(result == false)
                     {
                         Console.WriteLine($"Вы ввели не число и не известную команду");
                     }
@@ -46,10 +46,10 @@ namespace LiteDynamicArray
             }  
         }
 
-        static void EnterNumber(List<int> numbers,string userInput)
+        static void EnterNumber(List<int> numbers,int number)
         { 
             int enterNumber;
-            enterNumber = Convert.ToInt32(userInput);
+            enterNumber = number;
             numbers.Add(enterNumber);
         }
 
