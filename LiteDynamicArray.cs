@@ -32,11 +32,11 @@ namespace LiteDynamicArray
                 }
                 else
                 {
-                    bool result = int.TryParse(userInput, out int number);
+                    bool result = int.TryParse(userInput, out int enterNumber);
 
                     if (result == true)
                     {
-                        EnterNumber(numbers, number);
+                        EnterNumber(numbers, enterNumber);
                     }
                     else if(result == false)
                     {
@@ -46,10 +46,8 @@ namespace LiteDynamicArray
             }  
         }
 
-        static void EnterNumber(List<int> numbers,int number)
+        static void EnterNumber(List<int> numbers,int enterNumber)
         { 
-            int enterNumber;
-            enterNumber = number;
             numbers.Add(enterNumber);
         }
 
