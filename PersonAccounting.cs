@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,13 +23,13 @@ namespace PersonAccounting
                 switch (inputUser)
                 {
                     case "1":
-                        AddDosier(ref fullName, ref positionJob);
+                        AddDosier(fullName, positionJob);
                         break;
                     case "2":
                         ShowDossies(fullName, positionJob);
                         break;
                     case "3":
-                        RemoveDossier(ref fullName, ref positionJob);
+                        RemoveDossier(fullName,positionJob);
                         break;
                     case "4":
                         Console.WriteLine("Вы вышли из программы");
@@ -39,7 +39,7 @@ namespace PersonAccounting
             }
         }
 
-        static void AddDosier(ref List<string> fullName, ref List<string> positionJob)
+        static void AddDosier(List<string> fullName, List<string> positionJob)
         {
             Console.WriteLine("Напишите ФИО сотрудника");
             AssigningValue(ref fullName);
@@ -64,19 +64,35 @@ namespace PersonAccounting
             }
         }
 
-        static void RemoveDossier(ref List<string> fullName, ref List<string> positionJob)
+        static void RemoveDossier( List<string> fullName,  List<string> positionJob)
         {
             int indexArray = 0;
-
+            string input;
+            bool result = false;
             Console.WriteLine($"Напишите порядковый номер досье,который вы хотите удалить");
             ShowDossies(fullName, positionJob);
-            indexArray = Convert.ToInt32(Console.ReadLine());
-            DeletedValue(ref fullName, ref indexArray);
-            DeletedValue(ref positionJob, ref indexArray);
+
+            while(result == false)
+            {
+                input = Console.ReadLine();
+
+                if(int.TryParse(input,out int value))
+                {
+                    indexArray = value;
+                    result = true;
+                }
+                else
+                {
+                    Console.WriteLine("Ошибка.Введите порядковый номер");
+                }
+            }
+
+            DeletedValue(ref fullName, indexArray);
+            DeletedValue(ref positionJob, indexArray);
             Console.WriteLine($"Вы удалили досье");
         }
 
-        static void DeletedValue(ref List<string> name, ref int indexArray)
+        static void DeletedValue(ref List<string> name, int indexArray)
         {
             name.RemoveAt(indexArray);
         }
