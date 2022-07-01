@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -45,7 +45,7 @@ namespace GamePlayer
             }
         }
 
-        public void PlayerPosition(int positionX,int positionY)
+        public void SetPosition(int positionX,int positionY)
         {
             PositionX = _positionX;
             PositionY = _positionY;
