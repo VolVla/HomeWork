@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,7 +15,7 @@ namespace DateBasePlayer
 
             while (isExit == false)
             {
-                Console.WriteLine($"Для того чтобы добавить игрока напишите 1\nДля того чтобы Забанить игрока по ID напишите 2\nДля того чтобы Разбанить игрока по ID напишите 3\nДля того чтобы Удалить игрока по ID напишите 4\nДля того чтобы Выйти из программы 5\n");
+                Console.WriteLine($"Для того чтобы добавить игрока напишите 1\nДля вывода информации о всех игроков напишите 2\nДля того чтобы Забанить игрока по ID напишите 3\nДля того чтобы Разбанить игрока по ID напишите 4\nДля того чтобы Удалить игрока по ID напишите 5\nДля того чтобы Выйти из программы 6\n");
                 int input = Convert.ToInt32(Console.ReadLine());
 
                 switch (input)
@@ -24,15 +24,19 @@ namespace DateBasePlayer
                         database.AddPlayer();
                         break;
                     case 2:
-                        database.BanPlayer();
+                        database.ShowInfoPlayer();
                         break;
                     case 3:
+                        database.BanPlayer();
+                        break;
+                    case 4:
                         database.UnBanPlayer();
                         break;
-                    case 4: 
+                    case 5:
+                        database.ShowInfoPlayer();
                         database.DeletePlayer();
                         break;
-                    case 5:
+                    case 6:
                         isExit = true;
                         break;
                 }
@@ -61,15 +65,29 @@ namespace DateBasePlayer
             {
                 IsBanned = false;
             }
+
+            public void ShowInfoPlayer()
+            {
+                Console.WriteLine($"Имя игрока {Name}  Уровень игрока: {Level}");
+
+                if (IsBanned == true)
+                {
+                    Console.WriteLine("У игрока бан");
+                }
+                else if (IsBanned == false)
+                {
+                    Console.WriteLine("У игрока нет бана");
+                }
+            }
         }
         class DataBase
         {
-            const string TRUEANSWER = "Да";
-            const string FALSEANSWER = "Нет";
+            private string _trueAnswer = "Да";
+            private string _falseAnswer = "Нет";
             private Dictionary<int, Player> _players = new Dictionary<int, Player>();
             private int _playerIndex;
-            bool isBanned;
-
+            private bool _conditionPlayer;
+             
             public DataBase()
             {
                 _playerIndex = 0;
@@ -85,25 +103,27 @@ namespace DateBasePlayer
                 if(isNumber == false)
                 {
                     Console.WriteLine("Уровень должен содержать только числа");
+                    return;
                 }
 
-                Console.WriteLine($"\nИгрок забанен? ({TRUEANSWER} или {FALSEANSWER})");
+                Console.WriteLine($"\nИгрок забанен? ({_trueAnswer} или {_falseAnswer})");
                 string input = Console.ReadLine();
 
-                if(input == TRUEANSWER)
+                if(input == _trueAnswer)
                 {
-                    isBanned = true;
+                    _conditionPlayer = true;
                 }
-                else if (input == FALSEANSWER)
+                else if (input == _falseAnswer)
                 {
-                    isBanned = false;
+                    _conditionPlayer = false;
                 }
                 else
                 {
                     Console.WriteLine("Введено не коректное значение");
+                    return;
                 }
 
-                _players.Add(_playerIndex, new Player(name, level, isBanned));
+                _players.Add(_playerIndex, new Player(name, level, _conditionPlayer));
                 _playerIndex++;
             }
 
@@ -122,6 +142,22 @@ namespace DateBasePlayer
                     Console.WriteLine("Введено не коректное значение");
                 }
                 
+            }
+
+            public void ShowInfoPlayer()
+            {
+               if(_players.Count != 0)
+               {
+                    for(int i = 0; i < _players.Count; i++)
+                    {
+                        _players[i].ShowInfoPlayer();
+                        Console.WriteLine($"Уникальный номер игрока {i}");
+                    }
+               }
+               else
+               {
+                    Console.WriteLine("В базе нету игроков");
+               } 
             }
 
             public void BanPlayer()
