@@ -16,7 +16,7 @@ namespace DateBasePlayer
             while (isExit == false)
             {
                 Console.WriteLine($"Для того чтобы добавить игрока напишите 1\nДля вывода информации о всех игроков напишите 2\nДля того чтобы Забанить игрока по ID напишите 3\nДля того чтобы Разбанить игрока по ID напишите 4\nДля того чтобы Удалить игрока по ID напишите 5\nДля того чтобы Выйти из программы 6\n");
-                int input = Convert.ToInt32(Console.ReadLine());
+                bool isNumber = int.TryParse(Console.ReadLine(), out int input);
 
                 switch (input)
                 {
@@ -24,7 +24,7 @@ namespace DateBasePlayer
                         database.AddPlayer();
                         break;
                     case 2:
-                        database.ShowInfoPlayer();
+                        database.ShowInfo();
                         break;
                     case 3:
                         database.BanPlayer();
@@ -33,7 +33,7 @@ namespace DateBasePlayer
                         database.UnBanPlayer();
                         break;
                     case 5:
-                        database.ShowInfoPlayer();
+                        database.ShowInfo();
                         database.DeletePlayer();
                         break;
                     case 6:
@@ -48,12 +48,14 @@ namespace DateBasePlayer
             public string Name  { get; private set;}
             public int Level { get; private set; }
             public bool IsBanned { get; private set; }
+            public int Index { get; private set; }
 
-            public Player(string name, int level, bool isBanned)
+            public Player(string name, int level, bool isBanned,int index)
             {
                 Name = name;
                 Level = level;
                 IsBanned = isBanned;
+                Index = index;
             }
 
             public void Ban()
@@ -66,7 +68,7 @@ namespace DateBasePlayer
                 IsBanned = false;
             }
 
-            public void ShowInfoPlayer()
+            public void ShowInfo()
             {
                 Console.WriteLine($"Имя игрока {Name}  Уровень игрока: {Level}");
 
@@ -78,16 +80,17 @@ namespace DateBasePlayer
                 {
                     Console.WriteLine("У игрока нет бана");
                 }
+                Console.WriteLine($"Уникальный номер игрока {Index}");
             }
         }
+
         class DataBase
         {
-            private string _trueAnswer = "Да";
-            private string _falseAnswer = "Нет";
-            private Dictionary<int, Player> _players = new Dictionary<int, Player>();
+            private List<int> _idPlayers = new List<int>();
+            private List<Player> _players = new List<Player>();
             private int _playerIndex;
-            private bool _conditionPlayer;
-             
+            private int _idPlayer = 0;
+
             public DataBase()
             {
                 _playerIndex = 0;
@@ -106,16 +109,17 @@ namespace DateBasePlayer
                     return;
                 }
 
-                Console.WriteLine($"\nИгрок забанен? ({_trueAnswer} или {_falseAnswer})");
+                Console.WriteLine($"\nИгрок забанен? (Да или Нет)");
                 string input = Console.ReadLine();
+                bool _isBanned;
 
-                if(input == _trueAnswer)
+                if (input == "Да")
                 {
-                    _conditionPlayer = true;
+                    _isBanned = true;
                 }
-                else if (input == _falseAnswer)
+                else if (input == "Нет")
                 {
-                    _conditionPlayer = false;
+                    _isBanned = false;
                 }
                 else
                 {
@@ -123,8 +127,32 @@ namespace DateBasePlayer
                     return;
                 }
 
-                _players.Add(_playerIndex, new Player(name, level, _conditionPlayer));
-                _playerIndex++;
+                _playerIndex = TryGetIndexPlayer(_playerIndex);
+                _players.Add(new Player(name, level, _isBanned, _playerIndex));
+                _idPlayers.Add(_playerIndex);
+            }
+
+            private int TryGetIndexPlayer(int _playerIndex)
+            {
+                bool isExitLoop = false;
+
+                while (isExitLoop == false)
+                {
+                    Console.WriteLine("\nВведите уникальный номер игрока\n");
+                    bool isNumber = int.TryParse(Console.ReadLine(), out int _Index);
+
+                    if (isNumber ==  false)
+                    {
+                        Console.WriteLine("Введено не коректное значение");
+                    }
+                    else if (isNumber == true)
+                    {
+                        _playerIndex = _Index;
+                        isExitLoop = true;
+                    }
+                }
+
+                return _playerIndex;
             }
 
             public void DeletePlayer()
@@ -132,26 +160,32 @@ namespace DateBasePlayer
                 Console.WriteLine("\nВведите уникальный номер игрока\n");
                 bool isNumber = int.TryParse(Console.ReadLine(), out int input);
 
-                if (isNumber == true && _players.ContainsKey(input) == true)
+                if (isNumber == true )
                 {
-                    _players.Remove(input);
+                    int id = GetIdPlayer(ref _idPlayer, ref input);
+                    _idPlayers.RemoveAt(id);
+                    _players.RemoveAt(id);
                     Console.WriteLine("Игрок удалён!");
                 }
                 else
                 {
                     Console.WriteLine("Введено не коректное значение");
                 }
-                
             }
 
-            public void ShowInfoPlayer()
+            public int GetIdPlayer(ref int _playerIndex, ref int input)
+            {
+                _playerIndex = _idPlayers.IndexOf(input);
+                return _playerIndex;
+            }
+            
+            public void ShowInfo()
             {
                if(_players.Count != 0)
                {
                     for(int i = 0; i < _players.Count; i++)
                     {
-                        _players[i].ShowInfoPlayer();
-                        Console.WriteLine($"Уникальный номер игрока {i}");
+                        _players[i].ShowInfo();
                     }
                }
                else
@@ -165,11 +199,13 @@ namespace DateBasePlayer
                 Console.WriteLine("\nВведите уникальный номер игрока\n");
                 bool isNumber = int.TryParse(Console.ReadLine(), out int input);
 
-                if (isNumber == true && _players.ContainsKey(input) == true)
+                if (isNumber == true )
                 {
-                    if(_players[input].IsBanned == false)
+                    int id = GetIdPlayer(ref _idPlayer, ref input);
+                    
+                    if(_players[id].IsBanned == false)
                     {
-                        _players[input].Ban();
+                        _players[id].Ban();
                         Console.WriteLine("Игрок забанен!");
                     }
                     else
@@ -188,11 +224,13 @@ namespace DateBasePlayer
                 Console.WriteLine("\nВведите уникальный номер игрока\n");
                 bool isNumber = int.TryParse(Console.ReadLine(), out int input);
 
-                if(isNumber == true && _players.ContainsKey(input) == true)
+                if(isNumber == true )
                 {
-                    if(_players[input].IsBanned == true)
+                    int id = GetIdPlayer(ref _idPlayer, ref input);
+
+                    if (_players[id].IsBanned == true)
                     {
-                        _players[input].UnBan();
+                        _players[id].UnBan();
                         Console.WriteLine("Игрок разбанен");
                     }
                     else
