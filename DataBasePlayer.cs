@@ -1,8 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DateBasePlayer
 {
@@ -10,244 +7,222 @@ namespace DateBasePlayer
     {
         static void Main(string[] args)
         {
-            bool isExit = false;
-            DataBase database = new DataBase();
+            DateBase dateBase = new DateBase();
+            dateBase.Work();
+        }
+    }
 
-            while (isExit == false)
+    class DateBase
+    {
+        private bool _isDataBaseWork = true;
+
+        private List<Player> _players = new List<Player>();
+
+        public void Work()
+        {
+            string userInput;
+
+            while (_isDataBaseWork)
             {
-                Console.WriteLine($"\nДля того чтобы добавить игрока напишите 1\nДля вывода информации о всех игроков напишите 2\nДля того чтобы Забанить игрока по ID напишите 3\nДля того чтобы Разбанить игрока по ID напишите 4\nДля того чтобы Удалить игрока по ID напишите 5\nДля того чтобы Выйти из программы 6\n");
-                bool isNumber = int.TryParse(Console.ReadLine(), out int input);
+                Console.WriteLine("Добро пожаловать! Доступные комманды");
+                Console.WriteLine("1 - Добавить игрока \n2 - Консоль бана \n3 - Удалить игрока\n4 - Выход");
+                userInput = Console.ReadLine();
+                Console.Clear();
 
-                switch (input)
+                switch (userInput)
                 {
-                    case 1:
-                        database.AddPlayer();
+                    case "1":
+                        AddPlayer();
                         break;
-                    case 2:
-                        database.ShowInfo();
+                    case "2":
+                        BanPlayer();
                         break;
-                    case 3:
-                        database.BanPlayer();
+                    case "3":
+                        RemovePlayer();
                         break;
-                    case 4:
-                        database.UnBanPlayer();
+                    case "4":
+                        _isDataBaseWork = false;
                         break;
-                    case 5:
-                        database.ShowInfo();
-                        database.DeletePlayer();
-                        break;
-                    case 6:
-                        isExit = true;
+                    default:
+                        Console.WriteLine("Данные не корректны");
                         break;
                 }
+            }
+        }
+
+        private void AddPlayer()
+        {
+            string nickName;
+            string levelPlayer;
+            string inputId;
+            int result;
+            bool isFail = true;
+
+            Console.WriteLine("Введите никнейм игрока");
+            nickName = Console.ReadLine();
+            Console.WriteLine("Какой у него уровень");
+            CheckString(out levelPlayer, out result);
+            Console.WriteLine("Введите Id игрока");
+            CheckString(out inputId, out int idPlayer);
+            isFail = GetIdPlayer(idPlayer, idPlayer, isFail);
+
+            if (isFail == false)
+            {
+                _players.Add(new Player(nickName, result , idPlayer));
+            }
+            else
+            {
+                Console.WriteLine("Введены не корректные данные");
+            }
+
+            Console.ReadKey();
+            Console.Clear();
+        }
+
+        private void CheckString(out string userInput, out int result)
+        {
+            userInput = " ";
+            result = 0;
+            bool isStringNumber;
+
+            userInput = Console.ReadLine();
+            isStringNumber = int.TryParse(userInput, out result);
+        }
+
+        private bool GetIdPlayer(int result, int idPlayer, bool isFail)
+        {
+            int id;
+            isFail = false;
+
+            for (int i = 0; i < _players.Count; i++)
+            {
+                id = _players[i].IdPlayer();
+
+                if (id == result)
+                {
+                    idPlayer = i;
+                    isFail = true;
+                }
+            }
+           
+            return isFail;
+        }
+
+        private void ShowInfoPlayers()
+        {
+            Console.WriteLine("Персонажи на сервере");
+
+            for (int i = 0; i < _players.Count; i++)
+            {
+                Console.Write($" ");
+                _players[i].ShowDetails();
+            }
+        }
+
+        private void RemovePlayer()
+        {
+            string userInput;
+            int result;
+            int idPlayer = 0;
+            bool isFail = false;
+
+            if (_players.Count > 0)
+            {
+                ShowInfoPlayers();
+                Console.WriteLine("Какого игрока удалить из сервера, ведите порядковый номер");
+                CheckString(out userInput, out result);
+                isFail = GetIdPlayer(result, idPlayer, isFail);
+
+                if (isFail == true)
+                {
+                    _players.RemoveAt(idPlayer);
+                    Console.Clear();
+                }
+                else
+                {
+                    Console.WriteLine("Данные не корректны");
+                }
+            }
+            else
+            {
+                Console.WriteLine("На сервере нету не одного игрока");
+            }
+        }
+
+        private void BanPlayer()
+        {
+            string userInput;
+            int result;
+            int idPlayer = 0;
+            bool isFail = true;
+
+            if (_players.Count > 0)
+            {
+                ShowInfoPlayers();
+                Console.WriteLine("Что - бы изменить статус бана персонажа, напиши его порядковый номер");
+
+                CheckString(out userInput, out result);
+                
+                isFail = GetIdPlayer(result, idPlayer, isFail);
+
+                if (isFail == true)
+                {
+                    if (_players[idPlayer].IsBanned == false)
+                    {
+                        _players[idPlayer].Ban();
+                    }
+                    else
+                    {
+                        _players[idPlayer].Unban();
+                    }
+
+                    _players[idPlayer].ShowDetails();
+                }
+                else if(isFail == false)
+                {
+                    Console.WriteLine("Данные не корректны");
+                }
+            }
+            else
+            {
+                Console.WriteLine("На сервере нету не одного игрока");
             }
         }
     }
 
     class Player
     {
-        public string Name { get; private set; }
-        public int Level { get; private set; }
-        public bool IsBanned { get; private set; }
+        private string _nickName;
+        private int _level;
+
         public int Id { get; private set; }
+        public bool IsBanned { get; private set; }
 
-        public Player()
+        public Player(string name, int level, int id)
         {
-            
-        }
-
-        public Player(string name, int level, bool isBanned, int id)
-        {
-            Name = name;
-            Level = level;
-            IsBanned = isBanned;
+            _nickName = name;
+            _level = level;
             Id = id;
         }
 
-        public void Ban()
+        public int IdPlayer()
         {
-                IsBanned = true;
+           return Id;
         }
 
-        public void UnBan()
+        public void Unban()
         {
             IsBanned = false;
         }
 
-        public void ShowInfo()
+        public void Ban()
         {
-            Console.WriteLine($"Имя игрока {Name}  Уровень игрока: {Level}");
-
-            if (IsBanned == true)
-            {
-                Console.WriteLine("У игрока бан");
-            }
-            else if (IsBanned == false)
-            {
-                Console.WriteLine("У игрока нет бана");
-            }
-
-            Console.WriteLine($"Уникальный номер игрока {Id - 1}");
+            IsBanned = true;
         }
 
-    } 
-     
-    class DataBase
-    {
-        private int _playerIndex;
-        public DataBase()
+        public void ShowDetails()
         {
-            _playerIndex = 0;
-        }
-
-        Player player = new Player();
-        int idPlayer = 0;
-        public List<Player> _players = new List<Player>();
-        bool isNumber;
-        
-
-        public void AddPlayer()
-        {
-            Console.WriteLine("\nВведите имя игрока: \n");
-            string name = Console.ReadLine();
-            Console.WriteLine("\nВведите уровень игрока: \n");
-            bool isNumber = int.TryParse(Console.ReadLine(), out int level);
-
-            if (isNumber == false)
-            {
-                Console.WriteLine("Уровень должен содержать только числа");
-                return;
-            }
-
-            Console.WriteLine($"\nИгрок забанен? (Да или Нет)");
-            string input = Console.ReadLine();
-            bool _isBanned;
-
-            if (input == "Да")
-            {
-                _isBanned = true;
-            }
-            else if (input == "Нет")
-            {
-                _isBanned = false;
-            }
-            else
-            {
-                Console.WriteLine("Введено не коректное значение");
-                return;
-            }
-
-            _playerIndex++;
-            _players.Add(new Player(name, level, _isBanned, _playerIndex));
-        }
-
-        public int GetPlayerId()
-        {
-            Console.WriteLine("\nВведите уникальный номер игрока\n");
-            isNumber = int.TryParse(Console.ReadLine(), out int input);
-
-            for(int i = 0; i < _players.Count; i++)
-            {
-                if(player.Id == input)
-                {
-                    idPlayer = player.Id;
-                    
-                }
-                else
-                {
-                    Console.WriteLine("Неккоректный ввод");
-                    break;
-                }
-            }
-            return idPlayer;
-            /*if (_players.Contains(_players[input]) == true)
-            {
-                _players.IndexOf(_players[input]);
-            }*/
-            
-        }
-
-        public void ShowInfo()
-        {
-            if (_players.Count != 0)
-            {
-                for (int i = 0; i < _players.Count; i++)
-                {
-                    _players[i].ShowInfo();
-                }
-            }
-            else
-            {
-                Console.WriteLine("В базе нету игроков");
-            }
-        }
-
-        public void BanPlayer()
-        {
-            int idads;
-            idads = GetPlayerId();
-
-            if (isNumber == true   )
-            {
-                if (_players[idads].IsBanned == false) 
-                {
-                    _players[idads].Ban();
-                    Console.WriteLine("Игрок забанен!");
-                }
-                else
-                {
-                    Console.WriteLine("Игрок уже забанен!");
-                }
-            }
-            else
-            {
-                Console.WriteLine("Неккоректный ввод");
-            }
-            
-        }
-
-        public void UnBanPlayer()
-        {
-           
-
-            if (_players.Contains(player) == false & isNumber == true)
-            {
-                if (_players[idPlayer].IsBanned == true)
-                {
-                    _players[idPlayer].UnBan();
-                    Console.WriteLine("Игрок разбанен!");
-                }
-                else
-                {
-                    Console.WriteLine("У игрока нету бана!");
-                }
-            }
-            else
-            {
-                Console.WriteLine("Неккоректный ввод");
-            }
-        }
-
-        public void DeletePlayer()
-        {
-            
-
-            if (_players.Contains(player) == true & isNumber == true)
-            {
-                if (_players.Contains(_players[idPlayer]))
-                {
-                    _players.RemoveAt(idPlayer);
-                    Console.WriteLine("Игрок удалён!");
-                }
-                else
-                {
-                    Console.WriteLine("Введено не корректное значение");
-                }
-            }
-            else
-            {
-                Console.WriteLine("Неккоректный ввод");
-            }
+            Console.WriteLine($"Ник персонажа - {_nickName}, его уровень - {_level}, статус бана - {IsBanned}, Id игрока {Id}");
         }
     }
 }
