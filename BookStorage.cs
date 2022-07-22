@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
 namespace DictionaryBook
@@ -7,10 +7,10 @@ namespace DictionaryBook
     {
         static void Main(string[] args)
         {
-            bool _isBookStorageWork = true;
+            bool isBookStorageWork = true;
             BookStorage bookStorage = new BookStorage();
 
-            while (_isBookStorageWork == true)
+            while (isBookStorageWork == true)
             {
                 Console.WriteLine("\nДобро пожаловать в хранилище книг");
                 Console.WriteLine("1 - Добавить книгу в хранилище, 2 - убрать книгу из хранилища, 3 - Показать все книги, 4 - Показать книги по указанному параметру, 5 - Выйти из программы");
@@ -43,7 +43,7 @@ namespace DictionaryBook
 
     class BookStorage
     {
-        List<Book> _books = new List<Book>();
+        private List<Book> _books = new List<Book>();
 
         public void AddBook()
         {
@@ -229,22 +229,22 @@ namespace DictionaryBook
 
     class Book
     {
-        public string _nameBook { get; private set; }
-        public string _autorBook { get; private set; }
-        public int _ageRelease { get; private set; }
-        public int _quantityBooks { get; private set; }
+        public string NameBook { get; private set; }
+        public string AutorBook { get; private set; }
+        public int AgeRelease { get; private set; }
+        public int QuantityBooks { get; private set; }
 
         public Book(int ageRelease, string nameBook, string autorBook, int quantityBooks)
         {
-            _ageRelease = ageRelease;
-            _nameBook = nameBook;
-            _autorBook = autorBook;
-            _quantityBooks = quantityBooks;
+            AgeRelease = ageRelease;
+            NameBook = nameBook;
+            AutorBook = autorBook;
+            QuantityBooks = quantityBooks;
         }
 
         public void ShowInfo()
         {
-            Console.WriteLine($"Название книги - {_nameBook}, Имя автора - {_autorBook}, Год релиза книги - {_ageRelease}, Количество книг - {_quantityBooks}");
+            Console.WriteLine($"Название книги - {NameBook}, Имя автора - {AutorBook}, Год релиза книги - {AgeRelease}, Количество книг - {QuantityBooks}");
         }
     }
 } 
