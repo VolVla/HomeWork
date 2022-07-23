@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,16 +13,15 @@ namespace DeckCards
             Deck deck = new Deck();
             bool isReadyGetCard = true;
 
-            while (isReadyGetCard == true)
+            while (isReadyGetCard)
             {
-                
                 Console.WriteLine("Для того чтобы ещё взять карту из колоды напишите 1, если хватит брать карты напишите 2");
                 int.TryParse(Console.ReadLine(), out int input);
 
                 switch (input)
                 {
                     case 1:
-                        deck.AddCardDeckPlayer();
+                        deck.AddCard();
                         break;
                     case 2:
                         isReadyGetCard = false;
@@ -33,36 +32,36 @@ namespace DeckCards
                 }
             }
 
-            deck.ShowCardsDeck();
+            deck.ShowCards();
         }
     }
 
     class Card
     {
-        private int _valueCard;
-        private int _numberCard; 
-        private string[] _namesCards = {"Камень","Ножниц","Бумага","Колодец","Пики","Крести","Буби","Черви"};
+        private int _value;
+        private int _number; 
+        private string[] _cardsNames = {"Камень","Ножниц","Бумага","Колодец","Пики","Крести","Буби","Черви"};
         private Random _random = new Random();
 
         public int Number { get; private set;}
-        public string NameCard { get; private set; }
+        public string CardName { get; private set; }
 
         public Card()
         {
-            SetValueCard();
-            NameCard = _namesCards[_numberCard];
-            Number = _valueCard;
+            SetValue();
+            CardName = _cardsNames[_number];
+            Number = _value;
         }
 
-        private void SetValueCard()
+        private void SetValue()
         {
-            _valueCard = _random.Next(0, 100);
-            _numberCard = _random.Next(_namesCards.Length);
+            _value = _random.Next(0, 100);
+            _number = _random.Next(_cardsNames.Length);
         }
        
-        public void ShowInfoCard()
+        public void ShowInfo()
         {
-            Console.WriteLine($"Номер вашей карты {Number}, Название вашей карты {NameCard}");
+            Console.WriteLine($"Номер вашей карты {Number}, Название вашей карты {CardName}");
         }
     }
 
@@ -70,19 +69,19 @@ namespace DeckCards
     {
         private List<Card> _cards = new List<Card>();
         
-        public void AddCardDeckPlayer()
+        public void AddCard()
         {
             _cards.Add(new Card());
             Console.WriteLine($"У вас всего {_cards.Count} карт на руке");
         }
 
-        public void ShowCardsDeck()
+        public void ShowCards()
         {
             if (_cards.Count > 0)
             {
                 foreach( Card card in _cards)
                 {
-                    card.ShowInfoCard();   
+                    card.ShowInfo();   
                 }
             }
             else
