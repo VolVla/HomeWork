@@ -1,18 +1,27 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace DeckCards
 {
-    internal class Program
+    internal class DeckCards
     {
-        static void Main(string[] args)
+        private List<Card> AllCards = new List<Card>()
+            {
+                new Card(0,"Камень"),new Card(1,"Ножниц"), new Card(2,"Бумага"),
+                new Card(3,"Колодец"), new Card(4,"Пики"), new Card(5,"Крести"),
+                new Card(6,"Буби"), new Card(7,"Черви"), new Card(8,"Дом"),
+                new Card(9,"Улица"), new Card(10,"Аптека"), new Card(11,"Машина"),
+                new Card(12,"Самолет"),new Card(13,"Носок"),new Card(14,"Шляпа"),
+                new Card(15,"Собака"),new Card(16,"Стол"),new Card(17,"Кружка"),
+                new Card(18,"Шторы"),new Card(19,"Чашка"),new Card(20,"Велосипед")
+            };
+
+        static void Main()
         {
             Player player = new Player();
             bool isReadyGetCard = true;
-            
+
             while (isReadyGetCard)
             {
                 Console.WriteLine("Для того чтобы ещё взять карту из колоды напишите 1,\nДля того чтобы показать карты на руке напишите 2.\nВыход напишите 3");
@@ -34,24 +43,15 @@ namespace DeckCards
                 }
             }
         }
-    }
 
-    class DeckCards
-    {
-        public List<Card> AllCards = new List<Card>() 
+        public List<Card> TransferCards()
         {
-            new Card(0,"Камень"),new Card(1,"Ножниц"), new Card(2,"Бумага"),
-            new Card(3,"Колодец"), new Card(4,"Пики"), new Card(5,"Крести"),
-            new Card(6,"Буби"), new Card(7,"Черви"), new Card(8,"Дом"),
-            new Card(9,"Улица"), new Card(10,"Аптека"), new Card(11,"Машина"),
-            new Card(12,"Самолет"),new Card(13,"Носок"),new Card(14,"Шляпа"),
-            new Card(15,"Собака"),new Card(16,"Стол"),new Card(17,"Кружка"),
-            new Card(18,"Шторы"),new Card(19,"Чашка"),new Card(20,"Велосипед")
-        };
+            return AllCards;
+        }
 
-        public int ShowLengt()
+        public int ShowLenght()
         {
-            return AllCards.Count;
+            return  AllCards.Count;
         }
 
         public void Delete(int indexCard)
@@ -59,43 +59,30 @@ namespace DeckCards
             AllCards.Remove(AllCards[indexCard]);
         }
     }
-    
-    class Card
-    {
-        public string Name { get;private set; }
-        public int Value { get; private set; }
-
-        public Card(int number,string name)
-        {
-            Name = name;
-            Value = number;
-        }
-    }
-
+ 
     class Player
     {
         private DeckCards _deckCards = new DeckCards();
         private List<Card> _cards = new List<Card>();
         private Random _random = new Random();
-        private int _minSizeDeck = 0;
 
         public void AddCard()
         {
-            if(_deckCards.ShowLengt() != _minSizeDeck)
+            if (_deckCards.ShowLenght() != 0)
             {
                 Console.WriteLine("Введите кол-во карт которых хотите вы взять.");
                 bool isNumber = int.TryParse(Console.ReadLine(), out int input);
 
-                if (isNumber == true && input <= _deckCards.ShowLengt())
+                if (isNumber == true && input <= _deckCards.ShowLenght())
                 {
-                    for(int i = 0; i < input; i++)
+                    for (int i = 0; i < input; i++)
                     {
-                        int randomNumber = _random.Next(_minSizeDeck,_deckCards.ShowLengt());
-                        _cards.Add(_deckCards.AllCards[randomNumber]);
+                        int randomNumber = _random.Next(0, _deckCards.ShowLenght());
+                        _cards.Add(_deckCards.TransferCards()[randomNumber]);
                         _deckCards.Delete(randomNumber);
                     }
                 }
-                else if(input >= _deckCards.ShowLengt())
+                else if (input >= _deckCards.ShowLenght()) 
                 {
                     Console.WriteLine("Вы пытаетесь взять больше карт чем есть в колоде");
                 }
@@ -105,10 +92,10 @@ namespace DeckCards
                 Console.WriteLine("Извините карты закончились,Вы не можете взять больше");
             }
         }
-       
+
         public void ShowCards()
         {
-            if (_cards.Count > _minSizeDeck)
+            if (_cards.Count > 0)
             {
                 foreach (Card card in _cards)
                 {
@@ -119,6 +106,18 @@ namespace DeckCards
             {
                 Console.WriteLine($"Вы не взяли не одной карты\n");
             }
+        }
+    }
+
+    class Card
+    {
+        public string Name { get; private set; }
+        public int Value { get; private set; }
+
+        public Card(int number, string name)
+        {
+            Name = name;
+            Value = number;
         }
     }
 }
