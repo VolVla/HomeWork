@@ -6,16 +6,16 @@ namespace DeckCards
 {
     internal class DeckCards
     {
-        private List<Card> AllCards = new List<Card>()
-        {
-            new Card(0,"Камень"),new Card(1,"Ножниц"), new Card(2,"Бумага"),
-            new Card(3,"Колодец"), new Card(4,"Пики"), new Card(5,"Крести"),
-            new Card(6,"Буби"), new Card(7,"Черви"), new Card(8,"Дом"),
-            new Card(9,"Улица"), new Card(10,"Аптека"), new Card(11,"Машина"),
-            new Card(12,"Самолет"),new Card(13,"Носок"),new Card(14,"Шляпа"),
-            new Card(15,"Собака"),new Card(16,"Стол"),new Card(17,"Кружка"),
-            new Card(18,"Шторы"),new Card(19,"Чашка"),new Card(20,"Велосипед")
-        };
+        private List<Card> _allCards = new List<Card>()
+            {
+                new Card(0,"Камень"),new Card(1,"Ножниц"), new Card(2,"Бумага"),
+                new Card(3,"Колодец"), new Card(4,"Пики"), new Card(5,"Крести"),
+                new Card(6,"Буби"), new Card(7,"Черви"), new Card(8,"Дом"),
+                new Card(9,"Улица"), new Card(10,"Аптека"), new Card(11,"Машина"),
+                new Card(12,"Самолет"),new Card(13,"Носок"),new Card(14,"Шляпа"),
+                new Card(15,"Собака"),new Card(16,"Стол"),new Card(17,"Кружка"),
+                new Card(18,"Шторы"),new Card(19,"Чашка"),new Card(20,"Велосипед")
+            };
 
         static void Main()
         {
@@ -46,17 +46,17 @@ namespace DeckCards
 
         public List<Card> TransferCards()
         {
-            return AllCards;
+            return _allCards;
         }
 
         public int ShowLenght()
         {
-            return  AllCards.Count;
+            return _allCards.Count;
         }
 
         public void Delete(int indexCard)
         {
-            AllCards.Remove(AllCards[indexCard]);
+            _allCards.Remove(_allCards[indexCard]);
         }
     }
  
