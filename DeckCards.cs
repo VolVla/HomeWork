@@ -9,6 +9,8 @@ namespace DeckCards
         static void Main()
         {
             Player player = new Player();
+            DeckCards _deckCards = new DeckCards(); 
+            Random _random = new Random();
             bool isReadyGetCard = true;
 
             while (isReadyGetCard)
@@ -18,7 +20,7 @@ namespace DeckCards
                 switch (Console.ReadLine())
                 {
                     case "1":
-                        player.AddCard();
+                        AddCard();
                         break;
                     case "2":
                         player.ShowCards();
@@ -31,29 +33,26 @@ namespace DeckCards
                         break;
                 }
             }
-        }
+
+            void AddCard()
+            {
+                if (_deckCards.ShowLenght() != 0)
+                {
+                    int randomNumber = _random.Next(0, _deckCards.ShowLenght());
+                    player._cards.Add(_deckCards.ReturnCard(randomNumber));
+                    _deckCards.Delete(randomNumber);
+                }
+                else
+                {
+                    Console.WriteLine("Извините карты закончились,Вы не можете взять больше");
+                }
+            }
+        }  
     }
 
     class Player
     {
-        private DeckCards _deckCards = new DeckCards();
-        private List<Card> _cards = new List<Card>();
-        private Random _random = new Random();
-
-        public void AddCard()
-        {
-            if (_deckCards.ShowLenght() != 0)
-            {
-                int randomNumber = _random.Next(0, _deckCards.ShowLenght());
-                _cards.Add(_deckCards.ShowCard(randomNumber));
-                _deckCards.Delete(randomNumber);
-            }
-            else
-            {
-                Console.WriteLine("Извините карты закончились,Вы не можете взять больше");
-            }
-        }
-
+        public List<Card> _cards = new List<Card>();
         public void ShowCards()
         {
             if (_cards.Count > 0)
@@ -83,7 +82,7 @@ namespace DeckCards
             new Card(18,"Шторы"),new Card(19,"Чашка"),new Card(20,"Велосипед")
         };
 
-        public Card ShowCard(int indexCard)
+        public Card ReturnCard(int indexCard)
         {
             return _allCards[indexCard];
         }
