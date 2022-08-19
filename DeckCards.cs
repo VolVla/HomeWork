@@ -5,12 +5,10 @@ using System.Collections.Generic;
 namespace DeckCards
 {
     internal class Program
-    {
+    { 
         static void Main()
         {
-            Player player = new Player();
-            DeckCards _deckCards = new DeckCards(); 
-            Random _random = new Random();
+            DeckCards _deckCards = new DeckCards();
             bool isReadyGetCard = true;
 
             while (isReadyGetCard)
@@ -20,10 +18,10 @@ namespace DeckCards
                 switch (Console.ReadLine())
                 {
                     case "1":
-                        AddCard();
+                        _deckCards.AddCard();
                         break;
                     case "2":
-                        player.ShowCards();
+                        _deckCards.ShowCards();
                         break;
                     case "3":
                         isReadyGetCard = false;
@@ -33,44 +31,27 @@ namespace DeckCards
                         break;
                 }
             }
-
-            void AddCard()
-            {
-                if (_deckCards.ShowLenght() != 0)
-                {
-                    int randomNumber = _random.Next(0, _deckCards.ShowLenght());
-                    player._cards.Add(_deckCards.ReturnCard(randomNumber));
-                    _deckCards.Delete(randomNumber);
-                }
-                else
-                {
-                    Console.WriteLine("Извините карты закончились,Вы не можете взять больше");
-                }
-            }
-        }  
+        }
     }
 
     class Player
     {
-        public List<Card> _cards = new List<Card>();
-        public void ShowCards()
+        private List<Card> _deck = new List<Card>();
+
+        public List<Card> GetDeckCards()
         {
-            if (_cards.Count > 0)
-            {
-                foreach (Card card in _cards)
-                {
-                    Console.WriteLine($"Название карты {card.Name}, величина карты {card.Value}");
-                }
-            }
-            else
-            {
-                Console.WriteLine($"Вы не взяли не одной карты\n");
-            }
+            return _deck;
+        }
+
+        public void SetDeck(List<Card> temporaryDeck)
+        {
+            _deck = temporaryDeck;
         }
     }
 
     class DeckCards
     {
+        private List<Card> _temporaryDeck = new List<Card>();
         private List<Card> _allCards = new List<Card>()
         {
             new Card(0,"Камень"),new Card(1,"Ножниц"), new Card(2,"Бумага"),
@@ -81,10 +62,23 @@ namespace DeckCards
             new Card(15,"Собака"),new Card(16,"Стол"),new Card(17,"Кружка"),
             new Card(18,"Шторы"),new Card(19,"Чашка"),new Card(20,"Велосипед")
         };
+        private Random _random = new Random();
+        Player player = new Player();
 
-        public Card ReturnCard(int indexCard)
+        public void AddCard()
         {
-            return _allCards[indexCard];
+            if (ShowLenght() != 0)
+            {
+                int randomNumber = _random.Next(0,ShowLenght());
+                _temporaryDeck = player.GetDeckCards();
+                _temporaryDeck.Add(_allCards[randomNumber]);
+                player.SetDeck(_temporaryDeck);
+                Delete(randomNumber);
+            }
+            else
+            {
+                Console.WriteLine("Извините карты закончились,Вы не можете взять больше");
+            }
         }
 
         public int ShowLenght()
@@ -95,6 +89,21 @@ namespace DeckCards
         public void Delete(int indexCard)
         {
             _allCards.Remove(_allCards[indexCard]);
+        }
+
+        public void ShowCards()
+        {
+            if ( player.GetDeckCards().Count > 0)
+            {
+                foreach (Card card in player.GetDeckCards())
+                {
+                    Console.WriteLine($"Название карты {card.Name}, величина карты {card.Value}");
+                }
+            }
+            else
+            {
+                Console.WriteLine($"Вы не взяли не одной карты\n");
+            }
         }
     }
 
