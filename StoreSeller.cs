@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -26,6 +26,7 @@ namespace StoreItems
                         seller.ShowProducts();
                         break;
                     case 2:
+                        seller.BuyProductFromSeller();
                         break;
                     case 3:
                         isExitShop = false;
@@ -33,12 +34,7 @@ namespace StoreItems
                         break;
                 }
             }
-        }
-
-        public void BuyProductFromSeller()
-        {
-
-        }
+        }        
     }
 
     class Seller
@@ -54,6 +50,10 @@ namespace StoreItems
             ,new Item("Лук",16),new Item("Колчан стрел",6)
         };
 
+        public void BuyProductFromSeller()
+        {
+            
+        }
         public void ShowProducts()
         {
             foreach(Item product in _items)
