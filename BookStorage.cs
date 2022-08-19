@@ -1,250 +1,121 @@
 using System;
 using System.Collections.Generic;
 
-namespace DictionaryBook
+
+namespace DeckCards
 {
-    class Program
-    {
-        static void Main(string[] args)
+    internal class Program
+    { 
+        static void Main()
         {
-            bool isBookStorageWork = true;
-            BookStorage bookStorage = new BookStorage();
+            DeckCards _deckCards = new DeckCards();
+            bool isReadyGetCard = true;
 
-            while (isBookStorageWork == true)
+            while (isReadyGetCard)
             {
-                Console.WriteLine("\nДобро пожаловать в хранилище книг");
-                Console.WriteLine("1 - Добавить книгу в хранилище, 2 - убрать книгу из хранилища, 3 - Показать все книги, 4 - Показать книги по указанному параметру, 5 - Выйти из программы");
+                Console.WriteLine("Для того чтобы ещё взять карту из колоды напишите 1,\nДля того чтобы показать карты на руке напишите 2.\nВыход напишите 3");
 
                 switch (Console.ReadLine())
                 {
                     case "1":
-                        bookStorage.AddBook();
+                        _deckCards.AddCard();
                         break;
                     case "2":
-                        bookStorage.RemoveBook();
+                        _deckCards.ShowCards();
                         break;
                     case "3":
-                        bookStorage.ShowAllBook();
-                        break;
-                    case "4":
-                        bookStorage.SortBookStorage();
-                        break;
-                    case "5":
-                        Console.WriteLine("Вы вышли из программы");
-                        _isBookStorageWork = false;
+                        isReadyGetCard = false;
                         break;
                     default:
-                        Console.WriteLine("Данные не корректны");
+                        Console.WriteLine("Введено не корректное значение");
                         break;
                 }
             }
         }
     }
 
-    class BookStorage
+    class Player
     {
-        private List<Book> _books = new List<Book>();
+        private List<Card> _deck = new List<Card>();
 
-        public void AddBook()
+        public List<Card> GetDeckCards()
         {
-            string nameBook;
-            string nameAutor;
-            bool isAge;
-            bool isQuantityBook;
-
-            Console.WriteLine("Введите название книги");
-            nameBook = Console.ReadLine();
-            Console.WriteLine("Введите автора книги");
-            nameAutor = Console.ReadLine();
-            Console.WriteLine("Введите дату созданию книги");
-            isAge = int.TryParse(Console.ReadLine(), out int ageRelease);
-            
-            if (isAge == false)
-            {
-                Console.WriteLine("Неккоректный ввод.");
-                return;
-            }
-
-            Console.WriteLine("Введите количество книг");
-            isQuantityBook = int.TryParse(Console.ReadLine(), out int quantityBooks);
-
-            if ((isAge && isQuantityBook) != false)
-            {
-                _books.Add(new Book(ageRelease, nameBook, nameAutor, quantityBooks));
-            }
-            else
-            {
-                Console.WriteLine("Неккоректный ввод.");
-                return;
-            }
+            return _deck;
         }
 
-        public void RemoveBook()
+        public void SetDeck(List<Card> temporaryDeck)
         {
-            string input;
-
-            if (_books.Count > 0)
-            {
-                ShowAllBook();
-                Console.WriteLine("Введите название книги");
-                input = Console.ReadLine();
-
-                for (int i = 0; i < _books.Count; i++)
-                {
-                    if (_books[i]._nameBook == input)
-                    {
-                        _books.RemoveAt(i);
-                        Console.WriteLine("Книга была убрана из хранилища.");
-                    }
-                    else
-                    {
-                        Console.WriteLine("Введено не коректные данные.");
-                    }
-                }
-            }
-            else
-            {
-                Console.WriteLine("В вашем хранилище нет книг, сначало положите их");
-            }
-        }
-
-        public void ShowAllBook()
-        {
-            Console.WriteLine("Книги в хранилище.");
-
-            if (_books.Count > 0)
-            {
-                foreach (Book book in _books)
-                {
-                    book.ShowInfo();
-                }
-            }
-            else
-            {
-                Console.WriteLine("В вашем хранилище нет книг, сначало положите их");
-            }
-        }
-
-        public void SortBookStorage()
-        {
-            if (_books.Count > 0)
-            {
-                Console.WriteLine($"Для сортировки книг по название напишите 1. Для сортировки по автору книги напишите 2 . Для сортировки по дате создание книги пишите 3");
-
-                switch (Console.ReadLine())
-                {
-                    case "1":
-                        SortTitleBook();
-                        break;
-                    case "2":
-                        SortNameAutor();
-                        break;
-                    case "3":
-                        SortAgeRelease();
-                        break;
-                    default:
-                        Console.WriteLine("Данные не корректны");
-                        break;
-                }
-            }
-            else
-            {
-                Console.WriteLine("В вашем хранилище нет книг, сначало положите их");
-            }
-        }
-
-        public void SortTitleBook()
-        {
-            bool isFound = false;
-            string input;
-            Console.WriteLine("Введите название книги");
-            input = Console.ReadLine();
-
-            foreach (Book book in _books)
-            {
-                if (book._nameBook == input)
-                {
-                    book.ShowInfo();
-                    isFound = true;
-                }
-            }
-
-            if (isFound == false)
-            {
-                Console.Write("\nДанная книга не была найдена");
-            }
-        }
-
-        public void SortNameAutor()
-        {
-            bool isFound = false;
-            string input;
-            Console.WriteLine("Введите автора книги");
-            input = Console.ReadLine();
-
-            foreach (Book book in _books)
-            {
-                if (book._autorBook == input)
-                {
-                    book.ShowInfo();
-                    isFound = true;
-                }
-            }
-
-            if (isFound == false)
-            {
-                Console.Write("\nДанная книга не была найдена");
-            }
-        }
-
-        public void SortAgeRelease()
-        {
-            bool isFound = false;
-            bool isNumber;
-            Console.WriteLine("Введите дату создании книги");
-            isNumber = int.TryParse(Console.ReadLine(), out int age);
-
-            if (isNumber == true)
-            {
-                foreach (Book book in _books)
-                {
-                    if (book._ageRelease == age)
-                    {
-                        book.ShowInfo();
-                        isFound = true;
-                    }
-                }
-
-                if (isFound == false)
-                {
-                    Console.Write("\nДанная книга не была найдена");
-                }
-            }
-            else
-            {
-                Console.WriteLine("Книг с текущей даты создания нету");
-            }
+            _deck = temporaryDeck;
         }
     }
 
-    class Book
+    class DeckCards
     {
-        public string NameBook { get; private set; }
-        public string AutorBook { get; private set; }
-        public int AgeRelease { get; private set; }
-        public int QuantityBooks { get; private set; }
-
-        public Book(int ageRelease, string nameBook, string autorBook, int quantityBooks)
+        private List<Card> _temporaryDeck = new List<Card>();
+        private List<Card> _allCards = new List<Card>()
         {
-            AgeRelease = ageRelease;
-            NameBook = nameBook;
-            AutorBook = autorBook;
-            QuantityBooks = quantityBooks;
+            new Card(0,"Камень"),new Card(1,"Ножниц"), new Card(2,"Бумага"),
+            new Card(3,"Колодец"), new Card(4,"Пики"), new Card(5,"Крести"),
+            new Card(6,"Буби"), new Card(7,"Черви"), new Card(8,"Дом"),
+            new Card(9,"Улица"), new Card(10,"Аптека"), new Card(11,"Машина"),
+            new Card(12,"Самолет"),new Card(13,"Носок"),new Card(14,"Шляпа"),
+            new Card(15,"Собака"),new Card(16,"Стол"),new Card(17,"Кружка"),
+            new Card(18,"Шторы"),new Card(19,"Чашка"),new Card(20,"Велосипед")
+        };
+        private Random _random = new Random();
+        Player player = new Player();
+
+        public void AddCard()
+        {
+            if (ShowLenght() != 0)
+            {
+                int randomNumber = _random.Next(0,ShowLenght());
+                _temporaryDeck = player.GetDeckCards();
+                _temporaryDeck.Add(_allCards[randomNumber]);
+                player.SetDeck(_temporaryDeck);
+                Delete(randomNumber);
+            }
+            else
+            {
+                Console.WriteLine("Извините карты закончились,Вы не можете взять больше");
+            }
         }
 
-        public void ShowInfo()
+        public int ShowLenght()
         {
-            Console.WriteLine($"Название книги - {NameBook}, Имя автора - {AutorBook}, Год релиза книги - {AgeRelease}, Количество книг - {QuantityBooks}");
+            return _allCards.Count;
+        }
+
+        public void Delete(int indexCard)
+        {
+            _allCards.Remove(_allCards[indexCard]);
+        }
+
+        public void ShowCards()
+        {
+            if ( player.GetDeckCards().Count > 0)
+            {
+                foreach (Card card in player.GetDeckCards())
+                {
+                    Console.WriteLine($"Название карты {card.Name}, величина карты {card.Value}");
+                }
+            }
+            else
+            {
+                Console.WriteLine($"Вы не взяли не одной карты\n");
+            }
         }
     }
-} 
+
+    class Card
+    {
+        public string Name { get; private set; }
+        public int Value { get; private set; }
+
+        public Card(int number, string name)
+        {
+            Name = name;
+            Value = number;
+        }
+    }
+}
