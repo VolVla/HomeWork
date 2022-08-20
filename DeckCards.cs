@@ -5,12 +5,22 @@ using System.Collections.Generic;
 namespace DeckCards
 {
     internal class Program
-    { 
+    {
         static void Main()
         {
-            DeckCards _deckCards = new DeckCards();
+            List<Card> allCards = new List<Card>()
+            {
+                new Card(0,"Камень"),new Card(1,"Ножниц"), new Card(2,"Бумага"),
+                new Card(3,"Колодец"), new Card(4,"Пики"), new Card(5,"Крести"),
+                new Card(6,"Буби"), new Card(7,"Черви"), new Card(8,"Дом"),
+                new Card(9,"Улица"), new Card(10,"Аптека"), new Card(11,"Машина"),
+                new Card(12,"Самолет"),new Card(13,"Носок"),new Card(14,"Шляпа"),
+                new Card(15,"Собака"),new Card(16,"Стол"),new Card(17,"Кружка"),
+                new Card(18,"Шторы"),new Card(19,"Чашка"),new Card(20,"Велосипед")
+            };
+            Player player = new Player();
             bool isReadyGetCard = true;
-
+            
             while (isReadyGetCard)
             {
                 Console.WriteLine("Для того чтобы ещё взять карту из колоды напишите 1,\nДля того чтобы показать карты на руке напишите 2.\nВыход напишите 3");
@@ -18,10 +28,10 @@ namespace DeckCards
                 switch (Console.ReadLine())
                 {
                     case "1":
-                        _deckCards.AddCard();
+                        player.GiveCardDeck(allCards);
                         break;
                     case "2":
-                        _deckCards.ShowCards();
+                        player.ShowCards();
                         break;
                     case "3":
                         isReadyGetCard = false;
@@ -36,44 +46,16 @@ namespace DeckCards
 
     class Player
     {
-        private List<Card> _deck = new List<Card>();
-
-        public List<Card> GetDeckCards()
-        {
-            return _deck;
-        }
-
-        public void SetDeck(List<Card> temporaryDeck)
-        {
-            _deck = temporaryDeck;
-        }
-    }
-
-    class DeckCards
-    {
-        private List<Card> _temporaryDeck = new List<Card>();
-        private List<Card> _allCards = new List<Card>()
-        {
-            new Card(0,"Камень"),new Card(1,"Ножниц"), new Card(2,"Бумага"),
-            new Card(3,"Колодец"), new Card(4,"Пики"), new Card(5,"Крести"),
-            new Card(6,"Буби"), new Card(7,"Черви"), new Card(8,"Дом"),
-            new Card(9,"Улица"), new Card(10,"Аптека"), new Card(11,"Машина"),
-            new Card(12,"Самолет"),new Card(13,"Носок"),new Card(14,"Шляпа"),
-            new Card(15,"Собака"),new Card(16,"Стол"),new Card(17,"Кружка"),
-            new Card(18,"Шторы"),new Card(19,"Чашка"),new Card(20,"Велосипед")
-        };
         private Random _random = new Random();
-        Player player = new Player();
-
-        public void AddCard()
+        private List<Card> _deck = new List<Card>();
+        
+        public void GiveCardDeck(List<Card> _allCards)
         {
-            if (ShowLenght() != 0)
+            if (_allCards.Count != 0)
             {
-                int randomNumber = _random.Next(0,ShowLenght());
-                _temporaryDeck = player.GetDeckCards();
-                _temporaryDeck.Add(_allCards[randomNumber]);
-                player.SetDeck(_temporaryDeck);
-                Delete(randomNumber);
+                int randomNumber = _random.Next(0, _allCards.Count);
+                _deck.Add(_allCards[randomNumber]);
+                _allCards.Remove(_allCards[randomNumber]);
             }
             else
             {
@@ -81,21 +63,11 @@ namespace DeckCards
             }
         }
 
-        public int ShowLenght()
-        {
-            return _allCards.Count;
-        }
-
-        public void Delete(int indexCard)
-        {
-            _allCards.Remove(_allCards[indexCard]);
-        }
-
         public void ShowCards()
         {
-            if ( player.GetDeckCards().Count > 0)
+            if (_deck.Count > 0)
             {
-                foreach (Card card in player.GetDeckCards())
+                foreach (Card card in _deck)
                 {
                     Console.WriteLine($"Название карты {card.Name}, величина карты {card.Value}");
                 }
