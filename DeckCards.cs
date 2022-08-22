@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 
-
 namespace DeckCards
 {
     internal class Program
@@ -20,15 +19,17 @@ namespace DeckCards
             };
             Player player = new Player();
             bool isReadyGetCard = true;
-            
+            string userInput;
+
             while (isReadyGetCard)
             {
                 Console.WriteLine("Для того чтобы ещё взять карту из колоды напишите 1,\nДля того чтобы показать карты на руке напишите 2.\nВыход напишите 3");
+                userInput = Console.ReadLine();
 
-                switch (Console.ReadLine())
+                switch (userInput)
                 {
                     case "1":
-                        player.GiveCardDeck(allCards);
+                        player.GiveCard(allCards);
                         break;
                     case "2":
                         player.ShowCards();
@@ -49,7 +50,7 @@ namespace DeckCards
         private Random _random = new Random();
         private List<Card> _deck = new List<Card>();
         
-        public void GiveCardDeck(List<Card> _allCards)
+        public void GiveCard(List<Card> _allCards)
         {
             if (_allCards.Count != 0)
             {
