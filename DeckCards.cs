@@ -1,13 +1,13 @@
 using System;
 using System.Collections.Generic;
 
-
 namespace DeckCards
 {
     internal class Program
     {
         static void Main()
         {
+            DeckCards deckCard = new DeckCards();
             Player player = new Player();
             bool isReadyGetCard = true;
             string userInput;
@@ -20,7 +20,7 @@ namespace DeckCards
                 switch (userInput)
                 {
                     case "1":
-                        player.GetCard();
+                        deckCard.GiveCard(player.TakeCard());
                         break;
                     case "2":
                         player.ShowCards();
@@ -48,6 +48,21 @@ namespace DeckCards
             new Card(15,"Собака"),new Card(16,"Стол"),new Card(17,"Кружка"),
             new Card(18,"Шторы"),new Card(19,"Чашка"),new Card(20,"Велосипед")
         };
+        private Random _random = new Random();
+
+        public void GiveCard(List<Card>_deck)
+        {
+            if (ShowLenght() != 0)
+            {
+                int randomNumber = _random.Next(0, ShowLenght());
+                _deck.Add(ShowCards(randomNumber));
+                RemoveCard(randomNumber);
+            }
+            else
+            {
+                Console.WriteLine("Извините карты закончились,Вы не можете взять больше");
+            }
+        }
 
         public Card ShowCards(int indexCard)
         {
@@ -67,22 +82,11 @@ namespace DeckCards
 
     class Player
     {
-        private DeckCards _deckCards = new DeckCards();
         private List<Card> _deck = new List<Card>();
-        private Random _random = new Random();
         
-        public void GetCard()
+        public List<Card> TakeCard()
         {
-            if (_deckCards.ShowLenght() != 0)
-            {
-                int randomNumber = _random.Next(0, _deckCards.ShowLenght());
-                _deck.Add(_deckCards.ShowCards(randomNumber));
-                _deckCards.RemoveCard(randomNumber);
-            }
-            else
-            {
-                Console.WriteLine("Извините карты закончились,Вы не можете взять больше");
-            }
+            return _deck;
         }
 
         public void ShowCards()
