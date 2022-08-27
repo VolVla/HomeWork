@@ -7,6 +7,7 @@ namespace DeckCards
     {
         static void Main()
         {
+            List<Card> deckHand = new List<Card>();
             DeckCards deckCard = new DeckCards();
             Player player = new Player();
             bool isReadyGetCard = true;
@@ -20,10 +21,10 @@ namespace DeckCards
                 switch (userInput)
                 {
                     case "1":
-                        deckCard.GiveCard(player.TakeCard());
+                        deckCard.TakeCard(deckHand);
                         break;
                     case "2":
-                        player.ShowCards();
+                        player.ShowCards(deckHand);
                         break;
                     case "3":
                         isReadyGetCard = false;
@@ -47,26 +48,21 @@ namespace DeckCards
             new Card(12,"Самолет"),new Card(13,"Носок"),new Card(14,"Шляпа"),
             new Card(15,"Собака"),new Card(16,"Стол"),new Card(17,"Кружка"),
             new Card(18,"Шторы"),new Card(19,"Чашка"),new Card(20,"Велосипед")
-        };
+        } ;
         private Random _random = new Random();
 
-        public void GiveCard(List<Card>_deck)
+        public void TakeCard(List<Card> _deckHand)
         {
             if (ShowLenght() != 0)
             {
                 int randomNumber = _random.Next(0, ShowLenght());
-                _deck.Add(ShowCards(randomNumber));
+                _deckHand.Add(_allCards[randomNumber]);
                 RemoveCard(randomNumber);
             }
             else
             {
                 Console.WriteLine("Извините карты закончились,Вы не можете взять больше");
             }
-        }
-
-        public Card ShowCards(int indexCard)
-        {
-            return _allCards[indexCard];
         }
 
         public int ShowLenght()
@@ -82,18 +78,11 @@ namespace DeckCards
 
     class Player
     {
-        private List<Card> _deck = new List<Card>();
-        
-        public List<Card> TakeCard()
+        public void ShowCards(List<Card> _deckHand)
         {
-            return _deck;
-        }
-
-        public void ShowCards()
-        {
-            if (_deck.Count > 0)
+            if (_deckHand.Count > 0)
             {
-                foreach (Card card in _deck)
+                foreach (Card card in _deckHand)
                 {
                     Console.WriteLine($"Название карты {card.Name}, величина карты {card.Value}");
                 }
