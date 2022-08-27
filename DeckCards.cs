@@ -7,26 +7,28 @@ namespace DeckCards
     {
         static void Main()
         {
-            List<Card> deckHand = new List<Card>();
-            DeckCards deckCard = new DeckCards();
+            const string WORDTAKECARD = "1";
+            const string WORDSHOWCARDHAND = "2";
+            const string WORDEXITPROGRAM = "3";
+            Deck deck = new Deck();
             Player player = new Player();
             bool isReadyGetCard = true;
             string userInput;
 
             while (isReadyGetCard)
             {
-                Console.WriteLine("Для того чтобы ещё взять карту из колоды напишите 1,\nДля того чтобы показать карты на руке напишите 2.\nВыход напишите 3");
+                Console.WriteLine($"Для того чтобы ещё взять карту из колоды напишите {WORDTAKECARD},\nДля того чтобы показать карты на руке напишите {WORDSHOWCARDHAND}.\nДля выход из программы напишите {WORDEXITPROGRAM}");
                 userInput = Console.ReadLine();
 
                 switch (userInput)
                 {
-                    case "1":
-                        deckCard.TakeCard(deckHand);
+                    case WORDTAKECARD:
+                        deck.TakeCard(player._deckHand);
                         break;
-                    case "2":
-                        player.ShowCards(deckHand);
+                    case WORDSHOWCARDHAND:
+                        player.ShowCards();
                         break;
-                    case "3":
+                    case WORDEXITPROGRAM:
                         isReadyGetCard = false;
                         break;
                     default:
@@ -37,7 +39,7 @@ namespace DeckCards
         }
     }
 
-    class DeckCards
+    class Deck
     {
         private List<Card> _allCards = new List<Card>()
         {
@@ -78,7 +80,8 @@ namespace DeckCards
 
     class Player
     {
-        public void ShowCards(List<Card> _deckHand)
+        internal  List<Card> _deckHand = new List<Card>();
+        public void ShowCards()
         {
             if (_deckHand.Count > 0)
             {
