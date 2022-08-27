@@ -7,9 +7,9 @@ namespace DeckCards
     {
         static void Main()
         {
-            const string WORDTAKECARD = "1";
-            const string WORDSHOWCARDHAND = "2";
-            const string WORDEXITPROGRAM = "3";
+            const string TakeCardCommand = "1";
+            const string ShowCardHandCommand = "2";
+            const string ExitProgramCommand = "3";
             Deck deck = new Deck();
             Player player = new Player();
             bool isReadyGetCard = true;
@@ -17,18 +17,18 @@ namespace DeckCards
 
             while (isReadyGetCard)
             {
-                Console.WriteLine($"Для того чтобы ещё взять карту из колоды напишите {WORDTAKECARD},\nДля того чтобы показать карты на руке напишите {WORDSHOWCARDHAND}.\nДля выход из программы напишите {WORDEXITPROGRAM}");
+                Console.WriteLine($"Для того чтобы ещё взять карту из колоды напишите {TakeCardCommand},\nДля того чтобы показать карты на руке напишите {ShowCardHandCommand}.\nДля выход из программы напишите {ExitProgramCommand}");
                 userInput = Console.ReadLine();
 
                 switch (userInput)
                 {
-                    case WORDTAKECARD:
-                        deck.TakeCard(player.DeckHand);
+                    case TakeCardCommand:
+                        player.TakeCard(deck._allCards);
                         break;
-                    case WORDSHOWCARDHAND:
+                    case ShowCardHandCommand:
                         player.ShowCards();
                         break;
-                    case WORDEXITPROGRAM:
+                    case ExitProgramCommand:
                         isReadyGetCard = false;
                         break;
                     default:
@@ -41,7 +41,7 @@ namespace DeckCards
 
     class Deck
     {
-        private List<Card> _allCards = new List<Card>()
+        public List<Card> _allCards = new List<Card>()
         {
             new Card(0,"Камень"),new Card(1,"Ножниц"), new Card(2,"Бумага"),
             new Card(3,"Колодец"), new Card(4,"Пики"), new Card(5,"Крести"),
@@ -51,15 +51,20 @@ namespace DeckCards
             new Card(15,"Собака"),new Card(16,"Стол"),new Card(17,"Кружка"),
             new Card(18,"Шторы"),new Card(19,"Чашка"),new Card(20,"Велосипед")
         } ;
+    }
+
+    class Player
+    {
+        private List<Card> _deckHand = new List<Card>();
         private Random _random = new Random();
 
-        public void TakeCard(List<Card> _deckHand)
+        public void TakeCard(List<Card> _allCards)
         {
-            if (ShowLenght() != 0)
+            if (_allCards.Count != 0)
             {
-                int randomNumber = _random.Next(0, ShowLenght());
+                int randomNumber = _random.Next(0, _allCards.Count);
                 _deckHand.Add(_allCards[randomNumber]);
-                RemoveCard(randomNumber);
+                _allCards.Remove(_allCards[randomNumber]);
             }
             else
             {
@@ -67,26 +72,11 @@ namespace DeckCards
             }
         }
 
-        public int ShowLenght()
-        {
-            return _allCards.Count;
-        }
-
-        public void RemoveCard(int indexCard)
-        {
-            _allCards.Remove(_allCards[indexCard]);
-        }
-    }
-
-    class Player
-    {
-        internal List<Card> DeckHand = new List<Card>();
-
         public void ShowCards()
         {
-            if (DeckHand.Count > 0)
+            if (_deckHand.Count > 0)
             {
-                foreach (Card card in DeckHand)
+                foreach (Card card in _deckHand)
                 {
                     Console.WriteLine($"Название карты {card.Name}, величина карты {card.Value}");
                 }
