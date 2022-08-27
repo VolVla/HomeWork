@@ -23,7 +23,7 @@ namespace DeckCards
                 switch (userInput)
                 {
                     case WORDTAKECARD:
-                        deck.TakeCard(player.deckHand);
+                        deck.TakeCard(player.DeckHand);
                         break;
                     case WORDSHOWCARDHAND:
                         player.ShowCards();
@@ -80,13 +80,13 @@ namespace DeckCards
 
     class Player
     {
-        internal List<Card> deckHand = new List<Card>();
+        internal List<Card> DeckHand = new List<Card>();
 
         public void ShowCards()
         {
-            if (deckHand.Count > 0)
+            if (DeckHand.Count > 0)
             {
-                foreach (Card card in deckHand)
+                foreach (Card card in DeckHand)
                 {
                     Console.WriteLine($"Название карты {card.Name}, величина карты {card.Value}");
                 }
