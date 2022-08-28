@@ -7,26 +7,32 @@ namespace StoreItems
     {
         static void Main()
         {
+            const string ShowProductCommand = "1";
+            const string BuyProductCommand = "2";
+            const string ShowItemsCommand = "3";
+            const string ExitProgramCommand = "4";
+            Seller seller = new Seller(); 
+            Player player = new Player();
+            string userInput;
             bool isExitShop = true;
-            Seller seller = new Seller();
-
+            
             while (isExitShop)
             {
                 Console.WriteLine("\nПриветствую в своем магазине чтобы посмотреть товар напиши 1,\nДля покупки товар напишите 2,\nДля просмотра предметов в инвентаре напишите 3,\nДля того, чтобы закончить покупки напишите 4");
-                int.TryParse(Console.ReadLine(), out int userInput);
+                userInput = Console.ReadLine();
 
                 switch (userInput)
                 {
-                    case 1:
+                    case ShowProductCommand:
                         seller.ShowProduct();
                         break;
-                    case 2:
-                        seller.BuyProductFromSeller();
+                    case BuyProductCommand:
+                        player.BuyProductFromSeller(seller.Products, seller.PriceItem);
                         break;
-                    case 3:
-                        seller.ShowItemPlayer();
+                    case ShowItemsCommand:
+                        player.ShowItems();
                         break;
-                    case 4:
+                    case ExitProgramCommand:
                         isExitShop = false;
                         Console.WriteLine("Вы закончили покупки и вышли из магазина");
                         break;
@@ -40,7 +46,7 @@ namespace StoreItems
 
     class Seller
     {
-        private List<Item> _products = new List<Item>()
+        public List<Item> Products = new List<Item>()
         {
             new Item("Зелье здоровья",5),new Item("Зелье маны",4),
             new Item("Шлем",10),new Item("Копьё",8),
@@ -50,29 +56,42 @@ namespace StoreItems
             new Item("Топор",13),new Item("Меч",20),
             new Item("Лук",16),new Item("Колчан стрел",6)
         };
-        private Player _player = new Player();
-        private int _balancePlayer;
-        private int _priceItem;
+        public int PriceItem { get;private set; }
 
-        public void BuyProductFromSeller()
+        public void ShowProduct()
+        {
+            foreach(Item item in Products)
+            {
+                int index = Products.IndexOf(item);
+                Console.Write(index);
+                item.ShowInfoProduct();
+            }
+        }
+    }
+
+    class Player
+    {
+        private List<Item> items = new List<Item>();
+        private int _balanceMoney = 100;
+        
+        public void BuyProductFromSeller(List<Item> products,int priceItem)
         { 
-            _balancePlayer = _player.ShowBalance();
-            Console.WriteLine($"Ваш баланс {_balancePlayer} монет");
+            Console.WriteLine($"Ваш баланс {_balanceMoney} монет");
 
-            if (_products.Count > 0)
+            if (products.Count > 0)
             {
                 Console.WriteLine("Введите номер предмета");
-                bool number = int.TryParse(Console.ReadLine() , out int index);
+                int.TryParse(Console.ReadLine() , out int index);
 
-                if (number)
+                if (index < products.Count && index >= 0)
                 {
-                    _priceItem = _products[index].AmountSellPrice;
+                    priceItem = products[index].AmountSellPrice; 
 
-                    if(_balancePlayer >= _priceItem)
+                    if(_balanceMoney >= priceItem)
                     {
-                        _player.Money(_priceItem);
-                        _player.GetItem(index,_products);
-                        RemoveItem(index);
+                        _balanceMoney -= priceItem;
+                        items.Add(products[index]);
+                        products.Remove(products[index]);
                         Console.WriteLine("Поздравляю вы купили товар.");
                     }
                     else
@@ -91,50 +110,9 @@ namespace StoreItems
             }
         }
 
-        public void ShowProduct()
-        {
-            foreach(Item item in _products)
-            {
-                int index = _products.IndexOf(item);
-                Console.Write(index);
-                item.ShowInfoProduct();
-            }
-        }
-
-        public void ShowItemPlayer()
-        {
-            _player.ShowItems();
-        }
-
-        public void RemoveItem(int indexItem)
-        {
-            _products.Remove(_products[indexItem]);
-        }
-    }
-
-    class Player
-    {
-        private List<Item> _items = new List<Item>();
-        private int balancePlayer = 100;
-       
-        public void Money(int priceItem)
-        {
-            balancePlayer -= priceItem;
-        }
-
-        public int ShowBalance()
-        {
-            return balancePlayer;
-        }
-
-        public void GetItem(int index,List<Item> _products)
-        {
-            _items.Add(_products[index]);
-        }
-
         public void ShowItems()
         {
-            foreach (Item item in _items)
+            foreach (Item item in items)
             {
                 string name =  item.NameProduct;
                 Console.WriteLine($"У вас в инвентаре {name}");
