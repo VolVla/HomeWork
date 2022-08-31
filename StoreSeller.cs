@@ -48,9 +48,9 @@ namespace StoreItems
     class Seller : Player
     {
         private List<Item> _products = new List<Item>();
+        private int _priceItem;
 
         public Item Product { get;private set  ;}
-        public int PriceItem { get;private set; }
 
         public Seller()
         {
@@ -81,11 +81,11 @@ namespace StoreItems
 
                 if (index < _products.Count && index >= 0)
                 {
-                    PriceItem = _products[index].AmountSellPrice; 
+                    _priceItem = _products[index].AmountSellPrice; 
 
-                    if(_balanceMoney >= PriceItem)
+                    if(_balanceMoney >= _priceItem)
                     {
-                        _balanceMoney -= PriceItem;
+                        _balanceMoney -= _priceItem;
                         Product = _products[index];
                         _products.Remove(_products[index]);
                         Console.WriteLine("Поздравляю вы купили товар.");
