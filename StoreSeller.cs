@@ -87,7 +87,6 @@ namespace StoreItems
                     {
                         _balanceMoney -= PriceItem;
                         Product = _products[index];
-                      //  Items.Add(_products[index]);
                         _products.Remove(_products[index]);
                         Console.WriteLine("Поздравляю вы купили товар.");
                     }
