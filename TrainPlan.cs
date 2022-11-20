@@ -7,16 +7,13 @@ namespace TrainPlan
     {
         static void Main()
         {
-            List<string> namesStation = new List<string>();
             RailStation railStation = new RailStation();
-            int numberPassengers = 0;
             bool isWork = true;
 
             while (isWork)
             {
-                namesStation = railStation.FormationDirection(namesStation);
-                numberPassengers = railStation.SellTicket();
-                railStation.FormationTrain(numberPassengers, namesStation);
+                railStation.CreateDirection();
+                railStation.CreateTrain();
                 railStation.SendTrain();
                 Console.WriteLine($"Вы хотите выйти из программы?Нажмите Enter.\nДля продолжение работы программы нажмите любую другую клавишу");
 
@@ -35,26 +32,22 @@ namespace TrainPlan
     class RailStation
     {
         private List<Train> _trainsList = new List<Train>();
+        private TicketOffice _ticketOffice = new TicketOffice();
+        private Direction _direction = new Direction();
 
-        public List<string> FormationDirection(List<string> _namesStation)
+        public void CreateDirection()
         {
-            Direction _direction = new Direction();
-            _namesStation = _direction.Create();
-            return _namesStation;
+            _direction.Create();
         }
 
         public int SellTicket()
         {
-            Tickets _tickets = new Tickets();
-            _tickets.Sell();
-            return _tickets.ReturnNumberPassager();
+            return _ticketOffice.Sell();
         }
 
-        public void FormationTrain(int _numberPassengers, List<string> _namesStation)
+        public void CreateTrain()
         {
-            Train train = new Train();
-            train.AddWagon(_numberPassengers);
-            train.SaveDirection(_namesStation, _numberPassengers);
+            Train train = new Train(SellTicket());
             _trainsList.Add(train);
         }
 
@@ -65,8 +58,8 @@ namespace TrainPlan
 
         public void ShowInfoMarch()
         {
-            Console.WriteLine($"Назначение {_trainsList[_trainsList.Count - 1].numberFirstStation} - {_trainsList[_trainsList.Count - 1].numberSecondStation}");
-            Console.WriteLine($"Количество пассажиров - {_trainsList[_trainsList.Count-1].numberPasseger}");
+            Console.WriteLine($"Назначение {_direction.FirstStation} - {_direction.SecondStation}");
+            Console.WriteLine($"Количество пассажиров - {_trainsList[_trainsList.Count - 1].numberPasseger}");
 
             if (_trainsList[_trainsList.Count - 1].GetTrainLenght() != 0)
             {
@@ -78,11 +71,13 @@ namespace TrainPlan
 
     class Direction
     {
-        private List<string> _namesStation = new List<string>();
         private string _firstStation = "";
         private string _secondStation = "";
-        
-        public List<string> Create()
+
+        public string FirstStation { get; private set; }
+        public string SecondStation { get; private set; }
+
+        public void Create()
         {
             bool isWork = true;
 
@@ -100,54 +95,50 @@ namespace TrainPlan
                 else
                 {
                     isWork = false;
-                    _namesStation.AddRange(new string[] { _firstStation, _secondStation });
                 }
             }
-            return _namesStation;
+            FirstStation = _firstStation;
+            SecondStation = _secondStation;
         }
     }
 
-    class Tickets
+    class TicketOffice
     {
         private int _numberPasseger = 0;
+        private int _minimumPassager = 0;
+        private int _maximumPassager = 101;
 
-        public void Sell()
+        public int Sell()
         {
-            if (_numberPasseger == 0)
-            {
-                Random random = new Random();
-                int minimumPassager = 0;
-                int maximumPassager = 101;
-                _numberPasseger = random.Next(minimumPassager, maximumPassager);
-                Console.WriteLine($"Продано {_numberPasseger} билетов");
-            }
-        }
-
-        public int ReturnNumberPassager()
-        {
+            Random random = new Random();
+            _numberPasseger = random.Next(_minimumPassager, _maximumPassager);
+            Console.WriteLine($"Продано {_numberPasseger} билетов");
             return _numberPasseger;
         }
     }
 
     class Train
     {
-        public string numberFirstStation { get; private set; }
-        public string numberSecondStation { get; private set; }
-        public int numberPasseger { get; private set; }
-
         private List<int> _typeWagons = new List<int> { 20, 40, 15 };
         private List<Wagon> _wagons = new List<Wagon>();
-        private int _numberPassagersDirection = 0;
 
-        public void AddWagon(int _numberPassengers)
+        public int numberPasseger { get; private set; }
+
+        public Train(int numberPassagers)
         {
-            if (_numberPassengers != 0 && _wagons.Count == 0)
+            numberPasseger = numberPassagers;
+            AddWagon(numberPassagers);
+        }
+
+        public void AddWagon(int numberPassagers)
+        {
+            if (numberPassagers != 0 && _wagons.Count == 0)
             {
                 bool isWork = true;
 
-                while (isWork == true && _numberPassengers > 0)
+                while (isWork == true && numberPassagers > 0)
                 {
-                    Console.WriteLine($"Колличество пассажиров : {_numberPassengers}\nВыберете Вагон: ");
+                    Console.WriteLine($"Колличество пассажиров : {numberPassagers}\nВыберете Вагон: ");
 
                     for (int i = 0; i < _typeWagons.Count; i++)
                     {
@@ -158,11 +149,11 @@ namespace TrainPlan
 
                     if (number == true)
                     {
-                        if (input <= _typeWagons.Count && _numberPassengers > 0)
+                        if (input <= _typeWagons.Count && numberPassagers > 0)
                         {
                             Wagon wagon = new Wagon(_typeWagons[input - 1]);
                             _wagons.Add(wagon);
-                            _numberPassengers -= _typeWagons[input - 1];
+                            numberPassagers -= _typeWagons[input - 1];
                             Console.WriteLine("Вагон добавлен");
                         }
                         else
@@ -172,14 +163,6 @@ namespace TrainPlan
                     }
                 }
             }
-        }
-
-        public void SaveDirection(List<string> namesStation, int numberPasseger)
-        {
-            numberFirstStation = namesStation[namesStation.Count - 2];
-            numberSecondStation = namesStation[namesStation.Count - 1];
-            _numberPassagersDirection = numberPasseger;
-            numberPasseger = _numberPassagersDirection;
         }
 
         public void RenderTrain()
