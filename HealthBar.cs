@@ -22,14 +22,13 @@ namespace HealthBar
             string healthBar = "HealthBar";
             string manaBar = "ManaBar";
             int percent = 100;
+            
             while (isExit == false)
             {
                 percentFillBar = SetPercentBar(healthBar, health, maxHealth, percent, percentFillBar );
                 Console.Clear();
-
                 DrawBar(percentFillBar, maxHealth, positionLine,'_', '#') ;
                 percentFillBar = SetPercentBar(manaBar, mana, maxMana, percent, percentFillBar);
-
                 DrawBar(percentFillBar, maxMana, positionLine + 1 , '_','#');
                 Console.WriteLine("\nДля выхода из программы напишите " + wordExit +" для продолжения напишите любой символ");
                 userInput = Console.ReadLine();
@@ -38,13 +37,16 @@ namespace HealthBar
                 {
                     isExit = true;
                 }
+                
                 Console.Clear(); 
             }
-        }    
+        }
+        
         static void StandartPositionText()
         {
             Console.SetCursorPosition(0, 6);
         }
+        
         static int SetPercentBar(string nameBar, int value ,int maxValue,int percent, int percentFillBar)
         {
             StandartPositionText();
@@ -53,6 +55,7 @@ namespace HealthBar
             percentFillBar = value * maxValue / percent;
             return percentFillBar;
         }
+        
         static void DrawBar(int value, int maxValue, int positionX, char emptySymbol = ' ',char fillSymbol = ' '  )
         {
             string bar ="";
@@ -76,7 +79,8 @@ namespace HealthBar
                 {   
                     bar += emptySymbol;
                 }
-            }  
+            }
+            
             Console.Write(bar + "]");
         }
     }
