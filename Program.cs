@@ -33,11 +33,11 @@ namespace InputWord
 
                 if (word.ContainsKey($"{enterWord}"))
                 {
-                Console.WriteLine(word[enterWord]);
+                    Console.WriteLine(word[enterWord]);
                 }
                 else
                 {
-                Console.WriteLine($"Вашего слова {enterWord} нет в списке");
+                    Console.WriteLine($"Вашего слова {enterWord} нет в списке");
                 }
             }
         }
@@ -46,7 +46,6 @@ namespace InputWord
         {
             string inputWord;
             inputWord = Console.ReadLine();
-
             return inputWord;
         }
     }
