@@ -1,21 +1,17 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SimpleCode
 {
     class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
-            int numberMessages;
             string message;
+
             Console.WriteLine("Введите своё собщение");
             message = Console.ReadLine();
             Console.WriteLine("Введите кол-во отправляемых сообщений");
-            numberMessages = Convert.ToInt32(Console.ReadLine());
+            int.TryParse(Console.ReadLine(), out int numberMessages);
 
             for (int i = 0; i < numberMessages; i++)
             {
