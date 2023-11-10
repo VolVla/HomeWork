@@ -36,6 +36,7 @@ namespace RequestNumber
                     Console.WriteLine($"Преобразование прошло не удачно введите число.");
                 }
             }
+            
              return number;
         }
     }
