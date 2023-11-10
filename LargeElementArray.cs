@@ -1,14 +1,11 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LargeElementArray
 {
         class Program
         {
-            static void Main(string[] args)
+            static void Main()
             {
                 int sizeArrayLines = 10;
                 int sizeArrayColumns = 10;
@@ -17,6 +14,7 @@ namespace LargeElementArray
                 Random random = new Random();
 
                 Console.WriteLine("Исходная матрица");
+                    
                 for (int i = 0; i < matrix.GetLength(0); i++)
                 {
                     for (int j = 0; j < matrix.GetLength(1); j++)
@@ -27,10 +25,13 @@ namespace LargeElementArray
                         {
                             maximumElement = matrix[i, j];
                         }
+                            
                         Console.Write(matrix[i,j] + " ");
                     }
+                        
                     Console.WriteLine();
                 }
+                    
                 Console.WriteLine("Наибольший элемент = " + maximumElement);
 
                 for (int i = 0; i < matrix.GetLength(0); i++)
@@ -43,6 +44,7 @@ namespace LargeElementArray
                         }
                     }
                 }
+                    
                 Console.WriteLine("\nПолученная матрица");
 
                 for (int i = 0; i < matrix.GetLength(0); i++)
@@ -51,6 +53,7 @@ namespace LargeElementArray
                     {
                         Console.Write(matrix[i, j] + " ");
                     }
+                        
                     Console.WriteLine();
                 }
             }
