@@ -20,10 +20,6 @@ namespace SimpleProgram
             bool isExit = false;
             string userInput;
             string wordsWelcome = "Добро пожаловать в мою программу.";
-            int sizeHeightConsole;
-            int sizeWidthConsole;
-            int heightPositionCursor;
-            int widthPositionCursor;
 
             while (isExit == false)
             {
@@ -72,9 +68,9 @@ namespace SimpleProgram
                         break;
                     case CommandSetConsoleSize:
                         Console.WriteLine(" Предупреждение.Размер консоли ограничен до 63.\nУстановите размер высоты окна консоли.");
-                        sizeHeightConsole = Convert.ToInt32(Console.ReadLine());
+                        int sizeHeightConsole = Convert.ToInt32(Console.ReadLine());
                         Console.WriteLine(" Установите размер ширины окна консоли.");
-                        sizeWidthConsole = Convert.ToInt32(Console.ReadLine());
+                        int sizeWidthConsole = Convert.ToInt32(Console.ReadLine());
                         Console.WindowHeight = sizeHeightConsole;
                         Console.WindowWidth = sizeWidthConsole;
                         break;
@@ -84,9 +80,9 @@ namespace SimpleProgram
                         break;
                     case CommandSetPositionCursor:
                         Console.WriteLine(" Установите положение высоты позиции курсора.");
-                        heightPositionCursor = Convert.ToInt32(Console.ReadLine());
+                        int heightPositionCursor = Convert.ToInt32(Console.ReadLine());
                         Console.WriteLine(" Установите положение ширины позиции курсора.");
-                        widthPositionCursor = Convert.ToInt32(Console.ReadLine());
+                        int widthPositionCursor = Convert.ToInt32(Console.ReadLine());
                         Console.SetCursorPosition(widthPositionCursor, heightPositionCursor);
                         break;
                     case CommandClearConsole:
