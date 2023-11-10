@@ -1,32 +1,29 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LiteDynamicArray
 {
     class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
+            const string WordExit = "exit";
+            const string CommandAmount = "sum";
             bool isExit = true;
             string userInput;
-            const string wordExit = "exit";
-            const string commandAmount = "sum";
             List<int> numbers = new List<int>();
 
             while (isExit == true)
             {
-                Console.WriteLine($"\nВведите число  \nДля вывода суммы всех введеных чисел.Введите слово {commandAmount}\nДля выхода из программы.Введите слово {wordExit}");
+                Console.WriteLine($"\nВведите число  \nДля вывода суммы всех введеных чисел.Введите слово {CommandAmount}\nДля выхода из программы.Введите слово {WordExit}");
                 userInput = Console.ReadLine();
 
-                if (wordExit == userInput)
+                if (WordExit == userInput)
                 {
                     Console.WriteLine("Вы вышли из программы.");
                     isExit = false;
                 }
-                else if (commandAmount == userInput)
+                else if (CommandAmount == userInput)
                 {
                     SumNumbers(numbers);
                 }
@@ -36,19 +33,14 @@ namespace LiteDynamicArray
 
                     if (result == true)
                     {
-                        EnterNumber(numbers, enterNumber);
+                        numbers.Add(enterNumber);
                     }
-                    else if(result == false)
+                    else if (result == false)
                     {
                         Console.WriteLine($"Вы ввели не число и не известную команду");
                     }
                 }
-            }  
-        }
-
-        static void EnterNumber(List<int> numbers,int enterNumber)
-        { 
-            numbers.Add(enterNumber);
+            }
         }
 
         static void SumNumbers(List<int> numbers)
