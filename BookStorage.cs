@@ -7,10 +7,10 @@ namespace DictionaryBook
     {
         static void Main(string[] args)
         {
-            bool isBookStorageWork = true;
+            bool _isBookStorageWork = true;
             BookStorage bookStorage = new BookStorage();
 
-            while (isBookStorageWork == true)
+            while (_isBookStorageWork == true)
             {
                 Console.WriteLine("\nДобро пожаловать в хранилище книг");
                 Console.WriteLine("1 - Добавить книгу в хранилище, 2 - убрать книгу из хранилища, 3 - Показать все книги, 4 - Показать книги по указанному параметру, 5 - Выйти из программы");
@@ -58,7 +58,7 @@ namespace DictionaryBook
             nameAutor = Console.ReadLine();
             Console.WriteLine("Введите дату созданию книги");
             isAge = int.TryParse(Console.ReadLine(), out int ageRelease);
-            
+
             if (isAge == false)
             {
                 Console.WriteLine("Неккоректный ввод.");
@@ -91,7 +91,7 @@ namespace DictionaryBook
 
                 for (int i = 0; i < _books.Count; i++)
                 {
-                    if (_books[i]._nameBook == input)
+                    if (_books[i].NameBook == input)
                     {
                         _books.RemoveAt(i);
                         Console.WriteLine("Книга была убрана из хранилища.");
@@ -127,19 +127,23 @@ namespace DictionaryBook
 
         public void SortBookStorage()
         {
+            const string CommandBookSortByName = "1";
+            const string CommandBookSortByAuthor = "2";
+            const string CommandBookSortByDate = "3";
+
             if (_books.Count > 0)
             {
-                Console.WriteLine($"Для сортировки книг по название напишите 1. Для сортировки по автору книги напишите 2 . Для сортировки по дате создание книги пишите 3");
+                Console.WriteLine($"Для сортировки книг по название напишите {CommandBookSortByName}. Для сортировки по автору книги напишите {CommandBookSortByAuthor} . Для сортировки по дате создание книги пишите {CommandBookSortByDate}");
 
                 switch (Console.ReadLine())
                 {
-                    case "1":
+                    case CommandBookSortByName:
                         SortTitleBook();
                         break;
-                    case "2":
+                    case CommandBookSortByAuthor:
                         SortNameAutor();
                         break;
-                    case "3":
+                    case CommandBookSortByDate:
                         SortAgeRelease();
                         break;
                     default:
@@ -162,7 +166,7 @@ namespace DictionaryBook
 
             foreach (Book book in _books)
             {
-                if (book._nameBook == input)
+                if (book.NameBook == input)
                 {
                     book.ShowInfo();
                     isFound = true;
@@ -184,7 +188,7 @@ namespace DictionaryBook
 
             foreach (Book book in _books)
             {
-                if (book._autorBook == input)
+                if (book.AutorBook == input)
                 {
                     book.ShowInfo();
                     isFound = true;
@@ -208,7 +212,7 @@ namespace DictionaryBook
             {
                 foreach (Book book in _books)
                 {
-                    if (book._ageRelease == age)
+                    if (book.AgeRelease == age)
                     {
                         book.ShowInfo();
                         isFound = true;
@@ -247,4 +251,4 @@ namespace DictionaryBook
             Console.WriteLine($"Название книги - {NameBook}, Имя автора - {AutorBook}, Год релиза книги - {AgeRelease}, Количество книг - {QuantityBooks}");
         }
     }
-} 
+}
