@@ -1,23 +1,22 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Cycle
 {
     class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
-            int exitValue = 7;
+            int currentOfNumber = 5;
             int stepValue = 7;
-            int maximumNumber = 98;
+            int maximumNumber = 96;
 
-            for (int i = exitValue; exitValue <= maximumNumber ; exitValue += stepValue )
+            for (int i = 0; currentOfNumber <= maximumNumber; i++)
             {
-                 Console.Write(exitValue+" ");
+                Console.Write(currentOfNumber + " ");
+                currentOfNumber += stepValue;
             }
+
+            Console.ReadKey();
         }
     }
 }
