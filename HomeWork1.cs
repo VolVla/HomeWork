@@ -11,6 +11,7 @@ namespace HomeWork1
         {
             string nameUser;
             string signOfZodiac;
+            
             Console.WriteLine("Как вас зовут");
             nameUser = Console.ReadLine();
             Console.WriteLine("Какой ваш знак зодиака");
