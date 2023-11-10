@@ -1,14 +1,10 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RectangleName
 {
     class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
             int lineSymbol = 0; 
             char symbol;
@@ -25,6 +21,7 @@ namespace RectangleName
             {
                  Console.Write(symbol);
             }
+            
             Console.Write("\n"+ lineUserName + "\n");
 
             for (int x = lineSymbol; x < lineUserName.Length; x++)
