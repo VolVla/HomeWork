@@ -8,7 +8,7 @@ namespace Random100
 {
     class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
             int number;
             int multiplicityFirstValue = 3;
@@ -27,6 +27,7 @@ namespace Random100
                     sumNumbers += i;
                 }
             }
+            
             Console.WriteLine($"\nСумма всех положительных чисел которые кратные {multiplicityFirstValue} или {multiplicitySecondtValue} сумма равна {sumNumbers}");
         }
     }
