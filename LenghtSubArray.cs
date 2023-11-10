@@ -32,6 +32,7 @@ namespace LenghtSubArray
                     numberRepeat = 1;
                 }
            }
+            
            Console.WriteLine($"\nСамое большое число {maximumValue}, кол-во повторений {maximumValueRepeat}");
 
            foreach (int value in arrayNumbers)
