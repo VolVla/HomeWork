@@ -1,15 +1,16 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PersonAccounting
 {
     class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
+            const string CommandAddDosier = "1";
+            const string CommandShowDosiers = "2";
+            const string CommandRemoveDosier = "3";
+            const string CommandExit = "4";
             bool isExit = false;
             string inputUser;
             List<string> fullName = new List<string>();
@@ -17,21 +18,21 @@ namespace PersonAccounting
 
             while (isExit == false)
             {
-                Console.WriteLine("\n1 Для добавление досье введите 1.\n2 Для вывода всех досье введите 2. \n3 Для удаления досье введите 3. \n4 Для выхода из программы введите 4.");
+                Console.WriteLine($"\n1 Для добавление досье введите {CommandAddDosier}.\n2 Для вывода всех досье введите {CommandShowDosiers}. \n3 Для удаления досье введите {CommandRemoveDosier}. \n4 Для выхода из программы введите {CommandExit}.");
                 inputUser = Console.ReadLine();
 
                 switch (inputUser)
                 {
-                    case "1":
+                    case CommandAddDosier:
                         AddDosier(fullName, positionJob);
                         break;
-                    case "2":
+                    case CommandShowDosiers:
                         ShowDossies(fullName, positionJob);
                         break;
-                    case "3":
-                        RemoveDossier(fullName,positionJob);
+                    case CommandRemoveDosier:
+                        RemoveDossier(fullName, positionJob);
                         break;
-                    case "4":
+                    case CommandExit:
                         Console.WriteLine("Вы вышли из программы");
                         isExit = true;
                         break;
@@ -64,7 +65,7 @@ namespace PersonAccounting
             }
         }
 
-        static void RemoveDossier( List<string> fullName,  List<string> positionJob)
+        static void RemoveDossier(List<string> fullName, List<string> positionJob)
         {
             int indexArray = 0;
             string input;
@@ -72,11 +73,11 @@ namespace PersonAccounting
             Console.WriteLine($"Напишите порядковый номер досье,который вы хотите удалить");
             ShowDossies(fullName, positionJob);
 
-            while(result == false)
+            while (result == false)
             {
                 input = Console.ReadLine();
 
-                if(int.TryParse(input,out int value))
+                if (int.TryParse(input, out int value))
                 {
                     indexArray = value;
                     result = true;
