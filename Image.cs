@@ -14,6 +14,7 @@ namespace Image
             int capacityRow = 3;
             int filledOfRow;
             int imageBeyondMeasure;
+            
             filledOfRow = numberOfImages / capacityRow;
             imageBeyondMeasure = numberOfImages % capacityRow;
             Console.WriteLine("У вас " + filledOfRow + " полностью заполненных рядов ,и " + imageBeyondMeasure + " картинка сверх меры");
