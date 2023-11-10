@@ -5,7 +5,7 @@ namespace DateBasePlayer
 {
     class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
             DateBase dateBase = new DateBase();
             dateBase.Work();
@@ -14,6 +14,10 @@ namespace DateBasePlayer
 
     class DateBase
     {
+        private const string _CommandAddPlayer = "1";
+        private const string _CommandConsoleBanPlayer = "2";
+        private const string _CommandRemovePlayer = "3";
+        private const string _CommandExit = "4";
         private bool _isDataBaseWork = true;
 
         private List<Player> _players = new List<Player>();
@@ -25,22 +29,22 @@ namespace DateBasePlayer
             while (_isDataBaseWork)
             {
                 Console.WriteLine("Добро пожаловать! Доступные комманды");
-                Console.WriteLine("1 - Добавить игрока \n2 - Консоль бана \n3 - Удалить игрока\n4 - Выход");
+                Console.WriteLine($"{_CommandAddPlayer} - Добавить игрока \n{_CommandConsoleBanPlayer} - Консоль бана \n{_CommandRemovePlayer} - Удалить игрока\n{_CommandExit} - Выход");
                 userInput = Console.ReadLine();
                 Console.Clear();
 
                 switch (userInput)
                 {
-                    case "1":
+                    case _CommandAddPlayer:
                         AddPlayer();
                         break;
-                    case "2":
+                    case _CommandConsoleBanPlayer:
                         BanPlayer();
                         break;
-                    case "3":
+                    case _CommandRemovePlayer:
                         RemovePlayer();
                         break;
-                    case "4":
+                    case _CommandExit:
                         _isDataBaseWork = false;
                         break;
                     default:
@@ -68,7 +72,7 @@ namespace DateBasePlayer
 
             if (isFail == false)
             {
-                _players.Add(new Player(nickName, result , idPlayer));
+                _players.Add(new Player(nickName, result, idPlayer));
             }
             else
             {
@@ -104,7 +108,7 @@ namespace DateBasePlayer
                     isFail = true;
                 }
             }
-           
+
             return isFail;
         }
 
@@ -162,7 +166,7 @@ namespace DateBasePlayer
                 Console.WriteLine("Что - бы изменить статус бана персонажа, напиши его порядковый номер");
 
                 CheckString(out userInput, out result);
-                
+
                 isFail = GetIdPlayer(result, idPlayer, isFail);
 
                 if (isFail == true)
@@ -178,7 +182,7 @@ namespace DateBasePlayer
 
                     _players[idPlayer].ShowDetails();
                 }
-                else if(isFail == false)
+                else if (isFail == false)
                 {
                     Console.WriteLine("Данные не корректны");
                 }
@@ -207,7 +211,7 @@ namespace DateBasePlayer
 
         public int IdPlayer()
         {
-           return Id;
+            return Id;
         }
 
         public void Unban()
