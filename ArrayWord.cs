@@ -13,7 +13,8 @@ namespace ArrayWord
             string text ="Дана строка с текстом используя метод строки ";
             string[] arrayWords = text.Split(' ');
 
-            foreach (string word in arrayWords){
+            foreach (string word in arrayWords)
+            {
                 Console.WriteLine($"{word}");
             }
         }
