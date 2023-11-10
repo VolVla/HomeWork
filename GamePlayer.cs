@@ -22,6 +22,7 @@ namespace GamePlayer
     {
         private int _positionX = 10;
         private int _positionY = 15;
+        
         public int PositionX 
         {
             get 
@@ -33,6 +34,7 @@ namespace GamePlayer
                 _positionX = value; 
             } 
         }
+        
         public int PositionY
         {
             get
