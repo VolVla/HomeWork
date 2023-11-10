@@ -1,15 +1,10 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 
 namespace MaximumDepthExpressions
 {
     class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
             int valueLeftParenthesis = 0;
             int valueRightParenthesis = 0;
@@ -20,23 +15,31 @@ namespace MaximumDepthExpressions
 
             for (int i = 0; i < text.Length; i++)
             {
-                if (text[i] == leftParenthesis){
+                if (text[i] == leftParenthesis)
+                {
                     valueLeftParenthesis++;
-                    if (i != text.Length-1 && text[i+1] != leftParenthesis){
+                    
+                    if (i != text.Length-1 && text[i+1] != leftParenthesis)
+                    {
                         maximumDepthParenthesis++;
                     }
                 }
-                else if (text[i] == rightParenthesis){
+                else if (text[i] == rightParenthesis)
+                {
                     valueRightParenthesis++;
                 }
-                if(valueLeftParenthesis < valueRightParenthesis){
+                if(valueLeftParenthesis < valueRightParenthesis)
+                {
                     break;    
                 } 
             }
-            if (valueLeftParenthesis == valueRightParenthesis){
+            
+            if (valueLeftParenthesis == valueRightParenthesis)
+            {
                 Console.WriteLine($"Корректное скобочное выражение, максимальная глубина вложенных скобок {maximumDepthParenthesis}");
             }
-            else{
+            else
+            {
                 Console.WriteLine($"Не корректное скобочное выражение.");      
             } 
         }
