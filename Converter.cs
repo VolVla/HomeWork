@@ -128,8 +128,8 @@ namespace Converter
                             break;
                     case "7":
                             Console.WriteLine("Вы закончили обмен.");
-                        isExit = true;
-                        break;
+                            isExit = true;
+                            break;
                 }
             }
         }
