@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Hospital
 {
@@ -10,18 +6,17 @@ namespace Hospital
     {
         static void Main(string[] args)
         {
-            const int timeOfmin = 60;
+            const int timeMinuteOfHour = 60;
             const int timeService = 10;
             int allWaitingTime;
-            int waitingTimeMin;
+            int waitingTimeMinute;
             int waitingTimeHour;
-            int humans;
             Console.Write("Введите кол-во людей в очереди:");
-            humans = Convert.ToInt32(Console.ReadLine());
-            allWaitingTime = humans * timeService;
-            waitingTimeHour = allWaitingTime / timeOfmin;
-            waitingTimeMin = allWaitingTime % timeOfmin;
-            Console.WriteLine("Вы должны отстоять в очереди: " + waitingTimeHour + " часа " + waitingTimeMin + " минут.");
+            int.TryParse(Console.ReadLine(), out int numberHumans);
+            allWaitingTime = numberHumans * timeService;
+            waitingTimeHour = allWaitingTime / timeMinuteOfHour;
+            waitingTimeMinute = allWaitingTime % timeMinuteOfHour;
+            Console.WriteLine($"Вы должны отстоять в очереди: {waitingTimeHour} часа {waitingTimeMinute} минут.");
         }
     }
 }
