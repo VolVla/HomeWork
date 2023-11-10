@@ -1,14 +1,10 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SumEnteredNumbers
 {
     class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
             int[] arrayNumbers = new int[0];
             bool isExit = false;
