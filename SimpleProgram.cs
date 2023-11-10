@@ -23,7 +23,7 @@ namespace SimpleProgram
 
             while (isExit == false)
             {
-                Console.WriteLine(wordsWelcome + "\nЗдесь вы можете. \n 1 - Установить цвет текста.\n 2 - Установить цвет фона консоли.\n 3 - Установить размер окна консоли.\n 4 - Установить слова приветсвия в программе.\n 5 - Установить позицию курсора в консоли. \n 6 - Очистить консоль.\n 7 - Выход из программы.");
+                Console.WriteLine(wordsWelcome + $"\nЗдесь вы можете. \n {CommandSetColorText} - Установить цвет текста.\n {CommandSetColorFonConsole} - Установить цвет фона консоли.\n {CommandSetConsoleSize} - Установить размер окна консоли.\n {CommandSetWordOfWelcome} - Установить слова приветсвия в программе.\n {CommandSetPositionCursor} - Установить позицию курсора в консоли. \n {CommandClearConsole} - Очистить консоль.\n {CommandExitProgram} - Выход из программы.");
                 userInput = Console.ReadLine();
 
                 switch (userInput)
@@ -46,6 +46,7 @@ namespace SimpleProgram
                                 Console.ForegroundColor = ConsoleColor.Blue;
                                 break;
                         }
+
                         break;
                     case CommandSetColorFonConsole:
                         Console.WriteLine("\n 1 - Установить красный  цвет фона.\n 2 - Установить зелёный  цвет фона.\n 3 - Установить жёлтый  цвет фона.\n 4 - Установить синий  цвет фона. ");
@@ -65,6 +66,7 @@ namespace SimpleProgram
                                 Console.BackgroundColor = ConsoleColor.Blue;
                                 break;
                         }
+
                         break;
                     case CommandSetConsoleSize:
                         Console.WriteLine(" Предупреждение.Размер консоли ограничен до 63.\nУстановите размер высоты окна консоли.");
