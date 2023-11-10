@@ -1,14 +1,10 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FindNaturalNumbers
 {
     class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
             int maximumValue = 28;
             int minimumValue = 1;
@@ -24,7 +20,8 @@ namespace FindNaturalNumbers
                 {
                     amountNaturalNumbers++;
                 }
-            } 
+            }
+            
             Console.WriteLine($"Число N = {valueElementN} количество трехзначных натуральных чисел {amountNaturalNumbers}");
         }
     }
