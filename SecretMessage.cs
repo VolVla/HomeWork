@@ -10,7 +10,7 @@ namespace SecretMessage
             string password = "admin";
             int numberOfAttempts;
 
-            for (int i = 0; i < tryCount; i++)
+            for (int i = 1; i <= tryCount; i++)
             {
                 Console.WriteLine("Введите пароль " + password);
                 string inputPassword = Console.ReadLine();
@@ -22,7 +22,7 @@ namespace SecretMessage
                 }
                 else
                 {
-                    numberOfAttempts = tryCount - i - 1;
+                    numberOfAttempts = tryCount - i ;
                     Console.WriteLine("Введите правильный пароль. У вас осталось - " + numberOfAttempts + " попыток.");
                 }
             }
