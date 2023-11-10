@@ -1,15 +1,16 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DossierFullName
 {
     class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
+            const string CommandAddDosier = "1";
+            const string CommandShowDosiers = "2";
+            const string CommandRemoveDosier = "3";
+            const string CommandFindDosierFullName = "4";
+            const string CommandExit = "5";
             bool exit = false;
             string[] arrayFullNames = new string[0];
             string[] arrayPositonJobs = new string[0];
@@ -17,24 +18,24 @@ namespace DossierFullName
 
             while (exit == false)
             {
-                Console.WriteLine("\n1 Для добавление досье введите 1.\n2 Для вывода всех досье введите 2. \n3 Для удаления досье введите 3. \n4 Для поиска досье по фамилии введите 4. \n5 Для выхода из программы введите 5.");
+                Console.WriteLine($"\n1 Для добавление досье введите {CommandAddDosier}.\n2 Для вывода всех досье введите {CommandShowDosiers}. \n3 Для удаления досье введите {CommandRemoveDosier}. \n4 Для поиска досье по фамилии введите {CommandFindDosierFullName}.\n5 Для выхода из программы введите {CommandExit}");
                 inputUser = Console.ReadLine();
 
                 switch (inputUser)
                 {
-                    case "1":
+                    case CommandAddDosier:
                         AddDosier(ref arrayFullNames, ref arrayPositonJobs);
                         break;
-                    case "2":
+                    case CommandShowDosiers:
                         ShowDossies(arrayFullNames, arrayPositonJobs);
                         break;
-                    case "3":
+                    case CommandRemoveDosier:
                         RemoveDossier(ref arrayFullNames, ref arrayPositonJobs);
                         break;
-                    case "4":
+                    case CommandFindDosierFullName:
                         FindDossier(arrayFullNames, arrayPositonJobs);
                         break;
-                    case "5":
+                    case CommandExit:
                         Console.WriteLine("Вы вышли из программы");
                         exit = true;
                         break;
@@ -50,7 +51,7 @@ namespace DossierFullName
             AssigningValueArray(ref arrayPositonJobs);
         }
 
-        static void AssigningValueArray(ref string[] nameArray) 
+        static void AssigningValueArray(ref string[] nameArray)
         {
             string[] tempValueArray = new string[nameArray.Length + 1];
 
@@ -66,9 +67,9 @@ namespace DossierFullName
 
         static void ShowDossies(string[] arrayFullNames, string[] arrayPositonJobs)
         {
-            for(int i = 0; i < arrayFullNames.Length; i++)
+            for (int i = 0; i < arrayFullNames.Length; i++)
             {
-                if(arrayFullNames[i] != "" && arrayPositonJobs[i] != "")
+                if (arrayFullNames[i] != "" && arrayPositonJobs[i] != "")
                 {
                     Console.WriteLine($"{i + 1}    - {arrayFullNames[i]} -  {arrayPositonJobs[i]}");
                 }
@@ -85,7 +86,7 @@ namespace DossierFullName
             DeletedValueArray(ref arrayFullNames, ref indexArray);
             DeletedValueArray(ref arrayPositonJobs, ref indexArray);
             Console.WriteLine($"Вы удалили досье");
-        }  
+        }
 
         static void DeletedValueArray(ref string[] nameArray, ref int indexArray)
         {
@@ -103,7 +104,7 @@ namespace DossierFullName
 
             nameArray = tempValueArray;
         }
-       
+
         static void FindDossier(string[] arrayFullNames, string[] arrayPositonJobs)
         {
             bool foundDossier = false;
@@ -113,12 +114,12 @@ namespace DossierFullName
 
             Console.WriteLine($"Чтобы найти досье, напишите полностью фамилию");
             inputSurname = Console.ReadLine();
-            
-            for(int i = 0; i < arrayFullNames.Length; i++)
+
+            for (int i = 0; i < arrayFullNames.Length; i++)
             {
                 inputFullNames = arrayFullNames[i].Split(' ');
 
-                if(inputSurname == inputFullNames[0])
+                if (inputSurname == inputFullNames[0])
                 {
                     indexArray = i;
                     Console.WriteLine("Досье найдено!");
@@ -127,9 +128,9 @@ namespace DossierFullName
                 }
             }
 
-            if(foundDossier == false)
+            if (foundDossier == false)
             {
-              Console.WriteLine("Такое досье не было найдено!");
+                Console.WriteLine("Такое досье не было найдено!");
             }
         }
     }
