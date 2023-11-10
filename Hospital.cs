@@ -11,6 +11,7 @@ namespace Hospital
             int allWaitingTime;
             int waitingTimeMinute;
             int waitingTimeHour;
+            
             Console.Write("Введите кол-во людей в очереди:");
             int.TryParse(Console.ReadLine(), out int numberHumans);
             allWaitingTime = numberHumans * timeService;
