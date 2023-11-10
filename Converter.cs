@@ -1,15 +1,18 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Converter
 {
     class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
+            const string CommandExchangeOfDollarsToRubles = "1";
+            const string CommandExchangeOfDollarsToYuans = "2";
+            const string CommandExchangeOfRublesToDollars = "3";
+            const string CommandExchangeOfRublesToYuans = "4";
+            const string CommandExchangeOfYuansToDollars = "5";
+            const string CommandExchangeOfYuansToRubles = "6";
+            const string CommandExit = "exit";
             float balanceUsd = 100;
             float balanceRub = 20;
             float balanceCny = 10;
@@ -17,26 +20,24 @@ namespace Converter
             float usdToCny = 6.37f;
             float rubToCny = 0.085f;
             float currencyCount;
-            string userInput;
             bool isExit = false;
 
             Console.WriteLine("Добро пожаловать в обменик валют.Выберете основную валюту для обмена. ");
 
             while (isExit == false)
-            {   
+            {
                 Console.WriteLine("Ваш баланс " + balanceUsd + " Долларов " + balanceRub + " Рублей " + balanceCny + " Юаней ");
-                Console.WriteLine("1 - обменять доллары на рубли");
-                Console.WriteLine("2 - обменять доллары на юани");
-                Console.WriteLine("3 - обменять рубли на доллары");
-                Console.WriteLine("4 - обменять рубли на юани");
-                Console.WriteLine("5 - обменять юани на доллары");
-                Console.WriteLine("6 - обменять юани на рубли");
-                Console.WriteLine("7 - Закончить обмен");
-                userInput = Console.ReadLine();
+                Console.WriteLine($"{CommandExchangeOfDollarsToRubles} - обменять доллары на рубли");
+                Console.WriteLine($"{CommandExchangeOfDollarsToYuans} - обменять доллары на юани");
+                Console.WriteLine($"{CommandExchangeOfRublesToDollars} - обменять рубли на доллары");
+                Console.WriteLine($"{CommandExchangeOfRublesToYuans} - обменять рубли на юани");
+                Console.WriteLine($"{CommandExchangeOfYuansToDollars} - обменять юани на доллары");
+                Console.WriteLine($"{CommandExchangeOfYuansToRubles} - обменять юани на рубли");
+                Console.WriteLine($"Введите {CommandExit} ,чтоб закончить обмен");
 
-                switch (userInput)
-                {   
-                    case "1":
+                switch (Console.ReadLine())
+                {
+                    case CommandExchangeOfDollarsToRubles:
                         Console.WriteLine("Обмен доллары на рубли.");
                         Console.WriteLine("Сколько вы хотите обменять:");
                         currencyCount = Convert.ToSingle(Console.ReadLine());
@@ -44,14 +45,14 @@ namespace Converter
                         if (balanceUsd >= currencyCount)
                         {
                             balanceUsd -= currencyCount;
-                            balanceRub += usdToRub / currencyCount ;
+                            balanceRub += usdToRub / currencyCount;
                         }
                         else
-                        {  
+                        {
                             Console.WriteLine("Введено недопустимое кол-во долларов.");
                         }
-                            break;
-                    case "2":
+                        break;
+                    case CommandExchangeOfDollarsToYuans:
                         Console.WriteLine("Обмен доллары на юань.");
                         Console.WriteLine("Сколько вы хотите обменять:");
                         currencyCount = Convert.ToSingle(Console.ReadLine());
@@ -59,77 +60,77 @@ namespace Converter
                         if (balanceUsd >= currencyCount)
                         {
                             balanceUsd -= currencyCount;
-                            balanceCny += usdToCny / currencyCount ;
+                            balanceCny += usdToCny / currencyCount;
                         }
                         else
-                        {   
+                        {
                             Console.WriteLine("Введено недопустимое кол-во долларов.");
                         }
-                            break;
-                    case "3":
+                        break;
+                    case CommandExchangeOfRublesToDollars:
                         Console.WriteLine("Обмен рублей на доллары.");
                         Console.WriteLine("Сколько вы хотите обменять:");
                         currencyCount = Convert.ToSingle(Console.ReadLine());
 
                         if (balanceRub >= currencyCount)
-                        {   
+                        {
                             balanceRub -= currencyCount;
-                            balanceUsd += usdToRub / currencyCount ;
+                            balanceUsd += usdToRub / currencyCount;
                         }
                         else
-                        {   
+                        {
                             Console.WriteLine("Введено недопустимое кол-во рублей.");
                         }
-                            break;
-                    case "4":
+                        break;
+                    case CommandExchangeOfRublesToYuans:
                         Console.WriteLine("Обмен рублей на юани.");
                         Console.WriteLine("Сколько вы хотите обменять:");
                         currencyCount = Convert.ToSingle(Console.ReadLine());
 
                         if (balanceRub >= currencyCount)
-                        {   
+                        {
                             balanceRub -= currencyCount;
-                            balanceCny +=  rubToCny / currencyCount ;
+                            balanceCny += rubToCny / currencyCount;
                         }
                         else
-                        {   
+                        {
                             Console.WriteLine("Введено недопустимое кол-во рублей.");
                         }
-                            break;
-                    case "5":
+                        break;
+                    case CommandExchangeOfYuansToDollars:
                         Console.WriteLine("Обмен юани на доллары .");
                         Console.WriteLine("Сколько вы хотите обменять:");
                         currencyCount = Convert.ToSingle(Console.ReadLine());
 
                         if (balanceCny >= currencyCount)
-                        {   
+                        {
                             balanceCny -= currencyCount;
                             balanceUsd += usdToCny / currencyCount;
                         }
                         else
-                        {   
-                             Console.WriteLine("Введено недопустимое кол-во юаней.");
+                        {
+                            Console.WriteLine("Введено недопустимое кол-во юаней.");
                         }
-                            break;
-                    case "6":
+                        break;
+                    case CommandExchangeOfYuansToRubles:
                         Console.WriteLine("Обмен юани на рубли.");
                         Console.WriteLine("Сколько вы хотите обменять: ");
                         currencyCount = Convert.ToSingle(Console.ReadLine());
 
                         if (balanceCny >= currencyCount)
-                        {   
+                        {
                             balanceCny -= currencyCount;
                             balanceRub += rubToCny / currencyCount;
                         }
                         else
-                        {   
+                        {
                             Console.WriteLine("Введено недопустимое кол-во юаней.");
                         }
-                            break;
-                    case "7":
-                            Console.WriteLine("Вы закончили обмен.");
-                            isExit = true;
-                            break;
+                        break;
+                    case CommandExit:
+                        Console.WriteLine("Вы закончили обмен.");
+                        isExit = true;
+                        break;
                 }
             }
         }
