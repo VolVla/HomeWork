@@ -45,11 +45,15 @@ namespace BattleRpg
 
             while (healthHero >= pointsBeforeDeathPerson & healthEnemy >= pointsBeforeDeathPerson)
             {
-                Console.WriteLine($"\nУ вас  {healthHero}  здоровья и  {currentValueIsCurse}  очков проклятья при достижение  {pointsBeforeDeathfHero}  очков вы умрете" +
-                $".\nУ босса {healthEnemy}  здоровья  {storageMagicPointVoodoo} очков проклятье вуду и {pointsFireEffect} очков подгорания.\n\n Вы можете применить способности." +
-                $" \n {CommandAttackFireball}- Атака Огненым шаром \n {CommandAttackSpirit} - Попросить духов о помощи (можно использовать один раз), игнорирует одну атаку противника," +
-                $"\n и востанавливает не много здоровья \n {CommandCurseEnemy} - Проклятье куклы вуды (востанавливает не много здоровья на кладывает на противника одно проклятье вуду.)" +
-                $"\n {CommandAttackCurse} - Проткнуть куклу вуду(наносит сильный урон при этом тратит " + conditionApplicationMagicVoodooPoints + " очка проклятья вуду.)");
+                Console.WriteLine($"\nУ вас  {healthHero}  здоровья и  {currentValueIsCurse}  очков проклятья" +
+                $" при достижение {pointsBeforeDeathfHero}  очков вы умрете.\nУ босса {healthEnemy}  здоровья" +
+                $"{storageMagicPointVoodoo} очков проклятье вуду и {pointsFireEffect} очков подгорания." +
+                $"\n\n Вы можете применить способности. \n {CommandAttackFireball}- Атака Огненым шаром" +
+                $"\n {CommandAttackSpirit} - Попросить духов о помощи (можно использовать один раз)," +
+                $" игнорирует одну атаку противника,\n и востанавливает не много здоровья \n {CommandCurseEnemy}" +
+                $"- Проклятье куклы вуды (востанавливает не много здоровья на кладывает на противника одно" +
+                $" проклятье вуду.)\n {CommandAttackCurse} - Проткнуть куклу вуду(наносит сильный урон при этом " +
+                $"тратит " + conditionApplicationMagicVoodooPoints + " очка проклятья вуду.)");
                 userInput = Console.ReadLine();
 
                 if (currentValueIsCurse == pointsBeforeDeathfHero)
