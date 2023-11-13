@@ -1,22 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System;
 
 namespace ArrayWord
 {
     class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
-            string text ="Дана строка с текстом используя метод строки ";
-            string[] arrayWords = text.Split(' ');
+            string text = "Дана строка с текстом используется метод строки ";
+            char spaceText = ' ';
+            string[] arrayWords = text.Split(spaceText);
 
             foreach (string word in arrayWords)
             {
                 Console.WriteLine($"{word}");
             }
+
+            Console.ReadKey();
         }
     }
 }
