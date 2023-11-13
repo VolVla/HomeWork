@@ -17,6 +17,7 @@ namespace SimpleProgram
             const string CommandSetGreen = "2";
             const string CommandSetBlue = "3";
             const string CommandSetYellow = "4";
+
             bool isExit = false;
             string userInput;
             string wordsWelcome = "Добро пожаловать в мою программу.";
@@ -29,45 +30,51 @@ namespace SimpleProgram
                 switch (userInput)
                 {
                     case CommandSetColorText:
-                        Console.WriteLine("\n 1 - Установить красный  цвет текста.\n 2 - Установить зелёный  цвет текста.\n 3 - Установить жёлтый  цвет текста.\n 4 - Установить синий  цвет текста. ");
+                        Console.WriteLine($"\n {CommandSetRed} - Установить красный  цвет текста.\n {CommandSetGreen} - Установить зелёный  цвет текста.\n {CommandSetYellow} - Установить жёлтый  цвет текста.\n {CommandSetBlue} - Установить синий  цвет текста. ");
 
                         switch (Console.ReadLine())
                         {
                             case CommandSetRed:
                                 Console.ForegroundColor = ConsoleColor.Red;
                                 break;
+
                             case CommandSetGreen:
                                 Console.ForegroundColor = ConsoleColor.Green;
                                 break;
+
                             case CommandSetYellow:
                                 Console.ForegroundColor = ConsoleColor.Yellow;
                                 break;
+
                             case CommandSetBlue:
                                 Console.ForegroundColor = ConsoleColor.Blue;
                                 break;
                         }
-
                         break;
+
                     case CommandSetColorFonConsole:
-                        Console.WriteLine("\n 1 - Установить красный  цвет фона.\n 2 - Установить зелёный  цвет фона.\n 3 - Установить жёлтый  цвет фона.\n 4 - Установить синий  цвет фона. ");
+                        Console.WriteLine($"\n {CommandSetRed} - Установить красный  цвет фона.\n {CommandSetGreen}- Установить зелёный  цвет фона.\n {CommandSetYellow} - Установить жёлтый  цвет фона.\n {CommandSetBlue} - Установить синий  цвет фона. ");
 
                         switch (Console.ReadLine())
                         {
                             case CommandSetRed:
                                 Console.BackgroundColor = ConsoleColor.Red;
                                 break;
+
                             case CommandSetGreen:
                                 Console.BackgroundColor = ConsoleColor.Green;
                                 break;
+
                             case CommandSetYellow:
                                 Console.BackgroundColor = ConsoleColor.Yellow;
                                 break;
+
                             case CommandSetBlue:
                                 Console.BackgroundColor = ConsoleColor.Blue;
                                 break;
                         }
-
                         break;
+
                     case CommandSetConsoleSize:
                         Console.WriteLine(" Предупреждение.Размер консоли ограничен до 63.\nУстановите размер высоты окна консоли.");
                         int sizeHeightConsole = Convert.ToInt32(Console.ReadLine());
@@ -76,10 +83,12 @@ namespace SimpleProgram
                         Console.WindowHeight = sizeHeightConsole;
                         Console.WindowWidth = sizeWidthConsole;
                         break;
+
                     case CommandSetWordOfWelcome:
                         Console.WriteLine("Введите текст приветствия в программе.");
                         wordsWelcome = Console.ReadLine();
                         break;
+
                     case CommandSetPositionCursor:
                         Console.WriteLine(" Установите положение высоты позиции курсора.");
                         int heightPositionCursor = Convert.ToInt32(Console.ReadLine());
@@ -87,9 +96,11 @@ namespace SimpleProgram
                         int widthPositionCursor = Convert.ToInt32(Console.ReadLine());
                         Console.SetCursorPosition(widthPositionCursor, heightPositionCursor);
                         break;
+
                     case CommandClearConsole:
                         Console.Clear();
                         break;
+
                     case CommandExitProgram:
                         Console.WriteLine("Введите слово " + CommandExitProgram + " для выхода из приложенния.");
 
