@@ -6,42 +6,45 @@ namespace MaximumDepthExpressions
     {
         static void Main()
         {
-            int valueLeftParenthesis = 0;
-            int valueRightParenthesis = 0;
-            int maximumDepthParenthesis = 0;
             char leftParenthesis = '(';
             char rightParenthesis = ')';
-            string text = "(()())";
+            int maximumDepthParenthesis = 0;
+            int symbolCounts = 0;
+            string text = "(((())))";
 
-            for (int i = 0; i < text.Length; i++)
+            foreach (var symbol in text)
             {
-                if (text[i] == leftParenthesis)
+                if (symbol == leftParenthesis)
                 {
-                    valueLeftParenthesis++;
-                    
-                    if (i != text.Length-1 && text[i+1] != leftParenthesis)
+                    symbolCounts++;
+
+                    if (symbolCounts > maximumDepthParenthesis)
                     {
-                        maximumDepthParenthesis++;
+                        maximumDepthParenthesis = symbolCounts;
                     }
                 }
-                else if (text[i] == rightParenthesis)
+                else if (symbol == rightParenthesis)
                 {
-                    valueRightParenthesis++;
+                    symbolCounts--;
+
+                    if (symbolCounts < 0)
+                    {
+                        break;
+                    }
                 }
-                if(valueLeftParenthesis < valueRightParenthesis)
-                {
-                    break;    
-                } 
             }
-            
-            if (valueLeftParenthesis == valueRightParenthesis)
+
+
+            if (symbolCounts != 0)
             {
-                Console.WriteLine($"Корректное скобочное выражение, максимальная глубина вложенных скобок {maximumDepthParenthesis}");
+                Console.WriteLine($"Не корректное скобочное выражение.");
             }
             else
             {
-                Console.WriteLine($"Не корректное скобочное выражение.");      
-            } 
+                Console.WriteLine($"Корректное скобочное выражение, максимальная глубина вложенных скобок {maximumDepthParenthesis}");
+            }
+
+            Console.ReadKey();
         }
     }
 }
