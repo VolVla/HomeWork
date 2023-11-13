@@ -1,43 +1,30 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RequestNumber
 {
     class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
-            int number = 0;
+            int number;
+
             number = GetNumber();
+            Console.ReadKey();
         }
-        
+
         static int GetNumber()
         {
-            int number = 0;
-            string userInput;
             bool isExit = false;
+            int number = 0;
 
             while (isExit == false)
             {
                 Console.WriteLine($"Введите число");
-                userInput = Console.ReadLine();
-                bool result = int.TryParse(userInput, out number);
-
-                if (result == true)
-                {
-                    Console.WriteLine($"Преобразование прошло успешно. Число {number}");
-                    isExit = true; 
-                }
-                else
-                {
-                    Console.WriteLine($"Преобразование прошло не удачно введите число.");
-                }
+                isExit = int.TryParse(Console.ReadLine(), out number);
             }
-            
-             return number;
+
+            Console.WriteLine("Преобразование прошло успешно.");
+            return number;
         }
     }
 }
