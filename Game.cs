@@ -10,17 +10,17 @@ namespace PacMan
             int allMoney = 0;
             int heroPositionX = 0;
             int heroPositionY = 0;
-            int numberSymbolsInLine;
-            int numberSymbolsInColumn;
+            int quantitySymbolsLine;
+            int quantitySymbolsColumn;
             char hero = '@';
             char wall = '#';
             char coin = '$';
             char[,] map;
 
-            Console.WriteLine($"Добро пожаловать в создание карты.");   
-            SetSizeMap(out numberSymbolsInLine, out numberSymbolsInColumn);
-            Console.WriteLine($"Для создание стены используете символ {wall},\nДля создание монетки используете символ {money},\nДля создание игрока используете символ {hero}");  
-            map = CreateMap(numberSymbolsInLine, numberSymbolsInColumn, ref heroPositionX, ref heroPositionY, hero, coin, ref allMoney);
+            Console.WriteLine($"Добро пожаловать в создание карты.");
+            SetSizeMap(out quantitySymbolsLine, out quantitySymbolsColumn);
+            Console.WriteLine($"Для создание стены используете символ {wall},\nДля создание монетки используете символ {money},\nДля создание игрока используете символ {hero}");
+            map = CreateMap(quantitySymbolsLine, quantitySymbolsColumn, ref heroPositionX, ref heroPositionY, hero, coin, ref allMoney);
             Console.Clear();
             DrawMap(map);
             PlayGame(heroPositionX, heroPositionY, hero, map, wall, ref money, coin, ref allMoney);
@@ -29,11 +29,13 @@ namespace PacMan
         static void SetSizeMap(out int numberSymbolsInLine, out int numberSymbolsInColumn)
         {
             Console.WriteLine($"Введите количество символов в строке карты");
-            numberSymbolsInLine = Convert.ToInt32(Console.ReadLine());
+            int.TryParse(Console.ReadLine(), out int quantityLine);
+            numberSymbolsInLine = quantityLine;
             Console.WriteLine($"Введите количество столбцов в карте");
-            numberSymbolsInColumn = Convert.ToInt32(Console.ReadLine());
+            int.TryParse(Console.ReadLine(), out int quantityColumn);
+            numberSymbolsInColumn = quantityColumn;
         }
-    
+
         static char[,] CreateMap(int numberSymbolsInLine, int numberSymbolsInColumn, ref int heroPositionX, ref int heroPositionY, char hero, char coin, ref int allMoney)
         {
             bool exitLoop;
@@ -42,7 +44,6 @@ namespace PacMan
 
             for (int i = 0; i < arraySymbols.GetLength(0); i++)
             {
-                int valueHero = 0;
                 exitLoop = false;
                 Console.WriteLine($"Введите {i + 1} строку карты");
 
@@ -56,14 +57,13 @@ namespace PacMan
                         {
                             arraySymbols[i, j] = symbolsInLine[j];
 
-                            if(arraySymbols[i,j] == hero)
+                            if (arraySymbols[i, j] == hero)
                             {
                                 heroPositionX = j;
                                 heroPositionY = i;
-                                valueHero++;
                             }
-                            
-                            if(arraySymbols[i,j] == coin)
+
+                            if (arraySymbols[i, j] == coin)
                             {
                                 allMoney++;
                             }
@@ -79,7 +79,7 @@ namespace PacMan
             }
 
             return arraySymbols;
-        }   
+        }
 
         static void CheckCorrectNumberSymbols(string symbolsInLine, int numberSymbolsInLine)
         {
@@ -95,7 +95,7 @@ namespace PacMan
             }
         }
 
-        static void DrawMap(char [,] maps)
+        static void DrawMap(char[,] maps)
         {
             for (int i = 0; i < maps.GetLength(0); i++)
             {
@@ -125,14 +125,14 @@ namespace PacMan
                 {
                     ConsoleKeyInfo key = Console.ReadKey(true);
                     ChangeDirection(key, ref heroPositionDirectionX, ref heroPositionDirectionY);
-                    
-                    if (map[heroPositionX + heroPositionDirectionX, heroPositionY + heroPositionDirectionY] != wall )
+
+                    if (map[heroPositionX + heroPositionDirectionX, heroPositionY + heroPositionDirectionY] != wall)
                     {
                         MovePlayer(ref heroPositionX, ref heroPositionY, heroPositionDirectionX, heroPositionDirectionY, hero);
-                        CollectingCoins(heroPositionX, heroPositionY, map, ref money, coin);
+                        CollectCoins(heroPositionX, heroPositionY, map, ref money, coin);
                     }
                 }
-                
+
                 if (money == allMoney)
                 {
                     isPlaying = false;
@@ -155,14 +155,17 @@ namespace PacMan
                     valueStepDirectionX = -1;
                     valueStepDirectionY = 0;
                     break;
+
                 case ConsoleKey.DownArrow:
                     valueStepDirectionX = 1;
                     valueStepDirectionY = 0;
                     break;
+
                 case ConsoleKey.RightArrow:
                     valueStepDirectionX = 0;
                     valueStepDirectionY = 1;
                     break;
+
                 case ConsoleKey.LeftArrow:
                     valueStepDirectionX = 0;
                     valueStepDirectionY = -1;
@@ -174,21 +177,19 @@ namespace PacMan
         {
             Console.SetCursorPosition(heroPositionY, heroPositionX);
             Console.Write(" ");
-
             heroPositionX += valueStepDirectionX;
             heroPositionY += valueStepDirectionY;
-
             Console.SetCursorPosition(heroPositionY, heroPositionX);
             Console.Write(hero);
         }
 
-        static void CollectingCoins(int heroPositionX, int heroPositionY, char[,] map, ref int money, char coins)
+        static void CollectCoins(int heroPositionX, int heroPositionY, char[,] map, ref int money, char coins)
         {
             if (map[heroPositionX, heroPositionY] == coins)
             {
                 money++;
                 map[heroPositionX, heroPositionY] = ' ';
-            }   
+            }
         }
     }
 }
