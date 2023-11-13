@@ -6,12 +6,10 @@ namespace RectangleName
     {
         static void Main()
         {
-            int currentLine = 1;
             char symbol;
             string userName;
             string lineUserName;
-            int amountSymbols = 0;
-            int numberRows = 3;
+            string frame = "";
 
             Console.WriteLine("Введите имя пользователя");
             userName = Console.ReadLine();
@@ -19,28 +17,14 @@ namespace RectangleName
             symbol = Convert.ToChar(Console.ReadLine());
             lineUserName = symbol + userName + symbol;
 
-            while (currentLine < numberRows)
+            for (int i = 0; i < lineUserName.Length; i++)
             {
-                if (amountSymbols < lineUserName.Length)
-                {
-                    Console.Write(symbol);
-                    amountSymbols++;
-                }
-
-                if (amountSymbols == lineUserName.Length)
-                {
-                    currentLine++;
-
-                    if (currentLine == numberRows)
-                    {
-                        break;
-                    }
-
-                    Console.WriteLine("\n" + lineUserName);
-                    amountSymbols = 0;
-                }
+                frame += symbol;
             }
 
+            Console.WriteLine(frame);
+            Console.WriteLine(lineUserName);
+            Console.WriteLine(frame);
             Console.ReadKey();
         }
     }
