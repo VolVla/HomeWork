@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System;
 
 namespace ArrayShift
 {
@@ -11,27 +7,29 @@ namespace ArrayShift
         static void Main()
         {
             const int AmountArray = 5;
-            int[] arrayNumbers = new int[AmountArray] {1,2,3,4,5};
+
+            int[] arrayNumbers = new int[AmountArray] { 1, 2, 3, 4, 5 };
             int valueShiftLeft;
+            int tempValue;
 
-            valueShiftLeft = Convert.ToInt32(Console.ReadLine());
+            valueShiftLeft = Convert.ToInt32(Console.ReadLine()) % arrayNumbers.Length;
 
-            for (int i = arrayNumbers.Length; i > valueShiftLeft; --i)
+            for (int i = 0; i < valueShiftLeft; i++)
             {
-                int aLast = arrayNumbers[arrayNumbers.Length - 1];
-
-                for (int j = arrayNumbers.Length - 1; j > 0; j--) 
+                for (int j = 0; j < arrayNumbers.Length -1; j++)
                 {
-                    arrayNumbers[j] = arrayNumbers[j - 1];
+                    tempValue = arrayNumbers[j];
+                    arrayNumbers[j] = arrayNumbers[j + 1];
+                    arrayNumbers[j+1] = tempValue;
                 }
-                
-                arrayNumbers[0] = aLast;
             }
 
             foreach (int number in arrayNumbers)
             {
                 Console.WriteLine($" {number}");
             }
+
+            Console.ReadKey();
         }
     }
 }
