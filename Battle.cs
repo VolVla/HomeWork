@@ -4,15 +4,15 @@ namespace BattleRpg
 {
     class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
             const string CommandAttackFireball = "1";
             const string CommandAttackSpirit = "2";
             const string CommandCurseEnemy = "3";
             const string CommandAttackCurse = "4";
+
             string userInput;
             Random random = new Random();
-            bool isExit = false;
             bool singleHelpOfSpirits = true;
             int healthHero = 120;
             int healthEnemy = 200;
@@ -43,9 +43,13 @@ namespace BattleRpg
 
             Console.WriteLine("Вы открыли дверь и встретили босса, он настроен враждебно, чтобы его победить используйте свои способности\nСражение начинается");
 
-            while (isExit == false)
+            while (healthHero >= pointsBeforeDeathPerson & healthEnemy >= pointsBeforeDeathPerson)
             {
-                Console.WriteLine($"\nУ вас  {healthHero}  здоровья и  {currentValueIsCurse}  очков проклятья при достижение  {pointsBeforeDeathfHero}  очков вы умрете.\nУ босса {healthEnemy}  здоровья  {storageMagicPointVoodoo} очков проклятье вуду и {pointsFireEffect} очков подгорания.\n\n Вы можете применить способности. \n {CommandAttackFireball}- Атака Огненым шаром \n {CommandAttackSpirit} - Попросить духов о помощи (можно использовать один раз), игнорирует одну атаку противника,\n и востанавливает не много здоровья \n {CommandCurseEnemy} - Проклятье куклы вуды (востанавливает не много здоровья на кладывает на противника одно проклятье вуду.)\n {CommandAttackCurse} - Проткнуть куклу вуду(наносит сильный урон при этом тратит " + conditionApplicationMagicVoodooPoints + " очка проклятья вуду.)");
+                Console.WriteLine($"\nУ вас  {healthHero}  здоровья и  {currentValueIsCurse}  очков проклятья при достижение  {pointsBeforeDeathfHero}  очков вы умрете" +
+                $".\nУ босса {healthEnemy}  здоровья  {storageMagicPointVoodoo} очков проклятье вуду и {pointsFireEffect} очков подгорания.\n\n Вы можете применить способности." +
+                $" \n {CommandAttackFireball}- Атака Огненым шаром \n {CommandAttackSpirit} - Попросить духов о помощи (можно использовать один раз), игнорирует одну атаку противника," +
+                $"\n и востанавливает не много здоровья \n {CommandCurseEnemy} - Проклятье куклы вуды (востанавливает не много здоровья на кладывает на противника одно проклятье вуду.)" +
+                $"\n {CommandAttackCurse} - Проткнуть куклу вуду(наносит сильный урон при этом тратит " + conditionApplicationMagicVoodooPoints + " очка проклятья вуду.)");
                 userInput = Console.ReadLine();
 
                 if (currentValueIsCurse == pointsBeforeDeathfHero)
@@ -109,23 +113,24 @@ namespace BattleRpg
                         }
                         break;
                 }
-
-                if (healthHero <= pointsBeforeDeathPerson && healthEnemy <= pointsBeforeDeathPerson)
-                {
-                    Console.WriteLine("\nПоздравляю вы убили друг друга. Вы не победили и не проиграли. Досвидания ");
-                    isExit = true;
-                }
-                else if (healthHero <= pointsBeforeDeathPerson)
-                {
-                    Console.WriteLine("\nВас убили.Босс на смехается над вашим трупом.");
-                    isExit = true;
-                }
-                else if (healthEnemy <= pointsBeforeDeathPerson)
-                {
-                    Console.WriteLine("\nВы убили босса.Вы победили герой.");
-                    isExit = true;
-                }
             }
+
+            if (healthHero <= pointsBeforeDeathPerson && healthEnemy <= pointsBeforeDeathPerson)
+            {
+                Console.WriteLine("\nПоздравляю вы убили друг друга. Вы не победили и не проиграли. Досвидания ");
+
+            }
+            else if (healthHero <= pointsBeforeDeathPerson)
+            {
+                Console.WriteLine("\nВас убили.Босс на смехается над вашим трупом.");
+
+            }
+            else if (healthEnemy <= pointsBeforeDeathPerson)
+            {
+                Console.WriteLine("\nВы убили босса.Вы победили герой.");
+            }
+
+            Console.ReadKey();
         }
     }
 }
