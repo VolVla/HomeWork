@@ -1,17 +1,13 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Shuffle
 {
     class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
-            const int AmountNumbers = 5;
-            int[] array = new int[AmountNumbers] { 1, 2, 3, 4, 5};
+            int[] array = new int[] { 1, 2, 3, 4, 5 };
+            
             Shuffle(array);
             OutputArray(array);
         }
@@ -19,11 +15,10 @@ namespace Shuffle
         static void Shuffle(int[] array)
         {
             Random random = new Random();
-            int lenghtArray = array.Length;
 
-            for (int i = 0; i < lenghtArray; i++)
+            for (int i = 0; i < array.Length; i++)
             {
-                Swap(array, i, random.Next(lenghtArray));
+                Swap(array, i, random.Next(array.Length));
             }
         }
 
@@ -36,9 +31,9 @@ namespace Shuffle
 
         static void OutputArray(int[] array)
         {
-            foreach(int numbers in array)
+            foreach (int number in array)
             {
-                Console.Write($"{numbers} ");
+                Console.Write($"{number} ");
             }
         }
     }
