@@ -6,9 +6,7 @@ namespace ArrayShift
     {
         static void Main()
         {
-            const int AmountArray = 5;
-
-            int[] arrayNumbers = new int[AmountArray] { 1, 2, 3, 4, 5 };
+            int[] arrayNumbers = new int[5] { 1, 2, 3, 4, 5 };
             int valueShiftLeft;
             int tempValue;
 
