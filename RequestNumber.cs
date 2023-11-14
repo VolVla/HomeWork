@@ -14,16 +14,17 @@ namespace RequestNumber
 
         static int GetNumber()
         {
-            bool isExit = false;
-            int number = 0;
+            int number;
 
-            while (isExit == false)
+            Console.WriteLine($"Введите число");
+
+            while (!int.TryParse(Console.ReadLine(), out number))
             {
                 Console.WriteLine($"Введите число");
-                isExit = int.TryParse(Console.ReadLine(), out number);
             }
 
             Console.WriteLine("Преобразование прошло успешно.");
+
             return number;
         }
     }
