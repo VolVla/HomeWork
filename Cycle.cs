@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 
 namespace Cycle
 {
@@ -7,33 +6,14 @@ namespace Cycle
     {
         static void Main()
         {
-            Numbers numbers = new Numbers();
+            int _currentOfNumber = 5;
+            int _stepValue = 7;
+            int _maximumNumber = 96;
+            char spaceChar = ' ';
 
-            foreach (int number in numbers)
+            for (int i = _currentOfNumber; i <= _maximumNumber; i += _stepValue)
             {
-                Console.Write(number + " ");
-            }
-        }
-    }
-
-    class Numbers
-    {
-        private int _currentOfNumber = 5;
-        private int _stepValue = 7;
-        private int _maximumNumber = 96;
-        private int _startValue = 0;
-
-        public IEnumerator<int> GetEnumerator()
-        {
-            for (int i = 0; _currentOfNumber < _maximumNumber; i++)
-            {
-                if (i > _startValue)
-                {
-                    _currentOfNumber += _stepValue;
-
-                }
-
-                yield return _currentOfNumber;
+                Console.Write($"{i} {spaceChar}");
             }
 
             Console.ReadKey();
