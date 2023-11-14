@@ -11,19 +11,19 @@ namespace Array
                 { 2, 2, 3, 4 },
                 { 5, 7, 2, 1 }
             };
-            int secondLineSum = 0;
-            int firstColumnProduct = 1;
-            int indexSecondLine = 1;
-            int indexColumnArray = 0;
+            int lineSum = 0;
+            int columnProduct = 1;
+            int indexLine = 2;
+            int indexColumnArray = 1;
 
             for (int i = 0; i < array.GetLength(1); i++)
             {
-                secondLineSum += array[indexSecondLine, i];
+                lineSum += array[indexLine - 1, i];
             }
 
             for (int j = 0; j < array.GetLength(0); j++)
             {
-                firstColumnProduct *= array[j, indexColumnArray];
+                columnProduct *= array[j, indexColumnArray - 1];
             }
 
             for (int i = 0; i < array.GetLength(0); i++)
@@ -36,7 +36,7 @@ namespace Array
                 Console.WriteLine();
             }
 
-            Console.WriteLine("Cумма второй строки - " + secondLineSum + " Произведение первого столбца - " + firstColumnProduct);
+            Console.WriteLine($"Cумма {indexLine} строки -  {lineSum}  Произведение {indexColumnArray} столбца -  {columnProduct}");
             Console.ReadKey();
         }
     }
