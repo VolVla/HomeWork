@@ -12,7 +12,7 @@ namespace LargeElementArray
             int maximumElement = int.MinValue;
             int minimumValue = 1;
             int maximumValue = 11;
-            int cellValue = 0;
+            int overwriteValue = 0;
             Random random = new Random();
 
             Console.WriteLine("Исходная матрица");
@@ -42,7 +42,7 @@ namespace LargeElementArray
                 {
                     if (matrix[i, j] == maximumElement)
                     {
-                        matrix[i, j] = cellValue;
+                        matrix[i, j] = overwriteValue;
                     }
                 }
             }
