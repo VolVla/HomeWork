@@ -55,12 +55,12 @@ namespace DossierFullName
         static void AddDossier(ref string[] arrayFullNames, ref string[] arrayPositonJobs)
         {
             Console.WriteLine("Напишите ФИО сотрудника");
-            AssignValueArray(ref arrayFullNames);
+            arrayFullNames = AddData(arrayFullNames);
             Console.WriteLine("Напишите должность сотрудника");
-            AssignValueArray(ref arrayPositonJobs);
+            arrayPositonJobs = AddData(arrayPositonJobs);
         }
 
-        static void AssignValueArray(ref string[] nameArray)
+        static string[] AddData(string[] nameArray)
         {
             string[] tempValueArray = new string[nameArray.Length + 1];
             tempValueArray[tempValueArray.Length - 1] = Console.ReadLine();
@@ -71,30 +71,38 @@ namespace DossierFullName
             }
 
             nameArray = tempValueArray;
+
+            return nameArray;
         }
 
         static void ShowDossies(string[] arrayFullNames, string[] arrayPositonJobs)
         {
             for (int i = 0; i < arrayFullNames.Length; i++)
             {
-                if (arrayFullNames[i] != "" && arrayPositonJobs[i] != "")
-                {
-                    Console.WriteLine($"{i + 1}    - {arrayFullNames[i]} -  {arrayPositonJobs[i]}");
-                }
+                Console.WriteLine($"{i + 1}    - {arrayFullNames[i]} -  {arrayPositonJobs[i]}");
             }
         }
 
         static void RemoveDossier(ref string[] arrayFullNames, ref string[] arrayPositonJobs)
         {
+            int minumumIndex = 0;
             Console.WriteLine($"Напишите порядковый номер досье,который вы хотите удалить");
             ShowDossies(arrayFullNames, arrayPositonJobs);
             int.TryParse(Console.ReadLine(), out int indexArray);
-            DeleteValueArray(ref arrayFullNames, ref indexArray);
-            DeleteValueArray(ref arrayPositonJobs, ref indexArray);
-            Console.WriteLine($"Вы удалили досье");
+
+            if ((indexArray != minumumIndex) & (indexArray <= arrayFullNames.Length || indexArray <= arrayPositonJobs.Length))
+            {
+                arrayFullNames = DeleteValueArray(arrayFullNames, indexArray);
+                arrayPositonJobs = DeleteValueArray(arrayPositonJobs, indexArray);
+                Console.WriteLine($"Вы удалили досье");
+            }
+            else
+            {
+                Console.WriteLine("Введено не коректное значение");
+            }
         }
 
-        static void DeleteValueArray(ref string[] nameArray, ref int indexArray)
+        static string[] DeleteValueArray(string[] nameArray, int indexArray)
         {
             string[] tempValueArray = new string[nameArray.Length - 1];
 
@@ -109,11 +117,13 @@ namespace DossierFullName
             }
 
             nameArray = tempValueArray;
+
+            return nameArray;
         }
 
         static void FindDossier(string[] arrayFullNames, string[] arrayPositonJobs)
         {
-            bool foundDossier = false;
+            bool isFoundDossier = false;
             string[] inputFullNames;
             string inputSurname;
             char space = ' ';
@@ -129,11 +139,11 @@ namespace DossierFullName
                 {
                     Console.WriteLine("Досье найдено!");
                     Console.WriteLine($"{i + 1}    - {arrayFullNames[i]} -  {arrayPositonJobs[i]}");
-                    foundDossier = true;
+                    isFoundDossier = true;
                 }
             }
 
-            if (foundDossier == false)
+            if (isFoundDossier == false)
             {
                 Console.WriteLine("Такое досье не было найдено!");
             }
