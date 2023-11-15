@@ -71,7 +71,6 @@ namespace DossierFullName
             }
 
             nameArray = tempValueArray;
-
             return nameArray;
         }
 
@@ -117,7 +116,6 @@ namespace DossierFullName
             }
 
             nameArray = tempValueArray;
-
             return nameArray;
         }
 
