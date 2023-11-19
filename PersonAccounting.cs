@@ -58,7 +58,7 @@ namespace PersonAccounting
             {
                 if (fullName[i] != "" && positionJob[i] != "")
                 {
-                    Console.WriteLine($"{i}    - {fullName[i]} -  {positionJob[i]}");
+                    Console.WriteLine($"{i + 1}  - {fullName[i]} -  {positionJob[i]}");
                 }
             }
         }
@@ -86,10 +86,10 @@ namespace PersonAccounting
                 }
             }
 
-            if (fullName.Count <= indexArray || positionJob.Count <= indexArray)
+            if (fullName.Count < indexArray || positionJob.Count < indexArray)
             {
-                fullName.RemoveAt(indexArray);
-                positionJob.RemoveAt(indexArray);
+                fullName.RemoveAt(indexArray - 1);
+                positionJob.RemoveAt(indexArray - 1);
             }
 
             Console.WriteLine($"Вы удалили досье");
