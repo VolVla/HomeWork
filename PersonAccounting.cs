@@ -11,6 +11,7 @@ namespace PersonAccounting
             const string CommandShowDosiers = "2";
             const string CommandRemoveDosier = "3";
             const string CommandExit = "4";
+
             bool isExit = false;
             string inputUser;
             List<string> fullName = new List<string>();
@@ -18,7 +19,7 @@ namespace PersonAccounting
 
             while (isExit == false)
             {
-                Console.WriteLine($"\n1 Для добавление досье введите {CommandAddDosier}.\n2 Для вывода всех досье введите {CommandShowDosiers}. \n3 Для удаления досье введите {CommandRemoveDosier}. \n4 Для выхода из программы введите {CommandExit}.");
+                Console.WriteLine($"\n Для добавление досье введите {CommandAddDosier}.\n Для вывода всех досье введите {CommandShowDosiers}. \n Для удаления досье введите {CommandRemoveDosier}. \n Для выхода из программы введите {CommandExit}.");
                 inputUser = Console.ReadLine();
 
                 switch (inputUser)
@@ -26,12 +27,15 @@ namespace PersonAccounting
                     case CommandAddDosier:
                         AddDosier(fullName, positionJob);
                         break;
+
                     case CommandShowDosiers:
                         ShowDossies(fullName, positionJob);
                         break;
+
                     case CommandRemoveDosier:
                         RemoveDossier(fullName, positionJob);
                         break;
+
                     case CommandExit:
                         Console.WriteLine("Вы вышли из программы");
                         isExit = true;
@@ -43,15 +47,9 @@ namespace PersonAccounting
         static void AddDosier(List<string> fullName, List<string> positionJob)
         {
             Console.WriteLine("Напишите ФИО сотрудника");
-            AssigningValue(ref fullName);
+            fullName.Add(Console.ReadLine());
             Console.WriteLine("Напишите должность сотрудника");
-            AssigningValue(ref positionJob);
-        }
-
-        static void AssigningValue(ref List<string> name)
-        {
-            string valueName = Console.ReadLine();
-            name.Add(valueName);
+            positionJob.Add(Console.ReadLine());
         }
 
         static void ShowDossies(List<string> fullName, List<string> positionJob)
@@ -88,14 +86,9 @@ namespace PersonAccounting
                 }
             }
 
-            DeletedValue(ref fullName, indexArray);
-            DeletedValue(ref positionJob, indexArray);
+            fullName.RemoveAt(indexArray);
+            positionJob.RemoveAt(indexArray);
             Console.WriteLine($"Вы удалили досье");
-        }
-
-        static void DeletedValue(ref List<string> name, int indexArray)
-        {
-            name.RemoveAt(indexArray);
         }
     }
 }
