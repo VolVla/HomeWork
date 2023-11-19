@@ -9,6 +9,7 @@ namespace LiteDynamicArray
         {
             const string WordExit = "exit";
             const string CommandAmount = "sum";
+
             bool isExit = true;
             string userInput;
             List<int> numbers = new List<int>();
@@ -29,18 +30,25 @@ namespace LiteDynamicArray
                 }
                 else
                 {
-                    bool result = int.TryParse(userInput, out int enterNumber);
-
-                    if (result == true)
-                    {
-                        numbers.Add(enterNumber);
-                    }
-                    else if (result == false)
-                    {
-                        Console.WriteLine($"Вы ввели не число и не известную команду");
-                    }
+                    numbers = AddNumbers(userInput, numbers);
                 }
             }
+        }
+
+        static List<int> AddNumbers(string userInput, List<int> numbers)
+        {
+            bool isNumber = int.TryParse(userInput, out int enterNumber);
+
+            if (isNumber == true)
+            {
+                numbers.Add(enterNumber);
+            }
+            else if (isNumber == false)
+            {
+                Console.WriteLine($"Вы ввели не число и не известную команду");
+            }
+
+            return numbers;
         }
 
         static void SumNumbers(List<int> numbers)
