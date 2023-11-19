@@ -65,6 +65,7 @@ namespace PersonAccounting
 
         static void RemoveDossier(List<string> fullName, List<string> positionJob)
         {
+            int minimumCount = 0;
             int indexArray = 0;
             string input;
             bool result = false;
@@ -77,7 +78,7 @@ namespace PersonAccounting
 
                 if (int.TryParse(input, out int value))
                 {
-                    indexArray = value;
+                    indexArray = value - 1;
                     result = true;
                 }
                 else
@@ -86,13 +87,15 @@ namespace PersonAccounting
                 }
             }
 
-            if (fullName.Count < indexArray || positionJob.Count < indexArray)
+            if (fullName.Count > minimumCount & positionJob.Count > minimumCount)
             {
-                fullName.RemoveAt(indexArray - 1);
-                positionJob.RemoveAt(indexArray - 1);
+                if (fullName.Count > indexArray || positionJob.Count > indexArray)
+                {
+                    fullName.RemoveAt(indexArray);
+                    positionJob.RemoveAt(indexArray);
+                    Console.WriteLine($"Вы удалили досье");
+                }
             }
-
-            Console.WriteLine($"Вы удалили досье");
         }
     }
 }
