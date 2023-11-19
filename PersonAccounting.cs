@@ -86,8 +86,12 @@ namespace PersonAccounting
                 }
             }
 
-            fullName.RemoveAt(indexArray);
-            positionJob.RemoveAt(indexArray);
+            if (fullName.Count <= indexArray || positionJob.Count <= indexArray)
+            {
+                fullName.RemoveAt(indexArray);
+                positionJob.RemoveAt(indexArray);
+            }
+
             Console.WriteLine($"Вы удалили досье");
         }
     }
