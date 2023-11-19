@@ -30,12 +30,12 @@ namespace LiteDynamicArray
                 }
                 else
                 {
-                    numbers = AddNumbers(userInput, numbers);
+                    AddNumbers(userInput, numbers);
                 }
             }
         }
 
-        static List<int> AddNumbers(string userInput, List<int> numbers)
+        static void AddNumbers(string userInput, List<int> numbers)
         {
             bool isNumber = int.TryParse(userInput, out int enterNumber);
 
@@ -47,8 +47,6 @@ namespace LiteDynamicArray
             {
                 Console.WriteLine($"Вы ввели не число и не известную команду");
             }
-
-            return numbers;
         }
 
         static void SumNumbers(List<int> numbers)
