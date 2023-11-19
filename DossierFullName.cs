@@ -88,11 +88,12 @@ namespace DossierFullName
             Console.WriteLine($"Напишите порядковый номер досье,который вы хотите удалить");
             ShowDossies(arrayFullNames, arrayPositonJobs);
             int.TryParse(Console.ReadLine(), out int indexArray);
+            int index = indexArray - 1;
 
-            if ((indexArray != minumumIndex) & (indexArray <= arrayFullNames.Length || indexArray <= arrayPositonJobs.Length))
+            if ((index >= minumumIndex) & (arrayFullNames.Length >= index || arrayPositonJobs.Length >= indexArray))
             {
-                arrayFullNames = DeleteValueArray(arrayFullNames, indexArray);
-                arrayPositonJobs = DeleteValueArray(arrayPositonJobs, indexArray);
+                arrayFullNames = DeleteValueArray(arrayFullNames, index);
+                arrayPositonJobs = DeleteValueArray(arrayPositonJobs, index);
                 Console.WriteLine($"Вы удалили досье");
             }
             else
@@ -105,14 +106,14 @@ namespace DossierFullName
         {
             string[] tempValueArray = new string[nameArray.Length - 1];
 
-            for (int i = 0; i < indexArray - 1; i++)
+            for (int i = 0; i < indexArray; i++)
             {
                 tempValueArray[i] = nameArray[i];
             }
 
-            for (int i = indexArray; i < tempValueArray.Length; i++)
+            for (int i = indexArray; i < nameArray.Length - 1; i++)
             {
-                tempValueArray[i - 1] = nameArray[i];
+                tempValueArray[i] = nameArray[i + 1];
             }
 
             nameArray = tempValueArray;
