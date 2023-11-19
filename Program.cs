@@ -1,8 +1,5 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace InputWord
 {
@@ -10,25 +7,30 @@ namespace InputWord
     {
         static void Main()
         {
-            bool exit = false;
-            string exitProgram = "Exit";
-            string firstWord = "Машина";
-            string secondWord = "Школа";
-            string thirdWord = "Кошка";
-            string enterWord;
-            Dictionary<string, string> word = new Dictionary<string, string>();
-            word.Add("Машина", "Лада Приора");
-            word.Add("Школа", "Школьники");
-            word.Add("Кошка", "не собака");
+            const string CommandExitProgram = "Exit";
 
-            while (exit == false)
+            bool isExit = false;
+
+            string wordCar = "Машина";
+            string wordSchool = "Школа";
+            string wordCat = "Кошка";
+            string enterWord;
+
+            Dictionary<string, string> word = new Dictionary<string, string>()
             {
-                Console.WriteLine($"Введите свое слово./Пример {firstWord}, {secondWord}, {thirdWord}. Для выхода из программы напишите {exitProgram}");
+                {wordCar ,"Лада Приора"},
+                {wordSchool,"Школьники"},
+                {wordCat,"не собака"}
+            };
+
+            while (isExit == false)
+            {
+                Console.WriteLine($"Введите свое слово./Пример {wordCar}, {wordSchool}, {wordCat}. Для выхода из программы напишите {CommandExitProgram}");
                 enterWord = GetWord();
 
-                if (enterWord == exitProgram) ;
+                if (enterWord == CommandExitProgram) ;
                 {
-                    exit = true;
+                    isExit = true;
                 }
 
                 if (word.ContainsKey($"{enterWord}"))
