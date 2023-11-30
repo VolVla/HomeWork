@@ -6,26 +6,18 @@ namespace HealthBar
     {
         static void Main()
         {
-            char emptySymbol = '_';
             char fillSymbol = '#';
             bool isExit = false;
             string userInput;
             string wordExit = "exit";
-            string healthBar = "HealthBar";
-            string manaBar = "ManaBar";
             int firstLine = 0;
-            int secondLine = 1;
             int maxHealth = 10;
-            int maxMana = 5;
-            int percentFillBar;
+            double percentFillBar;
 
             while (isExit == false)
             {
-                percentFillBar = SetPercentBar(healthBar, maxHealth);
-                Console.Clear();
-                DrawBar(percentFillBar, maxHealth, firstLine, emptySymbol, fillSymbol);
-                percentFillBar = SetPercentBar(manaBar, maxMana);
-                DrawBar(percentFillBar, maxMana, secondLine, emptySymbol, fillSymbol);
+                percentFillBar = SetPercentBar();
+                DrawBar(maxHealth, percentFillBar, firstLine, fillSymbol);
                 Console.WriteLine("\nДля выхода из программы напишите " + wordExit + " для продолжения напишите любой символ");
                 userInput = Console.ReadLine();
 
@@ -38,35 +30,33 @@ namespace HealthBar
             }
         }
 
-        static void SetPositionText()
+        static double SetPercentBar()
         {
-            int indexY = 0;
-            int indexX = 6;
-            Console.SetCursorPosition(indexX, indexY);
+            Console.WriteLine($"\nВведите % текущей шкалы");
+            double.TryParse(Console.ReadLine(), out double percentFill);
+            Console.Clear();
+            return percentFill;
         }
 
-        static int SetPercentBar(string nameBar, int maxValue)
+        static void DrawBar(int lenghtBar, double percent, int positionX, char fillSymbol)
         {
-            int percent = 100;
-            int percentFillBar;
-            SetPositionText();
-            Console.WriteLine("Введите % заполнения шкалы " + nameBar);
-            int value = Convert.ToInt32(Console.ReadLine());
-            percentFillBar = value * maxValue / percent;
-            return percentFillBar;
-        }
+            int maximumPercentFillBar = 100;
+            int minumumPercentFillBar = 0;
 
-        static void DrawBar(int value, int maxValue, int positionX, char emptySymbol, char fillSymbol)
-        {
-            string bar = "[";
-            char rightFrame = ']';
-            int positionY = 0;
-
-            if (value >= 0)
+            if (percent >= minumumPercentFillBar && percent <= maximumPercentFillBar)
             {
-                for (int i = 0; i < maxValue; i++)
+                string bar = "";
+                char rightFrame = ']';
+                char emptySymbol = '_';
+                int positionY = 0;
+                int currentValue = (int)Math.Round(lenghtBar * (percent / maximumPercentFillBar));
+
+                Console.SetCursorPosition(positionY, positionX);
+                Console.Write("[");
+
+                for (int i = 0; i < lenghtBar; i++)
                 {
-                    if (i < value)
+                    if (i < currentValue)
                     {
                         bar += fillSymbol;
                     }
@@ -76,7 +66,6 @@ namespace HealthBar
                     }
                 }
 
-                Console.SetCursorPosition(positionY, positionX);
                 Console.Write(bar + rightFrame);
             }
         }
