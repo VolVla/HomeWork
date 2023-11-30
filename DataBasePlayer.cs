@@ -14,10 +14,10 @@ namespace DateBasePlayer
 
     class DateBase
     {
-        private const string _CommandAddPlayer = "1";
-        private const string _CommandConsoleBanPlayer = "2";
-        private const string _CommandRemovePlayer = "3";
-        private const string _CommandExit = "4";
+        private const string CommandAddPlayer = "1";
+        private const string CommandConsoleBanPlayer = "2";
+        private const string CommandRemovePlayer = "3";
+        private const string CommandExit = "4";
         private bool _isDataBaseWork = true;
 
         private List<Player> _players = new List<Player>();
@@ -29,22 +29,22 @@ namespace DateBasePlayer
             while (_isDataBaseWork)
             {
                 Console.WriteLine("Добро пожаловать! Доступные комманды");
-                Console.WriteLine($"{_CommandAddPlayer} - Добавить игрока \n{_CommandConsoleBanPlayer} - Консоль бана \n{_CommandRemovePlayer} - Удалить игрока\n{_CommandExit} - Выход");
+                Console.WriteLine($"{CommandAddPlayer} - Добавить игрока \n{CommandConsoleBanPlayer} - Консоль бана \n{CommandRemovePlayer} - Удалить игрока\n{CommandExit} - Выход");
                 userInput = Console.ReadLine();
                 Console.Clear();
 
                 switch (userInput)
                 {
-                    case _CommandAddPlayer:
+                    case CommandAddPlayer:
                         AddPlayer();
                         break;
-                    case _CommandConsoleBanPlayer:
+                    case CommandConsoleBanPlayer:
                         BanPlayer();
                         break;
-                    case _CommandRemovePlayer:
+                    case CommandRemovePlayer:
                         RemovePlayer();
                         break;
-                    case _CommandExit:
+                    case CommandExit:
                         _isDataBaseWork = false;
                         break;
                     default:
@@ -65,10 +65,10 @@ namespace DateBasePlayer
             Console.WriteLine("Введите никнейм игрока");
             nickName = Console.ReadLine();
             Console.WriteLine("Какой у него уровень");
-            CheckString(out levelPlayer, out result);
+            FindInfo(out levelPlayer, out result);
             Console.WriteLine("Введите Id игрока");
-            CheckString(out inputId, out int idPlayer);
-            isFail = GetIdPlayer(idPlayer, idPlayer, isFail);
+            FindInfo(out inputId, out int idPlayer);
+            isFail = CheckIdPlayer(idPlayer, idPlayer, isFail);
 
             if (isFail == false)
             {
@@ -83,9 +83,9 @@ namespace DateBasePlayer
             Console.Clear();
         }
 
-        private void CheckString(out string userInput, out int result)
+        private void FindInfo(out string userInput, out int result)
         {
-            userInput = " ";
+            userInput = "";
             result = 0;
             bool isStringNumber;
 
@@ -93,14 +93,14 @@ namespace DateBasePlayer
             isStringNumber = int.TryParse(userInput, out result);
         }
 
-        private bool GetIdPlayer(int result, int idPlayer, bool isFail)
+        private bool CheckIdPlayer(int result, int idPlayer, bool isFail)
         {
             int id;
             isFail = false;
 
             for (int i = 0; i < _players.Count; i++)
             {
-                id = _players[i].IdPlayer();
+                id = _players[i].GetId();
 
                 if (id == result)
                 {
@@ -134,8 +134,8 @@ namespace DateBasePlayer
             {
                 ShowInfoPlayers();
                 Console.WriteLine("Какого игрока удалить из сервера, ведите порядковый номер");
-                CheckString(out userInput, out result);
-                isFail = GetIdPlayer(result, idPlayer, isFail);
+                FindInfo(out userInput, out result);
+                isFail = CheckIdPlayer(result, idPlayer, isFail);
 
                 if (isFail == true)
                 {
@@ -165,9 +165,8 @@ namespace DateBasePlayer
                 ShowInfoPlayers();
                 Console.WriteLine("Что - бы изменить статус бана персонажа, напиши его порядковый номер");
 
-                CheckString(out userInput, out result);
-
-                isFail = GetIdPlayer(result, idPlayer, isFail);
+                FindInfo(out userInput, out result);
+                isFail = CheckIdPlayer(result, idPlayer, isFail);
 
                 if (isFail == true)
                 {
@@ -199,9 +198,6 @@ namespace DateBasePlayer
         private string _nickName;
         private int _level;
 
-        public int Id { get; private set; }
-        public bool IsBanned { get; private set; }
-
         public Player(string name, int level, int id)
         {
             _nickName = name;
@@ -209,7 +205,10 @@ namespace DateBasePlayer
             Id = id;
         }
 
-        public int IdPlayer()
+        public int Id { get; private set; }
+        public bool IsBanned { get; private set; }
+
+        public int GetId()
         {
             return Id;
         }
