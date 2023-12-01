@@ -23,7 +23,7 @@ namespace DeckCards
                 switch (userInput)
                 {
                     case TakeCardCommand:
-                        player.TakeCards(deck.GetCards());
+                        player.GetCardDeck(deck.GiveCard());
                         break;
                     case ShowCardHandCommand:
                         player.ShowCards();
@@ -41,6 +41,8 @@ namespace DeckCards
 
     class Deck
     {
+        private Random _random = new Random();
+
         private List<Card> _allCards = new List<Card>()
         {
             new Card(0,"Камень"),new Card(1,"Ножниц"), new Card(2,"Бумага"),
@@ -52,36 +54,27 @@ namespace DeckCards
             new Card(18,"Шторы"),new Card(19,"Чашка"),new Card(20,"Велосипед")
         };
 
-        public List<Card> GetCards()
+        public Card GiveCard()
         {
-            return _allCards;
+            int randomNumber = _random.Next(0, _allCards.Count);
+            return _allCards[randomNumber];
         }
     }
 
     class Player
     {
-        private List<Card> _deckHand = new List<Card>();
-        private Random _random = new Random();
+        private List<Card> _cardsPlayer = new List<Card>();
 
-        public void TakeCards(List<Card> allCards)
+        public void GetCardDeck(Card card)
         {
-            if (allCards.Count != 0)
-            {
-                int randomNumber = _random.Next(0, allCards.Count);
-                _deckHand.Add(allCards[randomNumber]);
-                allCards.Remove(allCards[randomNumber]);
-            }
-            else
-            {
-                Console.WriteLine("Извините карты закончились,Вы не можете взять больше");
-            }
+            _cardsPlayer.Add(card);
         }
 
         public void ShowCards()
         {
-            if (_deckHand.Count > 0)
+            if (_cardsPlayer.Count > 0)
             {
-                foreach (Card card in _deckHand)
+                foreach (Card card in _cardsPlayer)
                 {
                     Console.WriteLine($"Название карты {card.Name}, величина карты {card.Value}");
                 }
