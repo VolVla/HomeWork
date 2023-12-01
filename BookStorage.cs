@@ -5,33 +5,40 @@ namespace DictionaryBook
 {
     class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
-            bool _isBookStorageWork = true;
+            const int CommandAddBook = 1;
+            const int CommandRemoveBook = 2;
+            const int CommandShowAllBook = 3;
+            const int CommandSortBookStorage = 4;
+            const int CommandExitProgram = 5;
+
+            bool _isExit = true;
             BookStorage bookStorage = new BookStorage();
 
-            while (_isBookStorageWork == true)
+            while (_isExit == true)
             {
                 Console.WriteLine("\nДобро пожаловать в хранилище книг");
                 Console.WriteLine("1 - Добавить книгу в хранилище, 2 - убрать книгу из хранилища, 3 - Показать все книги, 4 - Показать книги по указанному параметру, 5 - Выйти из программы");
+                int.TryParse(Console.ReadLine(), out int result);
 
-                switch (Console.ReadLine())
+                switch (result)
                 {
-                    case "1":
+                    case CommandAddBook:
                         bookStorage.AddBook();
                         break;
-                    case "2":
+                    case CommandRemoveBook:
                         bookStorage.RemoveBook();
                         break;
-                    case "3":
+                    case CommandShowAllBook:
                         bookStorage.ShowAllBook();
                         break;
-                    case "4":
-                        bookStorage.SortBookStorage();
+                    case CommandSortBookStorage:
+                        bookStorage.SortBooks();
                         break;
-                    case "5":
+                    case CommandExitProgram:
                         Console.WriteLine("Вы вышли из программы");
-                        _isBookStorageWork = false;
+                        _isExit = false;
                         break;
                     default:
                         Console.WriteLine("Данные не корректны");
@@ -44,33 +51,30 @@ namespace DictionaryBook
     class BookStorage
     {
         private List<Book> _books = new List<Book>();
+        int minimumAmountBook = 0;
 
         public void AddBook()
         {
             string nameBook;
             string nameAutor;
-            bool isAge;
-            bool isQuantityBook;
+            bool isSetBookData;
 
             Console.WriteLine("Введите название книги");
             nameBook = Console.ReadLine();
             Console.WriteLine("Введите автора книги");
             nameAutor = Console.ReadLine();
             Console.WriteLine("Введите дату созданию книги");
-            isAge = int.TryParse(Console.ReadLine(), out int ageRelease);
+            isSetBookData = int.TryParse(Console.ReadLine(), out int ageRelease);
 
-            if (isAge == false)
+            if (isSetBookData == false)
             {
                 Console.WriteLine("Неккоректный ввод.");
                 return;
             }
 
-            Console.WriteLine("Введите количество книг");
-            isQuantityBook = int.TryParse(Console.ReadLine(), out int quantityBooks);
-
-            if ((isAge && isQuantityBook) != false)
+            if ((isSetBookData) != false)
             {
-                _books.Add(new Book(ageRelease, nameBook, nameAutor, quantityBooks));
+                _books.Add(new Book(ageRelease, nameBook, nameAutor));
             }
             else
             {
@@ -81,25 +85,20 @@ namespace DictionaryBook
 
         public void RemoveBook()
         {
-            string input;
-
-            if (_books.Count > 0)
+            if (_books.Count > minimumAmountBook)
             {
                 ShowAllBook();
-                Console.WriteLine("Введите название книги");
-                input = Console.ReadLine();
+                Console.WriteLine("Введите номер книги");
+                int.TryParse(Console.ReadLine(), out int numberBook);
 
-                for (int i = 0; i < _books.Count; i++)
+                if (_books.Count >= numberBook & numberBook > minimumAmountBook)
                 {
-                    if (_books[i].NameBook == input)
-                    {
-                        _books.RemoveAt(i);
-                        Console.WriteLine("Книга была убрана из хранилища.");
-                    }
-                    else
-                    {
-                        Console.WriteLine("Введено не коректные данные.");
-                    }
+                    _books.RemoveAt(numberBook - 1);
+                    Console.WriteLine("Книга была убрана из хранилища.");
+                }
+                else
+                {
+                    Console.WriteLine("Введено не коректные данные.");
                 }
             }
             else
@@ -112,11 +111,12 @@ namespace DictionaryBook
         {
             Console.WriteLine("Книги в хранилище.");
 
-            if (_books.Count > 0)
+            if (_books.Count > minimumAmountBook)
             {
-                foreach (Book book in _books)
+                for (int i = 0; i < _books.Count; i++)
                 {
-                    book.ShowInfo();
+                    Console.Write($"Номер книги - {i + 1}");
+                    _books[i].ShowInfo();
                 }
             }
             else
@@ -125,7 +125,7 @@ namespace DictionaryBook
             }
         }
 
-        public void SortBookStorage()
+        public void SortBooks()
         {
             const string CommandBookSortByName = "1";
             const string CommandBookSortByAuthor = "2";
@@ -157,7 +157,7 @@ namespace DictionaryBook
             }
         }
 
-        public void SortTitleBook()
+        private void SortTitleBook()
         {
             bool isFound = false;
             string input;
@@ -166,7 +166,7 @@ namespace DictionaryBook
 
             foreach (Book book in _books)
             {
-                if (book.NameBook == input)
+                if (book.Name.ToLower() == input.ToLower())
                 {
                     book.ShowInfo();
                     isFound = true;
@@ -179,7 +179,7 @@ namespace DictionaryBook
             }
         }
 
-        public void SortNameAutor()
+        private void SortNameAutor()
         {
             bool isFound = false;
             string input;
@@ -188,7 +188,7 @@ namespace DictionaryBook
 
             foreach (Book book in _books)
             {
-                if (book.AutorBook == input)
+                if (book.Autor.ToLower() == input.ToLower())
                 {
                     book.ShowInfo();
                     isFound = true;
@@ -201,14 +201,12 @@ namespace DictionaryBook
             }
         }
 
-        public void SortAgeRelease()
+        private void SortAgeRelease()
         {
             bool isFound = false;
-            bool isNumber;
             Console.WriteLine("Введите дату создании книги");
-            isNumber = int.TryParse(Console.ReadLine(), out int age);
 
-            if (isNumber == true)
+            if (int.TryParse(Console.ReadLine(), out int age))
             {
                 foreach (Book book in _books)
                 {
@@ -233,22 +231,20 @@ namespace DictionaryBook
 
     class Book
     {
-        public string NameBook { get; private set; }
-        public string AutorBook { get; private set; }
-        public int AgeRelease { get; private set; }
-        public int QuantityBooks { get; private set; }
-
-        public Book(int ageRelease, string nameBook, string autorBook, int quantityBooks)
+        public Book(int ageRelease, string nameBook, string autorBook)
         {
             AgeRelease = ageRelease;
-            NameBook = nameBook;
-            AutorBook = autorBook;
-            QuantityBooks = quantityBooks;
+            Name = nameBook;
+            Autor = autorBook;
         }
+
+        public string Name { get; private set; }
+        public string Autor { get; private set; }
+        public int AgeRelease { get; private set; }
 
         public void ShowInfo()
         {
-            Console.WriteLine($"Название книги - {NameBook}, Имя автора - {AutorBook}, Год релиза книги - {AgeRelease}, Количество книг - {QuantityBooks}");
+            Console.WriteLine($" Название книги - {Name}, Имя автора - {Autor}, Год релиза книги - {AgeRelease}");
         }
     }
 }
