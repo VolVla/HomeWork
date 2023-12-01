@@ -10,6 +10,7 @@ namespace DeckCards
             const string TakeCardCommand = "1";
             const string ShowCardHandCommand = "2";
             const string ExitProgramCommand = "3";
+
             Deck deck = new Deck();
             Player player = new Player();
             bool isReadyGetCard = true;
@@ -23,7 +24,7 @@ namespace DeckCards
                 switch (userInput)
                 {
                     case TakeCardCommand:
-                        player.GetCardDeck(deck.GiveCard());
+                        player.TakeCard(deck.GiveCard());
                         break;
                     case ShowCardHandCommand:
                         player.ShowCards();
@@ -41,8 +42,6 @@ namespace DeckCards
 
     class Deck
     {
-        private Random _random = new Random();
-
         private List<Card> _allCards = new List<Card>()
         {
             new Card(0,"Камень"),new Card(1,"Ножниц"), new Card(2,"Бумага"),
@@ -56,25 +55,56 @@ namespace DeckCards
 
         public Card GiveCard()
         {
-            int randomNumber = _random.Next(0, _allCards.Count);
-            return _allCards[randomNumber];
+            int minimalNumberCard = 0;
+            int firstCard = 0;
+            Card card;
+
+            if (_allCards.Count > minimalNumberCard)
+            {
+                card = _allCards[firstCard];
+                _allCards.Remove(card);
+                Console.WriteLine("Игрок взял карту и колода перемешалась");
+                ShuffleCards();
+            }
+            else
+            {
+                card = null;
+            }
+
+            return card;
+        }
+
+        private void ShuffleCards()
+        {
+            Random random = new Random();
+            int listLength = _allCards.Count;
+            int minimumValue = 1;
+
+            while (listLength > minimumValue)
+            {
+                int randomNumber = random.Next(listLength);
+                listLength--;
+                int temporaryValue = _allCards.IndexOf(_allCards[listLength]);
+                _allCards[listLength] = _allCards[randomNumber];
+                _allCards[randomNumber] = _allCards[temporaryValue];
+            }
         }
     }
 
     class Player
     {
-        private List<Card> _cardsPlayer = new List<Card>();
+        private List<Card> _cards = new List<Card>();
 
-        public void GetCardDeck(Card card)
+        public void TakeCard(Card card)
         {
-            _cardsPlayer.Add(card);
+            _cards.Add(card);
         }
 
         public void ShowCards()
         {
-            if (_cardsPlayer.Count > 0)
+            if (_cards.Count > 0)
             {
-                foreach (Card card in _cardsPlayer)
+                foreach (Card card in _cards)
                 {
                     Console.WriteLine($"Название карты {card.Name}, величина карты {card.Value}");
                 }
