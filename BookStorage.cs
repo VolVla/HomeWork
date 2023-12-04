@@ -20,9 +20,9 @@ namespace DictionaryBook
             {
                 Console.WriteLine("\nДобро пожаловать в хранилище книг");
                 Console.WriteLine("1 - Добавить книгу в хранилище, 2 - убрать книгу из хранилища, 3 - Показать все книги, 4 - Показать книги по указанному параметру, 5 - Выйти из программы");
-                int.TryParse(Console.ReadLine(), out int result);
+                int.TryParse(Console.ReadLine(), out int number);
 
-                switch (result)
+                switch (number)
                 {
                     case CommandAddBook:
                         bookStorage.AddBook();
@@ -51,7 +51,7 @@ namespace DictionaryBook
     class BookStorage
     {
         private List<Book> _books = new List<Book>();
-        int minimumAmountBook = 0;
+        private int _minimumAmountBook = 0;
 
         public void AddBook()
         {
@@ -79,21 +79,20 @@ namespace DictionaryBook
             else
             {
                 Console.WriteLine("Неккоректный ввод.");
-                return;
             }
         }
 
         public void RemoveBook()
         {
-            if (_books.Count > minimumAmountBook)
+            if (_books.Count > _minimumAmountBook)
             {
                 ShowAllBook();
                 Console.WriteLine("Введите номер книги");
                 int.TryParse(Console.ReadLine(), out int numberBook);
 
-                if (_books.Count >= numberBook & numberBook > minimumAmountBook)
+                if (_books.Count >= numberBook & numberBook > _minimumAmountBook)
                 {
-                    _books.RemoveAt(numberBook - 1);
+                    _books.Remove(_books[numberBook - 1]);
                     Console.WriteLine("Книга была убрана из хранилища.");
                 }
                 else
@@ -111,7 +110,7 @@ namespace DictionaryBook
         {
             Console.WriteLine("Книги в хранилище.");
 
-            if (_books.Count > minimumAmountBook)
+            if (_books.Count > _minimumAmountBook)
             {
                 for (int i = 0; i < _books.Count; i++)
                 {
