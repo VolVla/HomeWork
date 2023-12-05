@@ -10,8 +10,8 @@ namespace DictionaryBook
             const int CommandAddBook = 1;
             const int CommandRemoveBook = 2;
             const int CommandShowAllBook = 3;
-            const int CommandSortBookStorage = 4;
-            const int CommandExitProgram = 5;
+            const int CommandOutBookParameter = 4;
+            const int CommandProgramExit = 5;
 
             bool _isExit = true;
             BookStorage bookStorage = new BookStorage();
@@ -33,10 +33,10 @@ namespace DictionaryBook
                     case CommandShowAllBook:
                         bookStorage.ShowAllBook();
                         break;
-                    case CommandSortBookStorage:
-                        bookStorage.SortBooks();
+                    case CommandOutBookParameter:
+                        bookStorage.OutBookParameter();
                         break;
-                    case CommandExitProgram:
+                    case CommandProgramExit:
                         Console.WriteLine("Вы вышли из программы");
                         _isExit = false;
                         break;
@@ -55,26 +55,20 @@ namespace DictionaryBook
 
         public void AddBook()
         {
-            string nameBook;
-            string nameAutor;
+            string bookName;
+            string autorName;
             bool isSetBookData;
 
             Console.WriteLine("Введите название книги");
-            nameBook = Console.ReadLine();
+            bookName = Console.ReadLine();
             Console.WriteLine("Введите автора книги");
-            nameAutor = Console.ReadLine();
+            autorName = Console.ReadLine();
             Console.WriteLine("Введите дату созданию книги");
             isSetBookData = int.TryParse(Console.ReadLine(), out int ageRelease);
 
-            if (isSetBookData == false)
+            if (isSetBookData == true)
             {
-                Console.WriteLine("Неккоректный ввод.");
-                return;
-            }
-
-            if ((isSetBookData) != false)
-            {
-                _books.Add(new Book(ageRelease, nameBook, nameAutor));
+                _books.Add(new Book(ageRelease, bookName, autorName));
             }
             else
             {
@@ -124,26 +118,26 @@ namespace DictionaryBook
             }
         }
 
-        public void SortBooks()
+        public void OutBookParameter()
         {
-            const string CommandBookSortByName = "1";
-            const string CommandBookSortByAuthor = "2";
-            const string CommandBookSortByDate = "3";
+            const string CommandSortBookByName = "1";
+            const string CommandSortBookByAuthor = "2";
+            const string CommandSortBookByDate = "3";
 
             if (_books.Count > 0)
             {
-                Console.WriteLine($"Для сортировки книг по название напишите {CommandBookSortByName}. Для сортировки по автору книги напишите {CommandBookSortByAuthor} . Для сортировки по дате создание книги пишите {CommandBookSortByDate}");
+                Console.WriteLine($"Для сортировки книг по название напишите {CommandSortBookByName}. Для сортировки по автору книги напишите {CommandSortBookByAuthor} . Для сортировки по дате создание книги пишите {CommandSortBookByDate}");
 
                 switch (Console.ReadLine())
                 {
-                    case CommandBookSortByName:
+                    case CommandSortBookByName:
                         SortTitleBook();
                         break;
-                    case CommandBookSortByAuthor:
-                        SortNameAutor();
+                    case CommandSortBookByAuthor:
+                        SortAutorName();
                         break;
-                    case CommandBookSortByDate:
-                        SortAgeRelease();
+                    case CommandSortBookByDate:
+                        SortReleaseAge();
                         break;
                     default:
                         Console.WriteLine("Данные не корректны");
@@ -178,7 +172,7 @@ namespace DictionaryBook
             }
         }
 
-        private void SortNameAutor()
+        private void SortAutorName()
         {
             bool isFound = false;
             string input;
@@ -200,7 +194,7 @@ namespace DictionaryBook
             }
         }
 
-        private void SortAgeRelease()
+        private void SortReleaseAge()
         {
             bool isFound = false;
             Console.WriteLine("Введите дату создании книги");
@@ -209,7 +203,7 @@ namespace DictionaryBook
             {
                 foreach (Book book in _books)
                 {
-                    if (book.AgeRelease == age)
+                    if (book.ReleaseAge == age)
                     {
                         book.ShowInfo();
                         isFound = true;
@@ -232,18 +226,18 @@ namespace DictionaryBook
     {
         public Book(int ageRelease, string nameBook, string autorBook)
         {
-            AgeRelease = ageRelease;
+            ReleaseAge = ageRelease;
             Name = nameBook;
             Autor = autorBook;
         }
 
         public string Name { get; private set; }
         public string Autor { get; private set; }
-        public int AgeRelease { get; private set; }
+        public int ReleaseAge { get; private set; }
 
         public void ShowInfo()
         {
-            Console.WriteLine($" Название книги - {Name}, Имя автора - {Autor}, Год релиза книги - {AgeRelease}");
+            Console.WriteLine($" Название книги - {Name}, Имя автора - {Autor}, Год релиза книги - {ReleaseAge}");
         }
     }
 }
