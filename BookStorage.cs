@@ -130,7 +130,7 @@ namespace DictionaryBook
                 switch (Console.ReadLine())
                 {
                     case CommandSortBookByName:
-                        ShowBooksByTitle();
+                        ShowBookByTitle();
                         break;
                     case CommandSortBookByAuthor:
                         ShowBookByAutorName();
@@ -149,7 +149,7 @@ namespace DictionaryBook
             }
         }
 
-        private void ShowBooksByTitle()
+        private void ShowBookByTitle()
         {
             bool isFound = false;
             string input;
