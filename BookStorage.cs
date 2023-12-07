@@ -51,7 +51,6 @@ namespace DictionaryBook
     class BookStorage
     {
         private List<Book> _books = new List<Book>();
-        private int _minimumAmountBook = 0;
 
         public void AddBook()
         {
@@ -78,15 +77,15 @@ namespace DictionaryBook
 
         public void RemoveBook()
         {
-            if (_books.Count > _minimumAmountBook)
+            if (_books.Count > 0)
             {
                 ShowAllBooks();
                 Console.WriteLine("Введите номер книги");
                 int.TryParse(Console.ReadLine(), out int numberBook);
 
-                if (_books.Count >= numberBook & numberBook > _minimumAmountBook)
+                if (_books.Count >= numberBook & numberBook > 0)
                 {
-                    _books.Remove(_books[numberBook - 1]);
+                    _books.RemoveAt(numberBook - 1);
                     Console.WriteLine("Книга была убрана из хранилища.");
                 }
                 else
@@ -104,7 +103,7 @@ namespace DictionaryBook
         {
             Console.WriteLine("Книги в хранилище.");
 
-            if (_books.Count > _minimumAmountBook)
+            if (_books.Count > 0)
             {
                 for (int i = 0; i < _books.Count; i++)
                 {
@@ -134,10 +133,10 @@ namespace DictionaryBook
                         ShowBooksByTitle();
                         break;
                     case CommandSortBookByAuthor:
-                        ShowAutorByName();
+                        ShowBookByAutorName();
                         break;
                     case CommandSortBookByDate:
-                        ShowReleaseByAge();
+                        ShowBookByReleaseDate();
                         break;
                     default:
                         Console.WriteLine("Данные не корректны");
@@ -172,7 +171,7 @@ namespace DictionaryBook
             }
         }
 
-        private void ShowAutorByName()
+        private void ShowBookByAutorName()
         {
             bool isFound = false;
             string input;
@@ -194,7 +193,7 @@ namespace DictionaryBook
             }
         }
 
-        private void ShowReleaseByAge()
+        private void ShowBookByReleaseDate()
         {
             bool isFound = false;
             Console.WriteLine("Введите дату создании книги");
