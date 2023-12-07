@@ -7,31 +7,41 @@ namespace StoreItems
     {
         static void Main()
         {
+            Shop shop = new Shop();
+            shop.WorkShop();
+        }
+    }
+
+    class Shop
+    {
+        private Seller _seller = new Seller();
+        private Buyer _buyer = new Buyer();
+
+        public void WorkShop()
+        {
             const string ShowProductCommand = "1";
             const string BuyProductCommand = "2";
             const string ShowItemsCommand = "3";
             const string ExitProgramCommand = "4";
-            Seller seller = new Seller(); 
-            Buyer buyer = new Buyer();
+
             string userInput;
             bool isExitShop = true;
-            int _balanceMoney = 100;
 
             while (isExitShop)
             {
-                Console.WriteLine("\nПриветствую в своем магазине чтобы посмотреть товар напиши 1,\nДля покупки товар напишите 2,\nДля просмотра предметов в инвентаре напишите 3,\nДля того, чтобы закончить покупки напишите 4");
+                Console.WriteLine($"\nПриветствую в своем магазине чтобы посмотреть товар напиши {ShowProductCommand},\nДля покупки товар напишите {BuyProductCommand},\nДля просмотра предметов в инвентаре напишите {ShowItemsCommand},\nБалланс продавца - {_seller.GetBalance()}\nДля того, чтобы закончить покупки напишите {ExitProgramCommand}");
                 userInput = Console.ReadLine();
 
                 switch (userInput)
                 {
                     case ShowProductCommand:
-                        seller.ShowProduct();
+                        _seller.ShowInfo();
                         break;
                     case BuyProductCommand:
-                        buyer.TakeItem(seller.TransferItem(ref _balanceMoney));
+                        SellItem();
                         break;
                     case ShowItemsCommand:
-                        buyer.ShowInBag();
+                        _buyer.ShowInfo();
                         break;
                     case ExitProgramCommand:
                         isExitShop = false;
@@ -42,52 +52,25 @@ namespace StoreItems
                         break;
                 }
             }
-        } 
-    }
-
-    class Seller : Player
-    {
-        private List<Item> _products = new List<Item>();
-        private int _priceItem;
-
-        public Item Product { get;private set  ;}
-
-        public Seller()
-        {
-            _products.Add(new Item("Зелье здоровья", 5));
-            _products.Add(new Item("Зелье маны", 4));
-            _products.Add(new Item("Шлем", 10));
-            _products.Add(new Item("Копьё", 8));
-            _products.Add(new Item("Нагрудник", 9));
-            _products.Add(new Item("Поножи", 8));
-            _products.Add(new Item("Ботинки", 14));
-            _products.Add(new Item("Ожерелье", 2));
-            _products.Add(new Item("Браслет", 7));
-            _products.Add(new Item("Перчатки", 3));
-            _products.Add(new Item("Топор", 13));
-            _products.Add(new Item("Меч", 20));
-            _products.Add(new Item("Лук", 16));
-            _products.Add(new Item("Колчан стрел", 6));
         }
 
-        private void BuyProductFromSeller(ref int _balanceMoney)
-        { 
-            Console.WriteLine($"Ваш баланс {_balanceMoney} монет");
+        public void SellItem()
+        {
+            Console.WriteLine($"Баланс покупателя {_buyer.GetBalance()} монет");
 
-            if (_products.Count > 0)
+            if (_seller.GetListItems().Count > 0)
             {
                 Console.WriteLine("Введите номер предмета");
-                int.TryParse(Console.ReadLine() , out int index);
+                int.TryParse(Console.ReadLine(), out int index);
 
-                if (index < _products.Count && index >= 0)
+                if (index < _seller.GetListItems().Count && index >= 0)
                 {
-                    _priceItem = _products[index].AmountSellPrice; 
-
-                    if(_balanceMoney >= _priceItem)
+                    if (_buyer.GetBalance() >= _seller.GetListItems()[index].Price)
                     {
-                        _balanceMoney -= _priceItem;
-                        Product = _products[index];
-                        _products.Remove(_products[index]);
+                        _buyer.RemoveMoney(_seller.GetListItems()[index].Price);
+                        _seller.AddMoney(_seller.GetListItems()[index].Price);
+                        _buyer.TakeItem(_seller.GetListItems()[index]);
+                        _seller.RemoveItem(_seller.GetListItems()[index]);
                         Console.WriteLine("Поздравляю вы купили товар.");
                     }
                     else
@@ -105,67 +88,109 @@ namespace StoreItems
                 Console.WriteLine("Извините,но весь товар уже распродан.");
             }
         }
+    }
 
-        public void ShowProduct()
+    class Seller : Human
+    {
+        public Seller()
         {
-            foreach(Item item in _products)
-            {
-                int index = _products.IndexOf(item);
-                Console.Write(index);
-                item.ShowInfoProduct();
-            }
+            Balance = 10000;
+            Items.Add(new Item("Зелье здоровья", 5));
+            Items.Add(new Item("Зелье маны", 4));
+            Items.Add(new Item("Шлем", 10));
+            Items.Add(new Item("Копьё", 8));
+            Items.Add(new Item("Нагрудник", 9));
+            Items.Add(new Item("Поножи", 8));
+            Items.Add(new Item("Ботинки", 14));
+            Items.Add(new Item("Ожерелье", 2));
+            Items.Add(new Item("Браслет", 7));
+            Items.Add(new Item("Перчатки", 3));
+            Items.Add(new Item("Топор", 13));
+            Items.Add(new Item("Меч", 20));
+            Items.Add(new Item("Лук", 16));
+            Items.Add(new Item("Колчан стрел", 6));
         }
 
-        public Item TransferItem(ref int money)
+        public void RemoveItem(Item item)
         {
-            BuyProductFromSeller(ref money);
-            return Product;
+            Items.Remove(item);
+        }
+
+        public override void ShowInfo()
+        {
+            foreach (Item item in Items)
+            {
+                int index = Items.IndexOf(item);
+                Console.Write(index);
+                item.ShowInfo();
+            }
         }
     }
 
-    class Buyer : Player
+    class Buyer : Human
     {
-        public void TakeItem(Item product)
+        public Buyer()
         {
-            _items.Add(product);
+            Balance = 100;
         }
 
-        public void ShowInBag()
+        public void TakeItem(Item product)
         {
-            foreach(Item item in _items)
+            Items.Add(product);
+        }
+
+        public override void ShowInfo()
+        {
+            foreach (Item item in Items)
             {
                 Console.WriteLine(item.Name);
             }
         }
     }
 
-    class Player
-    {
-        private protected List<Item> _items = new List<Item>();
-        
-        public void ShowItems()
-        {
-            foreach (Item item in _items)
-            {
-                item.ShowInfoProduct();
-            }
-        }
-    }
-
     class Item
     {
-        public int AmountSellPrice { get;private set; }
-        public string Name { get; private set; }
-
         public Item(string name, int sellPrice)
         {
-            AmountSellPrice = sellPrice;
+            Price = sellPrice;
             Name = name;
         }
 
-        public void ShowInfoProduct()
+        public int Price { get; private set; }
+        public string Name { get; private set; }
+
+        public void ShowInfo()
         {
-            Console.WriteLine($" Название предмета '{Name}', стоимость предмета {AmountSellPrice} монет");
+            Console.WriteLine($" Название предмета '{Name}', стоимость предмета {Price} монет");
+        }
+    }
+
+    abstract class Human
+    {
+        protected List<Item> Items = new List<Item>();
+
+        protected int Balance { get; set; }
+
+        public abstract void ShowInfo();
+
+        public int GetBalance()
+        {
+            return Balance;
+        }
+
+        public List<Item> GetListItems()
+        {
+            return Items;
+        }
+
+        public void RemoveMoney(int money)
+        {
+            Balance -= money;
+        }
+
+        public void AddMoney(int money)
+        {
+            Balance += money;
         }
     }
 }
