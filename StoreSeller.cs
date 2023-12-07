@@ -121,8 +121,7 @@ namespace StoreItems
             foreach (Item item in Items)
             {
                 int index = Items.IndexOf(item);
-                Console.Write(index);
-                item.ShowInfo();
+                Console.WriteLine($"{index} Название предмета {item.Name}, стоимость предмета {item.Price} монет");
             }
         }
     }
@@ -158,11 +157,6 @@ namespace StoreItems
 
         public int Price { get; private set; }
         public string Name { get; private set; }
-
-        public void ShowInfo()
-        {
-            Console.WriteLine($" Название предмета '{Name}', стоимость предмета {Price} монет");
-        }
     }
 
     abstract class Human
