@@ -58,19 +58,19 @@ namespace StoreItems
         {
             Console.WriteLine($"Баланс покупателя {_buyer.GetBalance()} монет");
 
-            if (_seller.GetListItems().Count > 0)
+            if (_seller.GetNumberOfItems() > 0)
             {
                 Console.WriteLine("Введите номер предмета");
                 int.TryParse(Console.ReadLine(), out int index);
 
-                if (index < _seller.GetListItems().Count && index >= 0)
+                if (index < _seller.GetNumberOfItems() && index >= 0)
                 {
-                    if (_buyer.GetBalance() >= _seller.GetListItems()[index].Price)
+                    if (_buyer.GetBalance() >= _seller.GetIteam(index).Price)
                     {
-                        _buyer.RemoveMoney(_seller.GetListItems()[index].Price);
-                        _seller.AddMoney(_seller.GetListItems()[index].Price);
-                        _buyer.TakeItem(_seller.GetListItems()[index]);
-                        _seller.RemoveItem(_seller.GetListItems()[index]);
+                        _buyer.RemoveMoney(_seller.GetIteam(index).Price);
+                        _seller.AddMoney(_seller.GetIteam(index).Price);
+                        _buyer.TakeItem(_seller.GetIteam(index));
+                        _seller.RemoveItem(_seller.GetIteam(index));
                         Console.WriteLine("Поздравляю вы купили товар.");
                     }
                     else
@@ -114,6 +114,16 @@ namespace StoreItems
         public void RemoveItem(Item item)
         {
             Items.Remove(item);
+        }
+
+        public Item GetIteam(int id)
+        {
+            return Items[id];
+        }
+
+        public int GetNumberOfItems()
+        {
+            return Items.Count;
         }
 
         public override void ShowInfo()
@@ -163,18 +173,13 @@ namespace StoreItems
     {
         protected List<Item> Items = new List<Item>();
 
-        protected int Balance { get; set; }
+        protected int Balance;
 
         public abstract void ShowInfo();
 
         public int GetBalance()
         {
             return Balance;
-        }
-
-        public List<Item> GetListItems()
-        {
-            return Items;
         }
 
         public void RemoveMoney(int money)
